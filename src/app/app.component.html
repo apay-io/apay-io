@@ -1,0 +1,255 @@
+<div class="header">
+    <div class="content">
+
+        <div class="menu-row">
+            <div class="logo">
+                Papaya
+            </div>
+            <div class="tabs-menu">
+                <div class="tab active">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><defs><path id="a" d="M7.652 0A8.018 8.018 0 0 0 0 7.652h1.036a.348.348 0 1 1 0 .696H0A8.018 8.018 0 0 0 7.652 16v-1.036a.348.348 0 1 1 .696 0V16A8.018 8.018 0 0 0 16 8.348h-1.036a.348.348 0 1 1 0-.696H16A8.018 8.018 0 0 0 8.348 0v1.036a.348.348 0 1 1-.696 0V0zm4.56 3.475a.349.349 0 0 1 .255.542L9.098 9.005a.36.36 0 0 1-.093.093l-4.988 3.369a.351.351 0 0 1-.442-.042.349.349 0 0 1-.043-.442l3.37-4.988a.36.36 0 0 1 .093-.093l4.988-3.37a.347.347 0 0 1 .228-.057zm-4.77 3.967l-2.326 3.442 3.442-2.326-1.116-1.116z"></path></defs><g fill="none" fill-rule="evenodd" data-radium="true"><mask id="b" fill="#fff"><use xlink:href="#a"></use></mask><use fill="#FFF" fill-rule="nonzero" xlink:href="#a"></use><g fill="#FFF" fill-rule="nonzero" mask="url(#b)"><path d="M0 0h16.109v16.109H0z"></path></g></g></svg>
+                    <div class="text">
+                        Discover
+                    </div>
+                </div>
+                <div class="tab">
+                    <img class="icon" src="" alt="">
+                    <div class="text">
+                        My Wallet
+                    </div>
+                </div>
+                <div class="tab">
+                    <img class="icon" src="" alt="">
+                    <div class="text">
+                        Conver
+                    </div>
+                </div>
+                <div class="tab">
+                    <img class="icon" src="" alt="">
+                    <div class="text">
+                        Deposit
+                    </div>
+                </div>
+            </div>
+            <div class="profile-info">
+                <div class="button-sign-in">
+                    Sign in
+                </div>
+                <div class="menu" (click)="menu()">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+
+                <div *ngIf="menuInfo" class="info-popup">
+                    <div class="button-signIn-info">
+                        <div class="text">
+                            Sign in
+                        </div>
+                    </div>
+                    <div class="get-support">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill="#3B3B3B" d="M12 0C5.382 0 0 4.69 0 10.455c0 3.234 1.74 6.307 4.67 8.28-.07.549-.347 1.882-1.444 3.442l-.577.819L3.681 23c2.833 0 4.748-1.74 5.378-2.407.956.21 1.944.316 2.941.316 6.618 0 12-4.69 12-10.454C24 4.69 18.618 0 12 0z"></path></svg>
+                        <div class="text">
+                            Get Support
+                        </div>
+                    </div>
+                    <div class="currency-info">
+                        <div class="title">
+                            DISPLAY CURRENCY
+                        </div>
+                        <div class="select-currency">
+                            <mat-form-field>
+                                <mat-select [(value)]="selected">
+                                    <span></span>
+                                    <mat-select-trigger>
+                                    <span>
+                                        <img class="icon-select" [src]='"./../assets/img/"+ selected + ".png"' alt="">
+                                    </span>
+                                        &nbsp;{{selected}}
+                                    </mat-select-trigger>
+                                    <mat-option value="USD"> <img style="width: 20px; height: 20px;position: relative; top: 5px;" src="./../assets/img/USD.png" alt=""> USD</mat-option>
+                                    <mat-option value="EUR"> <img style="width: 20px; height: 20px;position: relative; top: 5px;" src="./../assets/img/EUR.png" alt=""> EUR</mat-option>
+                                    <mat-option value="ETH"> <img style="width: 20px; height: 20px;position: relative; top: 5px;" src="./../assets/img/ETH.png" alt=""> ETH</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="company">
+                        <div class="title">
+                            company
+                        </div>
+                        <div class="list-company">
+                            <div class="item">
+                                About Bancor
+                            </div>
+                            <div class="item">
+                                Terms of Use
+                            </div>
+                            <div class="item">
+                                Privacy Policy
+                            </div>
+                            <div class="item">
+                                Help Center
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="create-wallet">
+        <div class="title">
+            Your smart crypto wallet
+        </div>
+        <div class="description">
+            Decentralized, simple and secure.
+        </div>
+        <div class="button-create">
+            <div class="text">
+                Create Wallet
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-content">
+        <div class="container">
+            <div class="converter">
+                <div class="currency-from-amount-field">
+                    <img class="icon" src="./../assets/img/1.png" alt="">
+                    <div class="info-currency">
+                        <div class="text">
+                            PAY WITH
+                        </div>
+                        <div class="currency">
+                            ETH
+                        </div>
+                    </div>
+                    <input class="input-field" placeholder="Enter Amount" type="text">
+                </div>
+                <div class="wrapper-icon-conver">
+                    <svg class="icon-convert" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
+                </div>
+                <div class="currency-to-amount-field">
+                    <img class="icon" src="./../assets/img/1.png" alt="">
+                    <div class="info-currency">
+                        <div class="text">
+                            RECEIVE
+                        </div>
+                        <div class="currency">
+                            EOS
+                        </div>
+                    </div>
+                    <input class="input-field" placeholder="Enter Amount" type="text">
+                </div>
+                <div class="button-convert" (click)="this.modalService.open('signIn');">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
+                    <div class="text">
+                        Convert
+                    </div>
+                </div>
+            </div>
+
+            <app-table></app-table>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="tab-footer active">
+        <svg class="icon-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-radium="true" style="pointer-events: none;"><path d="M7.652 0A8.018 8.018 0 0 0 0 7.652h1.036a.348.348 0 0 1 0 .696H0A8.018 8.018 0 0 0 7.652 16v-1.036a.348.348 0 1 1 .696 0V16A8.018 8.018 0 0 0 16 8.348h-1.036a.348.348 0 1 1 0-.696H16A8.018 8.018 0 0 0 8.348 0v1.036a.348.348 0 0 1-.696 0V0zm4.56 3.475a.349.349 0 0 1 .255.542L9.098 9.005a.36.36 0 0 1-.093.093l-4.988 3.369a.349.349 0 0 1-.485-.484l3.37-4.988a.36.36 0 0 1 .093-.093l4.988-3.37a.347.347 0 0 1 .228-.057h.001zm-4.77 3.967l-2.326 3.442 3.442-2.326-1.116-1.116z"></path></svg>
+        <div class="title-bar-footer">
+            Discover
+        </div>
+    </div>
+    <div class="tab-footer">
+        <svg class="icon-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none;"><path d="M17.135 0c-.39 0-.893.112-1.563.28C13.898.725 4.074 3.46 3.907 3.515c-1.451.558-2.4 1.117-2.958 1.73a3.985 3.985 0 0 1 2.4-.78h15.628V2.622c0-.949 0-2.623-1.842-2.623zM3.349 5.581C1.284 5.581 0 7.535 0 8.931v11.943A3.12 3.12 0 0 0 3.126 24h17.19a3.12 3.12 0 0 0 3.126-3.126V8.82c0-1.73-1.619-3.238-3.349-3.238H3.349zm15.907 7.814c.781 0 1.395.614 1.395 1.396 0 .781-.614 1.395-1.395 1.395a1.382 1.382 0 0 1-1.396-1.395c0-.782.614-1.396 1.396-1.396z"></path></svg>
+        <div class="title-bar-footer">
+            My Wallet
+        </div>
+    </div>
+    <div class="tab-footer">
+        <svg class="icon-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
+        <div class="title-bar-footer">
+            Convert
+        </div>
+    </div>
+    <div class="tab-footer">
+        <svg class="icon-footer" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 15" data-radium="true" style="pointer-events: none;"><defs></defs><title>credit card</title><path id="credit-card-a" class="cls-1" d="M21.86 0H2.14A2.11 2.11 0 0 0 0 2.08v10.84A2.11 2.11 0 0 0 2.14 15h19.72A2.11 2.11 0 0 0 24 12.92V2.08A2.11 2.11 0 0 0 21.86 0zm-18 12.5a1.25 1.25 0 1 1 1.28-1.25 1.27 1.27 0 0 1-1.28 1.25zm3.43 0a1.25 1.25 0 1 1 1.28-1.25 1.27 1.27 0 0 1-1.28 1.25zm3.42 0A1.25 1.25 0 1 1 12 11.25a1.27 1.27 0 0 1-1.29 1.25zm12.43-6.25a.42.42 0 0 1-.43.42H1.29a.42.42 0 0 1-.43-.42V2.92a.42.42 0 0 1 .43-.42h21.42a.42.42 0 0 1 .43.42z"></path></svg>
+        <div class="title-bar-footer">
+            Deposit
+        </div>
+    </div>
+</div>
+
+<modal id="signIn">
+    <div class="modal">
+        <div class="modal-body">
+            <div class="head-popup">
+                Select Wallet
+                <div class="close" (click)="this.modalService.close('signIn');">
+                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill-rule="evenodd" d="M.458.404c.582-.565 1.54-.524 2.123.04l9.406 9.485L21.435.444c.583-.564 1.54-.605 2.123-.04.582.565.582 1.453.041 2.058l-9.531 9.526 9.531 9.565c.541.565.541 1.494-.041 2.059-.582.524-1.54.524-2.123-.04l-9.448-9.486-9.406 9.485c-.583.565-1.54.565-2.123.04-.582-.564-.624-1.493-.041-2.058l9.531-9.565L.417 2.462C-.166 1.857-.124.97.458.404z"></path></svg>
+                </div>
+            </div>
+            <div class="content-popup">
+                <div class="button-sign-in">
+                    <img class="icon" src="./../assets/img/papaya.jpg" alt="">
+                    <div class="text">
+                        Sign in
+                    </div>
+                </div>
+                <div class="description">
+                    Don't have an account?
+                    <a class="link" href="#">
+                        Register now
+                    </a>
+                </div>
+                <div class="indent">
+                    <div class="line"></div>
+                    <div class="text">OR</div>
+                    <div class="line"></div>
+                </div>
+                <div class="external">
+                    <div class="description">
+                        Already have an external wallet?
+                    </div>
+                    <div class="wallets-wrapper">
+                        <div class="wallet">
+                            <div class="wallet-title">
+                                <img class="icon" src="./../assets/img/meta.png" alt="">
+                                MetaMask
+                            </div>
+                        </div>
+                        <div class="wallet">
+                            <div class="wallet-title">
+                                <img class="icon" src="./../assets/img/scatter.png" alt="">
+                                Scatter
+                            </div>
+                        </div>
+                        <div class="wallet">
+                            <div class="wallet-title">
+                                <img class="icon" src="./../assets/img/formatic.png" alt="">
+                                Fortmatic
+                            </div>
+                        </div>
+                        <div class="wallet big">
+                            <div class="wallet-title">
+                                <img class="icon" src="./../assets/img/trezor.png" alt="">
+                                Trezor
+                            </div>
+                        </div>
+                        <div class="wallet big">
+                            <div class="wallet-title">
+                                <img class="icon" src="./../assets/img/ledger.png" alt="">
+                                Ledger
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>

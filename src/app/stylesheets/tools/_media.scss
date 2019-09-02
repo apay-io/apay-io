@@ -1,0 +1,35 @@
+$vga-width: 640px;
+$xga-width: 1024px;
+$uxga-width: 1600px;
+$fullHd-width: 1920px;
+$quadHd-width: 4096px;
+
+@mixin mobile {
+  @media (max-width: #{$xga-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin notMobile {
+  @media (min-width: #{$xga-width}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$xga-width}) and (max-width: #{$uxga-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin oldDesktop {
+  @media (min-width: #{$uxga-width}) and (max-width: #{$fullHd-width - 1px}) {
+    @content;
+  }
+}
+
+@mixin fullHD {
+  @media (min-width: #{$fullHd-width}) {
+    @content;
+  }
+}

@@ -1,0 +1,329 @@
+/* MODAL STYLES*/
+@import "./../stylesheets/tools/media.scss";
+
+modal {
+  display: none;
+
+  .modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: auto;
+    -webkit-animation: fade-in 0.3s ease-in-out;
+    animation: fade-in 0.3s ease-in-out;
+
+    .modal-body {
+      max-width: 410px;
+      //padding: 24px 24px 0;
+      background: #fff;
+      box-shadow: 0px 48px 48px rgba(20, 20, 20, 0.16), 0px 0px 24px rgba(20, 20, 20, 0.16);
+      border-radius: 12px;
+
+      .close-menu {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        cursor: pointer;
+      }
+
+      .menu-item {
+        cursor: pointer;
+        display: flex;
+        margin: 48px 0;
+        min-height: 25px;
+
+        .icon-item {
+          width: 24px;
+          object-fit: contain;
+        }
+
+        .text-item {
+          text-decoration: none;
+          margin-left: 16px;
+          line-height: 24px;
+          font-size: 17px;
+          color: var(--app-primary-color);
+        }
+      }
+
+      .support {
+        cursor: pointer;
+        margin: 24px 0;
+        padding-bottom: 30px;
+        border-bottom: 1px solid rgba(215, 222, 224, 0.64);
+        overflow: hidden;
+
+        .text-support {
+          margin-bottom: 16px;
+          line-height: 24px;
+          font-size: 17px;
+          text-align: center;
+          color: var(--app-base-black);
+        }
+      }
+    }
+    @media (max-width: 800px) {
+      -webkit-animation: slide-in 0.3s ease-in-out;
+      animation: slide-in 0.3s ease-in-out;
+      align-items: flex-end;
+      //padding: 8px;
+
+    }
+  }
+
+  .modal-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-animation: fade-in 0.3s ease-in-out;
+    animation: fade-in 0.3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.76);
+    z-index: 900;
+  }
+}
+
+body.modal-open {
+  overflow: hidden;
+
+  .modal {
+    display: flex;
+  }
+}
+
+.head-popup {
+  min-width: 540px;
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  background: rgb(15, 89, 209);
+  color: #fff;
+
+  .close {
+    cursor: pointer;
+    position: absolute;
+    z-index: 101;
+    right: 0;
+    top: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon-close {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  @include mobile {
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+.content-popup {
+  min-width: 412px;
+  background-color: rgb(249, 249, 249);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 64px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  .button-sign-in {
+    width: 100%;
+    max-width: 360px;
+    border-width: 1px;
+    height: 48px;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 8px;
+    color: rgb(255, 255, 255);
+    background: rgb(15, 89, 209);
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    border-style: solid;
+    border-color: rgb(14, 80, 188);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+
+    .icon {
+      display: block;
+      position: relative;
+      margin-right: 8px;
+      font-size: 16px;
+      text-align: center;
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+
+    .text {
+      color: #fff;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      line-height: normal;
+    }
+
+    &:hover {
+      background: rgb(14, 80, 188);
+    }
+  }
+
+  .description {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 16px;
+    color: #000;
+  }
+
+  .link {
+    color: rgb(14, 80, 188);
+    font-size: 16px;
+    transition: 0.3s;
+    text-decoration: none;
+
+    &:hover {
+      color: rgba(14, 80, 188, 0.61);
+    }
+  }
+
+  .indent {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 33px;
+
+    .line {
+      width: 100%;
+      min-width: 160px;
+      height: 1px;
+      background: rgb(223, 223, 223);
+    }
+
+    .text {
+      margin: 0 15px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgb(151, 151, 151);
+    }
+  }
+
+  .external {
+    .description {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .wallets-wrapper {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .wallet {
+        margin: 16px 8px 0;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 16px;
+        height: 48px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 8px;
+        background: rgb(255, 255, 255);
+        border: 1px solid rgb(223, 223, 223);
+        transition: all 300ms ease 0s;
+
+        .wallet-title {
+          color: #000;
+          text-align: center;
+
+          .icon {
+            background-position: center center;
+            background-repeat: no-repeat;
+            transition: all 900ms ease 0s;
+            opacity: 1;
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            position: relative;
+            top: 2px;
+            left: 2px;
+          }
+        }
+
+        &.big {
+          min-width: 156px;
+        }
+
+        &:hover {
+          background: rgb(249, 249, 249);
+          border-color: rgb(223, 223, 223);
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    min-width: unset;
+    width: 100%;
+    padding: 40px 0;
+
+    .button-sign-in {
+      max-width: 190px;
+    }
+
+    .indent {
+      .line {
+        width: 30%;
+      }
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
