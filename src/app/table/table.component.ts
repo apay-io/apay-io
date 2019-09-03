@@ -20,7 +20,7 @@ export interface UserData {
 })
 
 export class TableComponent implements OnInit {
-    displayedColumns: string[] = ['icon', 'name', 'change', 'usd', 'volume', 'depth', 'graph', 'convert', 'favorites'];
+    displayedColumns: string[] = ['icon', 'name', 'change', 'usd', 'volume', 'depth', 'graph', 'convert'];
     dataSource: MatTableDataSource<UserData>;
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -215,9 +215,7 @@ export class TableComponent implements OnInit {
             this.isMobile = false;
         } else {
             this.isMobile = true;
-            this.displayedColumns = ['icon', 'name', 'change', 'usd'];
         }
-
     }
 
     applyFilter(filterValue: string) {
