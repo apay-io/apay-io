@@ -19,14 +19,11 @@ table {
   position: relative;
   display: flex;
   align-items: center;
-  background: #f9f9f9;
   border-radius: 8px;
   font-size: 12px;
-  border: solid 1px #dfdfdf;
-  width: 184px;
   height: 16px;
   padding: 9px 5px 15px 26px;
-  margin-right: 20px;
+  margin-left: 20px;
 
   @include mobile {
     width: 100%;
@@ -41,7 +38,6 @@ mat-form-field {
   background: #fff;
   height: 60px;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -56,7 +52,7 @@ mat-form-field {
 }
 
 .mat-header-cell {
-  top: 70px;
+  top: 166px;
   position: sticky;
   z-index: 100;
   padding: 23px 4px 16px 0px;
@@ -155,40 +151,44 @@ mat-form-field {
   color: rgb(15, 89, 209);
 }
 
-
-.button-convert {
-  position: relative;
+.buttons {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 16px;
-  height: 15px;
-  width: 90px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: 8px;
-  background: rgb(255, 255, 255);
-  border: 1px solid rgb(223, 223, 223);
-  transition: 0.3s;
+  justify-content: space-between;
 
-  .icon {
-    width: 14px;
-    height: 14px;
-    object-fit: contain;
-  }
+  .button-convert {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    height: 15px;
+    width: 52px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(223, 223, 223);
+    transition: 0.3s;
 
-  .text {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    line-height: normal;
-    margin-left: 8px;
-    color: #000;
-  }
+    .icon {
+      width: 14px;
+      height: 14px;
+      object-fit: contain;
+    }
 
-  &:hover {
-    background: rgb(238, 238, 238);
+    .text {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      line-height: normal;
+      //margin-left: 8px;
+      color: #000;
+    }
+
+    &:hover {
+      background: rgb(238, 238, 238);
+    }
   }
 }
 

@@ -368,7 +368,9 @@
       margin-bottom: 120px;
 
       .converter {
-        position: relative;
+        position: sticky;
+        z-index: 102;
+        top: 68px;
         margin-top: -50px;
         margin-bottom: 30px;
         height: 50px;
@@ -383,44 +385,57 @@
         .currency-from-amount-field, .currency-to-amount-field {
           display: flex;
 
-          .icon {
-            background-color: rgb(238, 238, 238);
-            height: 48px;
-            width: 48px;
-            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
-            border: 1px solid rgb(238, 238, 238);
-            border-radius: 100%;
-            background-size: cover;
-            overflow: hidden;
-            flex-shrink: 0;
-            cursor: pointer;
-          }
-
-          .info-currency {
-            min-width: 60px;
-            margin: 0 16px;
+          .wrapper {
             display: flex;
-            justify-content: center;
-            //align-items: center;
-            flex-direction: column;
+            cursor: pointer;
 
-            .text {
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              overflow: visible;
-              line-height: normal;
-              font-size: 12px;
-              font-weight: 600;
-              color: rgb(151, 151, 151);
-              display: flex;
-              align-items: center;
-              margin-bottom: 2px;
-              text-transform: uppercase;
+            .icon {
+              background-color: rgb(238, 238, 238);
+              height: 48px;
+              width: 48px;
+              box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
+              border: 1px solid rgb(238, 238, 238);
+              border-radius: 100%;
+              background-size: cover;
+              overflow: hidden;
+              flex-shrink: 0;
+              cursor: pointer;
             }
 
-            .currency {
-              contain: #000;
-              font-weight: 600;
+            .info-currency {
+              min-width: 60px;
+              margin: 0 16px;
+              display: flex;
+              justify-content: center;
+              //align-items: center;
+              flex-direction: column;
+
+              .text {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: visible;
+                line-height: normal;
+                font-size: 12px;
+                font-weight: 600;
+                color: rgb(151, 151, 151);
+                display: flex;
+                align-items: center;
+                margin-bottom: 2px;
+                text-transform: uppercase;
+              }
+
+              .currency {
+                contain: #000;
+                font-weight: 600;
+
+                .icon-arrow {
+                  display: inline-flex;
+                  position: relative;
+                  font-size: 8px;
+                  padding-left: 4px;
+                  color: rgb(0, 0, 0);
+                }
+              }
             }
           }
 
@@ -526,6 +541,10 @@
             max-width: 200px;
           }
         }
+      }
+
+      @include mobile {
+        margin-bottom: 20px;
       }
     }
   }
