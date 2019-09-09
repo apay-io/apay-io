@@ -11,6 +11,8 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import { TableComponent } from './table/table.component';
 import {UiModule} from "./ui/ui.module";
 import {ModalService} from "./services/modal/modal.service";
+import { ConverterComponent } from './converter/converter.component';
+import {CoreModule} from "./core/core.module";
 
 @NgModule({
     imports: [
@@ -22,10 +24,11 @@ import {ModalService} from "./services/modal/modal.service";
         MatNativeDateModule,
         ReactiveFormsModule,
         MatInputModule,
-        UiModule
+        UiModule,
+        CoreModule,
     ],
     entryComponents: [AppComponent],
-    declarations: [AppComponent, TableComponent],
+    declarations: [AppComponent, TableComponent, ConverterComponent],
     bootstrap: [AppComponent],
     providers: [ModalService]
 })
