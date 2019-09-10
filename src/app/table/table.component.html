@@ -1,4 +1,4 @@
-<div *ngIf="!isMobile">
+<div [hidden]="isMobile">
     <mat-form-field>
         <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true"
              style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;">
@@ -23,7 +23,7 @@
                 <td mat-cell *matCellDef="let row">
                     <div class="name">
                         <div class="title">
-                            {{row.shortname}}
+                            {{row.code}}
                         </div>
                         <div class="description">
                             {{row.name}}
@@ -64,12 +64,12 @@
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let row">
                     <div class="buttons">
-                        <div class="button-convert">
+                        <div class="button-convert" (click)="currencySelection(row, 'buy')">
                             <div class="text">
                                 Buy
                             </div>
                         </div>
-                        <div class="button-convert">
+                        <div class="button-convert" (click)="currencySelection(row, 'sell')">
                             <div class="text">
                                 Sell
                             </div>
