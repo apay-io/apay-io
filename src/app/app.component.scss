@@ -366,18 +366,25 @@
       max-width: 1167px;
       margin-top: 30px;
       margin-bottom: 120px;
+    }
+  }
 
+  @include mobile {
+    margin-bottom: 50px;
 
-      @include mobile {
-        margin-bottom: 20px;
-      }
+    .create-wallet {
+      height: 242px;
+    }
+
+    .wrapper-content {
+      display: none;
     }
   }
 }
 
 .footer {
   position: fixed;
-  z-index: 100;
+  z-index: 102;
   background: #fff;
   padding: 8px;
   bottom: 0;

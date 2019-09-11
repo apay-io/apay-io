@@ -218,6 +218,7 @@ export class TableComponent implements OnInit {
             this.isMobile = false;
         } else {
             this.isMobile = true;
+            this.displayedColumns = ['icon', 'name', 'usd', 'convert'];
         }
     }
 

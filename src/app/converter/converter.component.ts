@@ -11,6 +11,10 @@ export class ConverterComponent implements OnInit {
   tokens;
   currencyBuy;
   currencySell;
+  searchValue: string;
+  arraySearchValue = [];
+  private tokensList = [];
+
     @ViewChild('buy', {static: false}) buyElement: ElementRef;
     @ViewChild('sell', {static: false}) sellElement: ElementRef;
 
@@ -95,13 +99,18 @@ export class ConverterComponent implements OnInit {
               icon: 'https://apay.io/public/logo/zrx.svg'
           },
       ];
+    this.arraySearchValue = this.tokensList = this.tokens;
 
       this.currencySelection.select
           .subscribe((currencyInfo) => {
               if (currencyInfo.typeCurrency === 'buy') {
+                  this.modalService.close('currency-buy');
+                  this.modalService.close('currency-sell');
                   this.currencyBuy = currencyInfo.data;
                   this.buyElement.nativeElement.focus();
               } else {
+                  this.modalService.close('currency-buy');
+                  this.modalService.close('currency-sell');
                   this.currencySell = currencyInfo.data;
                   this.sellElement.nativeElement.focus();
               }
@@ -110,10 +119,31 @@ export class ConverterComponent implements OnInit {
 
   chooseCurrencySell (event) {
     this.currencySell = event;
+    this.searchValue = '';
+    this.arraySearchValue = this.tokensList;
   }
 
   chooseCurrencyBuy (event) {
     this.currencyBuy = event;
+    this.searchValue = '';
+    this.arraySearchValue = this.tokensList;
   }
 
+  search() {
+      if (this.searchValue.length < 2) {
+          this.arraySearchValue = this.tokensList;
+          return false;
+      }
+
+      this.searchValue = this.searchValue[0].toUpperCase() + this.searchValue.slice(1);
+      console.log(this.searchValue);
+      console.log(this.tokensList);
+      this.arraySearchValue = this.tokensList.filter(
+          item => (item.name.indexOf(this.searchValue) > -1) ||  (item.code.indexOf(this.searchValue) > -1)
+      );
+  }
+
+  revertCurrency() {
+      [this.currencyBuy, this.currencySell] = [this.currencySell, this.currencyBuy];
+  }
 }

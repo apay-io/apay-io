@@ -37,17 +37,27 @@
         display: flex;
         cursor: pointer;
 
-        .icon {
-          background-color: rgb(238, 238, 238);
-          height: 48px;
-          width: 48px;
+        .wrapper-icon {
+          background-color: #fff;
+          height: 33px;
+          width: 33px;
+          padding: 11px;
           box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
           border: 1px solid rgb(238, 238, 238);
-          border-radius: 100%;
-          background-size: cover;
           overflow: hidden;
-          flex-shrink: 0;
-          cursor: pointer;
+          border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .icon {
+            background-color: #fff;
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            flex-shrink: 0;
+            cursor: pointer;
+          }
         }
 
         .info-currency {
@@ -55,7 +65,6 @@
           margin: 0 16px;
           display: flex;
           justify-content: center;
-          //align-items: center;
           flex-direction: column;
 
           .text {
@@ -115,9 +124,10 @@
       }
     }
 
-    .wrapper-icon-conver {
+    .wrapper-icon-convert {
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       .icon-convert {
         display: flex;
@@ -128,6 +138,13 @@
         cursor: pointer;
         text-align: center;
         color: rgb(15, 89, 209);
+        transition: .3s;
+      }
+
+      &:hover {
+        .icon-convert {
+          color: rgba(15, 89, 209, 0.5);
+        }
       }
     }
 
@@ -175,13 +192,14 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 230px;
+      border-radius: 0;
+      height: 244px;
 
       .currency-from-amount-field, .currency-to-amount-field {
         margin-bottom: 20px;
       }
 
-      .wrapper-icon-conver {
+      .wrapper-icon-convert {
         margin-bottom: 20px;
       }
 
