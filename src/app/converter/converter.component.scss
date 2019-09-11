@@ -39,9 +39,9 @@
 
         .wrapper-icon {
           background-color: #fff;
-          height: 33px;
-          width: 33px;
-          padding: 11px;
+          height: 48px;
+          width: 48px;
+          padding: 1px;
           box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
           border: 1px solid rgb(238, 238, 238);
           overflow: hidden;
@@ -57,6 +57,29 @@
             background-size: cover;
             flex-shrink: 0;
             cursor: pointer;
+
+            &.MTL, &.BCH {
+              height: 56px;
+              width: 56px;
+              padding: 0;
+            }
+
+            &.BAT {
+              width: 37px;
+              position: relative;
+              top: -3px;
+            }
+
+            &.REP {
+              height: 51px;
+              width: 69px;
+              object-fit: cover;
+              object-position: top;
+            }
+
+            &.SALT {
+              width: 32px;
+            }
           }
         }
 

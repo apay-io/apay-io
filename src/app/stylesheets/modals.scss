@@ -408,6 +408,24 @@ body.modal-open {
           width: 48px;
           margin-bottom: 8px;
           transition: all 900ms ease 0s;
+
+          &.MTL, &.BCH {
+            width: 57px;
+            height: 57px;
+            padding: 0;
+          }
+
+          &.BAT {
+            position: relative;
+            top: 5px;
+          }
+
+          &.REP {
+            height: 55px;
+            width: 82px;
+            object-fit: cover;
+            object-position: top;
+          }
         }
 
         .title-currency {
@@ -421,6 +439,11 @@ body.modal-open {
           font-size: 12px;
           font-weight: 600;
           color: rgb(151, 151, 151);
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          line-height: normal;
+          max-width: 75px;
         }
 
         &:hover {
