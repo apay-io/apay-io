@@ -28,7 +28,7 @@ export class ConverterComponent implements OnInit {
     this.currencyBuy = {
         code: 'XDR',
         name: 'Pays XDR',
-        icon: 'https://xdr.com/images/common/xdr-coin.svg'
+        icon: '/assets/img/xdr-coin.svg'
     };
     this.currencySell = {
         code: 'BTC',

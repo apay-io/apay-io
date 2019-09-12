@@ -11,16 +11,11 @@
         <mat-select [(value)]="selected">
             <span></span>
             <mat-select-trigger>
-                <span>
-                    <img class="icon-select" [src]='"./../assets/img/"+ selected + ".png"' alt="">
-                </span>
-                &nbsp;{{selected}}
+                {{selected}}
             </mat-select-trigger>
-            <mat-option value="USD"><img style="width: 20px; height: 20px;position: relative; top: 5px;" src="./../assets/img/USD.png" alt=""> USD
+            <mat-option value="USD">USD
             </mat-option>
-            <mat-option value="EUR"><img style="width: 20px; height: 20px;position: relative; top: 5px;" src="./../assets/img/EUR.png" alt=""> EUR
-            </mat-option>
-            <mat-option value="ETH"><img style="width: 20px; height: 20px;position: relative; top: 5px;" src="./../assets/img/ETH.png" alt=""> ETH
+            <mat-option value="EUR">EUR
             </mat-option>
         </mat-select>
     </mat-form-field>

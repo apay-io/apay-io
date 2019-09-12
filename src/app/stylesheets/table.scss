@@ -104,7 +104,6 @@ mat-form-field {
   &.BAT {
     width: 27px;
     position: relative;
-    top: -3px;
   }
 
   &.REP {
@@ -325,16 +324,6 @@ mat-form-field {
     align-items: center;
     border-radius: 0;
     box-shadow: none;
-  }
-
-  ::ng-deep .mat-select-trigger {
-    position: relative;
-    top: -5px;
-  }
-
-  ::ng-deep .mat-select-arrow-wrapper {
-    position: relative;
-    top: 4px;
   }
 
   ::ng-deep .mat-form-field-wrapper {
