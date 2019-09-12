@@ -1,0 +1,51 @@
+<div class="table-wrapper">
+    <mat-form-field>
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true"
+             style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;">
+            <path d="M9.572 0C4.28 0 0 4.182 0 9.352s4.28 9.353 9.572 9.353a9.67 9.67 0 0 0 5.12-1.461L21.607 24 24 21.662l-6.827-6.653c1.227-1.573 1.97-3.523 1.97-5.657 0-5.17-4.28-9.352-9.571-9.352zm0 2.2c4.053 0 7.32 3.192 7.32 7.152 0 3.961-3.267 7.152-7.32 7.152-4.054 0-7.32-3.191-7.32-7.152 0-3.96 3.266-7.151 7.32-7.151z"></path>
+        </svg>
+        <input placeholder="Search" [(ngModel)]="searchValue" type="text" matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+
+    <!--<table matSort (matSortChange)="sortData($event)" matSortActive="name" matSortDirection="asc" matSortDisableClear>-->
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="icon">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let row">
+                    <img class="icon" [ngClass]="row.code" src="{{row.icon}}" alt="">
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NAME</th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="name">
+                        <div class="title">
+                            {{row.code}}
+                        </div>
+                        <div class="description">
+                            {{row.name}}
+                        </div>
+                    </div>
+            </ng-container>
+
+            <ng-container matColumnDef="change">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> 24H CHANGE</th>
+                <td mat-cell *matCellDef="let row"><span class="change"
+                                                         [ngClass]="row.change[0] === '+' ? 'positive' : 'negative'">{{row.change}}% </span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="usd">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> PRICE USD</th>
+                <td mat-cell *matCellDef="let row"><span class="price">${{row.usd}} </span></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'active': currencyInfo.code === row.code}" (click)="currencySelection(row, this.currencyInfo.type)">
+            </tr>
+        </table>
+    </div>
+</div>

@@ -13,6 +13,7 @@ import {UiModule} from "./ui/ui.module";
 import {ModalService} from "./services/modal/modal.service";
 import { ConverterComponent } from './converter/converter.component';
 import {CoreModule} from "./core/core.module";
+import {TableMobileComponent} from "./table-mobile/table-mobile.component";
 
 @NgModule({
     imports: [
@@ -28,7 +29,7 @@ import {CoreModule} from "./core/core.module";
         CoreModule,
     ],
     entryComponents: [AppComponent],
-    declarations: [AppComponent, TableComponent, ConverterComponent],
+    declarations: [AppComponent, TableComponent, TableMobileComponent, ConverterComponent],
     bootstrap: [AppComponent],
     providers: [ModalService]
 })

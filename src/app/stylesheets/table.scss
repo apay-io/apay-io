@@ -1,0 +1,347 @@
+table {
+  background: transparent;
+  width: 100%;
+}
+
+.mat-elevation-z8 {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: #fff;
+}
+
+::ng-deep mat-form-field div.mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep mat-form-field div.mat-form-field-wrapper {
+  position: relative;
+  min-width: 60%;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 12px;
+  height: 16px;
+  padding: 9px 5px 15px 26px;
+  margin-left: 20px;
+
+  @include mobile {
+    width: 100%;
+    margin-left: 22px;
+  }
+}
+
+mat-form-field {
+  font-size: 14px;
+  width: 100%;
+  background: #fff;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+  .icon {
+    position: relative;
+    margin-right: -15px;
+    left: -19px;
+    top: 1px;
+  }
+}
+
+.mat-header-cell {
+  top: 109px;
+  position: sticky;
+  z-index: 100;
+  padding: 23px 0px 16px 10px;
+  cursor: pointer;
+  vertical-align: middle;
+  background: rgb(249, 249, 249);
+  border-top: 1px solid rgb(223, 223, 223);
+  border-bottom: 1px solid rgb(223, 223, 223);
+  font-weight: 500;
+  color: rgb(151, 151, 151);
+  font-size: 12px;
+  min-width: 35px;
+
+  &:nth-child(2) {
+    min-width: 106px;
+  }
+  &:nth-child(3) {
+    min-width: 120px;
+  }
+  &:nth-child(4) {
+    min-width: 120px;
+  }
+  &:nth-child(5) {
+    min-width: 130px;
+  }
+  &:nth-child(6) {
+    min-width: 170px;
+  }
+  &:nth-child(7) {
+    min-width: 130px;
+  }
+  &:nth-child(8) {
+    min-width: 140px;
+  }
+  &:nth-child(9) {
+    min-width: 56px;
+  }
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+
+  &.MTL, &.BCH {
+    height: 36px;
+    width: 36px;
+    margin-left: -3px;
+  }
+
+  &.BAT {
+    width: 27px;
+    position: relative;
+    top: -3px;
+  }
+
+  &.REP {
+    height: 33px;
+    width: 44px;
+    margin-left: -6px;
+    object-fit: cover;
+    object-position: top;
+  }
+}
+
+.mat-cell {
+  border-bottom: 1px solid rgb(223, 223, 223);
+  padding: 18px 4px 18px 10px;
+  text-align: left;
+  vertical-align: middle;
+
+  @include mobile {
+    &:first-of-type {
+      padding-left: 14px;
+    }
+  }
+}
+
+.mat-row {
+  &:last-child {
+    td {
+      border: none;
+    }
+  }
+
+  &.active {
+    background: #f9f9f9;
+  }
+}
+
+.name {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  .title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: normal;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .description {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: normal;
+    font-size: 12px;
+    max-width: 120px;
+    color: rgb(151, 151, 151);
+
+    @include mobile {
+      max-width: 65px;
+    }
+  }
+}
+
+.change {
+  &.positive {
+    color: rgb(96, 191, 82);
+  }
+
+  &.negative {
+    color: rgb(234, 78, 78);
+  }
+}
+
+.price {
+  color: rgb(15, 89, 209);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+
+  .button-convert {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    height: 15px;
+    width: 52px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(223, 223, 223);
+    transition: 0.3s;
+
+    .icon {
+      width: 14px;
+      height: 14px;
+      object-fit: contain;
+    }
+
+    .text {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      line-height: normal;
+      text-align: center;
+      color: #000;
+    }
+
+    &:hover {
+      background: rgb(238, 238, 238);
+    }
+  }
+
+  @include mobile {
+    .button-convert {
+      padding: 9px 14px;
+      width: unset;
+      height: unset;
+    }
+  }
+}
+
+.favorite {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 13px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  background: rgb(255, 255, 255);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(223, 223, 223);
+  transition: background 150ms ease 0s, color 150ms ease 0s;
+  justify-content: center;
+
+  .icon {
+    color: rgb(245, 166, 35);
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    background: rgb(238, 238, 238);
+  }
+}
+
+.sparkline {
+  stroke: rgb(15, 89, 209);
+  fill: rgb(246, 249, 255);
+}
+
+@include mobile {
+  .mat-table {
+    width: 100vw;
+  }
+
+  .mat-header-cell {
+    top: -4px;
+
+    &:nth-child(1) {
+      padding-left: 15px;
+      min-width: unset;
+    }
+
+    &:nth-child(2) {
+      min-width: unset;
+    }
+    &:nth-child(3) {
+      min-width: unset;
+    }
+    &:nth-child(4) {
+      min-width: unset;
+    }
+
+    &:last-of-type {
+      padding-right: 4px;
+    }
+  }
+}
+
+.icon-select {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  position: relative; top: 5px;
+}
+
+
+
+.select-currency {
+  position: absolute;
+  right: 15px;
+  top: 0;
+  width: 10%;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  background-color: #000;
+  color: rgb(59, 59, 59);
+
+  mat-form-field {
+    font-size: 14px;
+    width: 100%;
+    background: #fff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  ::ng-deep .mat-select-trigger {
+    position: relative;
+    top: -5px;
+  }
+
+  ::ng-deep .mat-select-arrow-wrapper {
+    position: relative;
+    top: 4px;
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    width: 80px;
+  }
+
+  ::ng-deep .mat-select-value {
+    padding-bottom: 2px;
+  }
+}

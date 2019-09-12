@@ -74,8 +74,11 @@ modal {
       -webkit-animation: slide-in 0.3s ease-in-out;
       animation: slide-in 0.3s ease-in-out;
       align-items: flex-end;
-      //padding: 8px;
 
+      .modal-body {
+        max-height: 80vh;
+        width: 100vw;
+      }
     }
   }
 
@@ -326,7 +329,6 @@ body.modal-open {
       position: relative;
       display: flex;
       align-items: center;
-      background: rgb(238, 238, 238);
       border-radius: 8px;
       font-size: 14px;
       margin: 16px;
@@ -346,10 +348,15 @@ body.modal-open {
         width: 100%;
         color: rgb(59, 59, 59);
         border-width: 0px;
+        outline: none;
         padding: 12px 32px;
         background: transparent;
         display: inline-block;
       }
+    }
+
+    @include mobile {
+      display: none;
     }
   }
 
@@ -360,6 +367,8 @@ body.modal-open {
     border-bottom-right-radius: 8px;
     max-height: 383px;
     overflow: auto;
+    min-height: 383px;
+    width: 90%;
 
     .title {
       white-space: nowrap;
@@ -375,13 +384,14 @@ body.modal-open {
 
     .currency-list {
       display: flex;
-      justify-content: space-between;
       flex-wrap: wrap;
 
       .currency-item {
         display: flex;
         justify-content: center;
         width: 21%;
+        margin-bottom: 15px;
+        margin-right: 22px;
         flex-direction: column;
         align-items: center;
         border: 1px solid transparent;
@@ -393,13 +403,29 @@ body.modal-open {
         transition: all 300ms ease 0s;
 
         .icon {
-          box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px 0px;
-          border: 2px solid rgb(255, 255, 255);
-          border-radius: 50%;
+          padding: 4px;
           height: 48px;
           width: 48px;
           margin-bottom: 8px;
           transition: all 900ms ease 0s;
+
+          &.MTL, &.BCH {
+            width: 57px;
+            height: 57px;
+            padding: 0;
+          }
+
+          &.BAT {
+            position: relative;
+            top: 5px;
+          }
+
+          &.REP {
+            height: 55px;
+            width: 82px;
+            object-fit: cover;
+            object-position: top;
+          }
         }
 
         .title-currency {
@@ -413,6 +439,11 @@ body.modal-open {
           font-size: 12px;
           font-weight: 600;
           color: rgb(151, 151, 151);
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          line-height: normal;
+          max-width: 75px;
         }
 
         &:hover {
@@ -424,10 +455,15 @@ body.modal-open {
           border: 1px solid rgb(15, 89, 209);
           background: rgb(245, 251, 255);
         }
+
+        &:nth-child(4n) {
+          margin-right: 0;
+        }
       }
     }
 
     @include mobile {
+      display: none;
       max-height: 370px;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
@@ -438,6 +474,14 @@ body.modal-open {
           width: 30%;
         }
       }
+    }
+  }
+
+  .table-mobile {
+    display: none;
+
+    @include mobile {
+      display: block;
     }
   }
 }

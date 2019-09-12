@@ -199,37 +199,6 @@
             font-weight: 600;
             font-size: 12px;
           }
-
-          .icon-select {
-            width: 20px;
-            height: 20px;
-            object-fit: contain;
-            position: relative; top: 5px;
-          }
-
-          ::ng-deep .mat-select-trigger {
-            position: relative;
-            top: -5px;
-          }
-
-          ::ng-deep .mat-select-arrow-wrapper {
-            position: relative;
-            top: 5px;
-          }
-
-          ::ng-deep .mat-form-field-wrapper {
-            width: 213px;
-          }
-
-          .select-currency {
-            width: 246px;
-            display: flex;
-            align-items: center;
-            padding: 12px 16px 0;
-            font-size: 14px;
-            background-color: transparent;
-            color: rgb(59, 59, 59);
-          }
         }
 
         .company {
@@ -362,22 +331,30 @@
     background: #eeeeee;
 
     .container {
+      position: relative;
       width: 100%;
       max-width: 1167px;
       margin-top: 30px;
       margin-bottom: 120px;
+    }
+  }
 
+  @include mobile {
+    margin-bottom: 50px;
 
-      @include mobile {
-        margin-bottom: 20px;
-      }
+    .create-wallet {
+      height: 242px;
+    }
+
+    .wrapper-content {
+      display: none;
     }
   }
 }
 
 .footer {
   position: fixed;
-  z-index: 100;
+  z-index: 102;
   background: #fff;
   padding: 8px;
   bottom: 0;
