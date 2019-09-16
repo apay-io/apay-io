@@ -1,9 +1,9 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {sparkline} from '@fnando/sparkline';
-import {CurrencySelectionService} from "../core/currency-selection.service";
-import {currencies} from '../../assets/currencies-list';
+import {CurrencySelectionService} from "../../core/currency-selection.service";
+import {currencies} from "../../../assets/currencies-list";
 
 export interface UserData {
     icon: string;
@@ -16,19 +16,19 @@ export interface UserData {
 }
 
 @Component({
-  selector: 'app-table-mobile',
-  templateUrl: './table-mobile.component.html',
-  styleUrls: ['./table-mobile.component.scss']
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss']
 })
 
-export class TableMobileComponent implements OnInit {
-    displayedColumns: string[] = ['icon', 'name', 'change', 'usd'];
+export class TableComponent implements OnInit {
+    displayedColumns: string[] = ['icon', 'name', 'change', 'usd', 'volume', 'depth', 'graph', 'convert'];
     dataSource: MatTableDataSource<UserData>;
-    @Input() currencyInfo: object;
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;
     currencies;
-    searchValue;
+    initSparklineTimeOut;
+    selected = 'USD';
 
     constructor(
         public currencySelectionService: CurrencySelectionService
@@ -40,6 +40,16 @@ export class TableMobileComponent implements OnInit {
     ngOnInit() {
         // this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.dataSource.connect().subscribe(data => {
+            clearTimeout(this.initSparklineTimeOut);
+            if (window.innerWidth >= 1024 && data.length > 0) {
+                this.initSparklineTimeOut = setTimeout(() => {
+                    data.forEach((item, id) => {
+                        sparkline(document.getElementsByClassName('sparkline')[id], item.graph);
+                    });
+                }, 2000);
+            }
+        });
     }
 
     applyFilter(filterValue: string) {
@@ -47,8 +57,6 @@ export class TableMobileComponent implements OnInit {
     }
 
     currencySelection(event, type: 'buy' | 'sell') {
-        this.searchValue = '';
-        this.applyFilter(this.searchValue);
         this.currencySelectionService.changeCurrency(event, type)
     }
 }

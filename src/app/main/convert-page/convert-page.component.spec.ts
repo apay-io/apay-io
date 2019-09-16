@@ -1,20 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableComponent } from './table.component';
+import {expect} from "jasmine";
+import {ConverterComponent} from "../../ui/converter/converter.component";
 
-describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
+describe('ConverterComponent', () => {
+  let component: ConverterComponent;
+  let fixture: ComponentFixture<ConverterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableComponent ]
+      declarations: [ ConverterComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableComponent);
+    fixture = TestBed.createComponent(ConverterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

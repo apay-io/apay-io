@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {ModalService} from "../services/modal/modal.service";
-import {CurrencySelectionService} from "../core/currency-selection.service";
-import {currencies} from "../../assets/currencies-list";
+import {ModalService} from "../../services/modal/modal.service";
+import {CurrencySelectionService} from "../../core/currency-selection.service";
+import {currencies} from "../../../assets/currencies-list";
 
 @Component({
   selector: 'app-converter',

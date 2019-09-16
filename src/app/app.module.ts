@@ -8,15 +8,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule, MatNativeDateModule} from '@angular/material';
 import {MaterialModule} from '../../material-module';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import { TableComponent } from './table/table.component';
+import { TableComponent } from './ui/table/table.component';
 import {UiModule} from "./ui/ui.module";
 import {ModalService} from "./services/modal/modal.service";
-import { ConverterComponent } from './converter/converter.component';
+import { ConverterComponent } from './ui/converter/converter.component';
 import {CoreModule} from "./core/core.module";
-import {TableMobileComponent} from "./table-mobile/table-mobile.component";
+import {TableMobileComponent} from "./ui/table-mobile/table-mobile.component";
 import {AppRoutingModule} from "./app-routing.module";
-import {ConvertPageComponent} from "./convert-page/convert-page.component";
-import {DepositComponent} from "./deposit/deposit.component";
+import {ConvertPageComponent} from "./main/convert-page/convert-page.component";
+import {DepositPageComponent} from "./main/deposit-page/deposit-page.component";
 
 @NgModule({
     imports: [
@@ -33,7 +33,7 @@ import {DepositComponent} from "./deposit/deposit.component";
         AppRoutingModule
     ],
     entryComponents: [AppComponent],
-    declarations: [AppComponent, TableComponent, TableMobileComponent, ConverterComponent, ConvertPageComponent, DepositComponent],
+    declarations: [AppComponent, TableComponent, TableMobileComponent, ConverterComponent, ConvertPageComponent, DepositPageComponent],
     bootstrap: [AppComponent],
     providers: [ModalService]
 })

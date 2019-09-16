@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {currencies} from "../../assets/currencies-list";
-import {ModalService} from "../services/modal/modal.service";
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {currencies} from "../../../assets/currencies-list";
+import {ModalService} from "../../services/modal/modal.service";
 
 @Component({
   selector: 'app-deposit',
-  templateUrl: './deposit.component.html',
-  styleUrls: ['./deposit.component.scss']
+  templateUrl: './deposit-page.component.html',
+  styleUrls: ['./deposit-page.component.scss']
 })
 
-export class DepositComponent implements OnInit {
+export class DepositPageComponent implements OnInit {
     currencies;
     selectedToken = {
         code: null,
@@ -18,6 +18,7 @@ export class DepositComponent implements OnInit {
     };
     searchValue: string;
     arraySearchValue = [];
+    @ViewChild('searchInput', {static: false}) searchElement: ElementRef;
 
     constructor(
         public modalService: ModalService
@@ -48,5 +49,11 @@ export class DepositComponent implements OnInit {
         this.arraySearchValue = this.currencies.filter(
             item => (item.name.indexOf(this.searchValue) > -1) ||  (item.code.indexOf(this.searchValue) > -1)
         );
+    }
+
+    clearSearch() {
+        this.searchValue = '';
+        this.arraySearchValue = this.currencies;
+        this.searchElement.nativeElement.focus();
     }
 }

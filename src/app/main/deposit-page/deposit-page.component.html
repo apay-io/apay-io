@@ -3,22 +3,27 @@
         <div class="title">
             Papaya anchor for Stellar network
         </div>
-        <!--<div class="description">-->
-            <!--At the moment we support following assets, choose the one you're interested in:-->
-        <!--</div>-->
     </div>
     <div class="wrapper-content">
         <div class="container">
             <div class="head-block">
                 <mat-form-field class="search-currency">
-                    <input matInput placeholder="Search" value="" [(ngModel)]="searchValue" (ngModelChange)="search()">
+                    <input matInput  placeholder="Search" value="" [(ngModel)]="searchValue" (ngModelChange)="search()" #searchInput>
                 </mat-form-field>
                 <div class="title">
                     Papaya anchor for Stellar network
                 </div>
             </div>
             <div class="currency-info-block">
-                <div class="left">
+                <div *ngIf="!arraySearchValue.length" class="left-empty-state">
+                    <div class="text">
+                        We couldn’t find any token that match <span class="bold">'{{searchValue}}'</span> in the network
+                        <div class="reset" (click)="clearSearch()">
+                            Reset results
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="arraySearchValue.length" class="left">
                     <div class="currency" *ngFor="let item of arraySearchValue" [ngClass]="{'active': selectedToken.code === item.code}" (click)="selectToken(item)">
                         <img class="icon" [src]="item.icon" alt="">
                         <div class="name">
@@ -92,7 +97,6 @@
                         0x188BCfb66C82CbB90d0867f6aA010C792DEE357F
                     </span>
                 </div>
-
 
                 <div class="button-sign-in" (click)="modalService.close('linked');">
                     <div class="text">

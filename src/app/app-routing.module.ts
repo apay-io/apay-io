@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ConvertPageComponent} from "./convert-page/convert-page.component";
-import {DepositComponent} from "./deposit/deposit.component";
+import {ConvertPageComponent} from "./main/convert-page/convert-page.component";
+import {DepositPageComponent} from "./main/deposit-page/deposit-page.component";
 
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'deposit',
-    component: DepositComponent
+    component: DepositPageComponent
   }
 ];
 
