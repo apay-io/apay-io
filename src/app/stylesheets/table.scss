@@ -64,29 +64,8 @@ mat-form-field {
   font-size: 12px;
   min-width: 35px;
 
-  &:nth-child(2) {
-    min-width: 106px;
-  }
-  &:nth-child(3) {
-    min-width: 120px;
-  }
-  &:nth-child(4) {
-    min-width: 120px;
-  }
-  &:nth-child(5) {
-    min-width: 130px;
-  }
-  &:nth-child(6) {
-    min-width: 170px;
-  }
-  &:nth-child(7) {
-    min-width: 130px;
-  }
   &:nth-child(8) {
-    min-width: 140px;
-  }
-  &:nth-child(9) {
-    min-width: 56px;
+    width: 190px;
   }
 }
 
@@ -276,17 +255,6 @@ mat-form-field {
 
     &:nth-child(1) {
       padding-left: 15px;
-      min-width: unset;
-    }
-
-    &:nth-child(2) {
-      min-width: unset;
-    }
-    &:nth-child(3) {
-      min-width: unset;
-    }
-    &:nth-child(4) {
-      min-width: unset;
     }
 
     &:last-of-type {

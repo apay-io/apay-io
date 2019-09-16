@@ -1,0 +1,107 @@
+<div class="content">
+    <div class="head-title">
+        <div class="title">
+            Papaya anchor for Stellar network
+        </div>
+        <!--<div class="description">-->
+            <!--At the moment we support following assets, choose the one you're interested in:-->
+        <!--</div>-->
+    </div>
+    <div class="wrapper-content">
+        <div class="container">
+            <div class="head-block">
+                <mat-form-field class="search-currency">
+                    <input matInput placeholder="Search" value="" [(ngModel)]="searchValue" (ngModelChange)="search()">
+                </mat-form-field>
+                <div class="title">
+                    Papaya anchor for Stellar network
+                </div>
+            </div>
+            <div class="currency-info-block">
+                <div class="left">
+                    <div class="currency" *ngFor="let item of arraySearchValue" [ngClass]="{'active': selectedToken.code === item.code}" (click)="selectToken(item)">
+                        <img class="icon" [src]="item.icon" alt="">
+                        <div class="name">
+                            {{item.name}}
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="!selectedToken.code" class="right-empty-state">
+                    At the moment we support following assets, choose the one you're interested in
+
+                </div>
+                <div *ngIf="selectedToken.code" class="right">
+                    <div class="title">
+                        Trust
+                    </div>
+                    <div class="description">
+                        First you must set trustline for asset
+                        <span class="bold">{{selectedToken.code}}</span> to account:
+                        <span class="bold">{{selectedToken.tokenOperation}}</span>
+                    </div>
+
+                    <div class="title">
+                        How to Deposit
+                    </div>
+
+                    <div class="description">
+                        Submit Stellar account you want to link
+                    </div>
+
+                    <div class="quote">
+                        Attention! Minimum deposit is 0.001 {{selectedToken.code}}. Any funds below that are ignored.
+                    </div>
+
+                    <div class="stellar-block">
+                        <mat-form-field class="stellar-address">
+                            <input matInput placeholder="Stellar address" value="">
+                        </mat-form-field>
+                        <mat-form-field class="type">
+                            <input matInput placeholder="Memo type" value="">
+                        </mat-form-field>
+                        <mat-form-field class="memo">
+                            <input matInput placeholder="Memo (optional)" value="">
+                        </mat-form-field>
+
+                        <div class="button-blue" (click)="modalService.open('linked');">
+                            <div class="text">
+                                Get {{selectedToken.code}} address
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<modal id="linked">
+    <div class="modal">
+        <div class="modal-body">
+            <div class="head-popup">
+                Your Stellar account is linked!
+                <div class="close" (click)="modalService.close('linked');">
+                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill-rule="evenodd" d="M.458.404c.582-.565 1.54-.524 2.123.04l9.406 9.485L21.435.444c.583-.564 1.54-.605 2.123-.04.582.565.582 1.453.041 2.058l-9.531 9.526 9.531 9.565c.541.565.541 1.494-.041 2.059-.582.524-1.54.524-2.123-.04l-9.448-9.486-9.406 9.485c-.583.565-1.54.565-2.123.04-.582-.564-.624-1.493-.041-2.058l9.531-9.565L.417 2.462C-.166 1.857-.124.97.458.404z"></path></svg>
+                </div>
+            </div>
+            <div class="content-popup">
+
+                <div class="text-info">
+                    You can deposit to:
+                    <span class="bold">
+                        0x188BCfb66C82CbB90d0867f6aA010C792DEE357F
+                    </span>
+                </div>
+
+
+                <div class="button-sign-in" (click)="modalService.close('linked');">
+                    <div class="text">
+                        Copy to clipboard and close
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>

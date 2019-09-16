@@ -6,25 +6,25 @@
                 Papaya
             </div>
             <div class="tabs-menu">
-                <div class="tab active">
+                <div class="tab" routerLink="/convert">
                     <img class="icon" src="" alt="">
                     <div class="text">
                         Convert
                     </div>
                 </div>
-                <div class="tab">
+                <div class="tab" routerLink="/myaccount">
                     <img class="icon" src="" alt="">
                     <div class="text">
                         My account
                     </div>
                 </div>
-                <div class="tab">
+                <div class="tab" routerLink="/faq">
                     <img class="icon" src="" alt="">
                     <div class="text">
                         FAQ
                     </div>
                 </div>
-                <div class="tab">
+                <div class="tab" routerLink="/deposit">
                     <img class="icon" src="" alt="">
                     <div class="text">
                         Deposit
@@ -46,27 +46,7 @@
     </div>
 </div>
 
-<div class="content">
-    <div class="create-wallet">
-        <div class="title">
-            Your smart crypto wallet
-        </div>
-        <div class="description">
-            Decentralized, simple and secure.
-        </div>
-        <div class="button-create">
-            <div class="text">
-                Create Wallet
-            </div>
-        </div>
-    </div>
-    <app-converter></app-converter>
-    <div class="wrapper-content">
-        <div class="container">
-            <app-table></app-table>
-        </div>
-    </div>
-</div>
+<router-outlet></router-outlet>
 
 <div class="footer">
     <div class="tab-footer active">

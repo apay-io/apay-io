@@ -14,6 +14,9 @@ import {ModalService} from "./services/modal/modal.service";
 import { ConverterComponent } from './converter/converter.component';
 import {CoreModule} from "./core/core.module";
 import {TableMobileComponent} from "./table-mobile/table-mobile.component";
+import {AppRoutingModule} from "./app-routing.module";
+import {ConvertPageComponent} from "./convert-page/convert-page.component";
+import {DepositComponent} from "./deposit/deposit.component";
 
 @NgModule({
     imports: [
@@ -27,9 +30,10 @@ import {TableMobileComponent} from "./table-mobile/table-mobile.component";
         MatInputModule,
         UiModule,
         CoreModule,
+        AppRoutingModule
     ],
     entryComponents: [AppComponent],
-    declarations: [AppComponent, TableComponent, TableMobileComponent, ConverterComponent],
+    declarations: [AppComponent, TableComponent, TableMobileComponent, ConverterComponent, ConvertPageComponent, DepositComponent],
     bootstrap: [AppComponent],
     providers: [ModalService]
 })

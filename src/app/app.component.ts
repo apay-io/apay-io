@@ -8,14 +8,7 @@ import {ModalService} from "./services/modal/modal.service";
 })
 export class AppComponent {
   title = 'papaya';
-  selected = 'USD';
-  menuInfo = false;
-
-    constructor(public modalService: ModalService,) {}
-
-    menu() {
-      this.menuInfo = !this.menuInfo;
-    }
+    constructor(public modalService: ModalService) {}
 }
 
 

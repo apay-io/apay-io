@@ -2,26 +2,15 @@ export const currencies = [
     {
         'code': 'XDR',
         'name': 'Pays XDR',
-        'icon': '/assets/img/xdr-coin.svg',
+        'icon': 'https://xdr.com/images/common/xdr-coin.svg',
         'change': '-0.25',
         'usd': '0.0000090',
         'volume': '0',
         'depth': '5,026,742',
         'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
         'convert': '1',
-        'favorites': '2'
-    },
-    {
-        'code': 'XLM',
-        'name': 'Lumen',
-        'icon': '/assets/img/XLM.png',
-        'change': '-0.25',
-        'usd': '0.0000090',
-        'volume': '0',
-        'depth': '5,026,742',
-        'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-        'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
     },
     {
         'code': 'BTC',
@@ -33,7 +22,8 @@ export const currencies = [
         'depth': '25,026,742',
         'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'WJ2RI2OTSJTNYOIGICST6DUXRGBDEVU63Y6NTHJQQASDVTC23NWLQVP3'
     },
     {
         'code': 'BCH',
@@ -45,7 +35,8 @@ export const currencies = [
         'depth': '5,026,742',
         'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'IG3YDVT3WJICST6DUXRGBDEVUC23NWLQVP62RI2O6NTHJQQASTSJTNYO'
     },
     {
         'code': 'ETH',
@@ -57,7 +48,8 @@ export const currencies = [
         'depth': '25,026,742',
         'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'THJQQAS3WJICST6DLQVPSJTTIG3YDVTUXRGBDEVUC23NWNYO62RI2O6N'
     },
     {
         'code': 'LTC',
@@ -69,7 +61,8 @@ export const currencies = [
         'depth': '5,026,742',
         'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'XRGBDEVUC23N6DLQVPSJTTIGWJICST3YDVWNYO6THJQQAS3O62RI2O6N'
     },
     {
         'code': 'BAT',
@@ -81,7 +74,8 @@ export const currencies = [
         'depth': '25,026,742',
         'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'THJQQAS3WJICST6DLQVPSJTTIG3YDVTUXRGBDEVUC23NWNYO62RI2O6N'
     },
     {
         'code': 'KIN',
@@ -105,7 +99,8 @@ export const currencies = [
         'depth': '25,026,742',
         'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'GBDEVUC23NWNYO62RI2O6NTHJQQAS3WJICST6DLQVPSJTTIG3YDVTUXR'
     },
     {
         'code': 'MTL',
@@ -117,7 +112,8 @@ export const currencies = [
         'depth': '5,026,742',
         'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'VPSJTTIG3YDVTUXRGBDEVUC23NTHJQQAS3WJICST6DLQNWNYO62RI2O6'
     },
     {
         'code': 'OMG',
@@ -129,7 +125,8 @@ export const currencies = [
         'depth': '25,026,742',
         'graph': [1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 8, 8, 7],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'O6NQVPSJTTIG3YDVTUXRGBCST6DLDEVUCTHJQQAS3WJIWNYO62RI223N'
     },
     {
         'code': 'REP',
@@ -141,7 +138,8 @@ export const currencies = [
         'depth': '5,026,742',
         'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'TTIG3YDVTUXRGBDEVUC23NWNYO62HJQQASQVPSJTRI2O6N3WJICST6DL'
     },
     {
         'code': 'SALT',
@@ -153,7 +151,8 @@ export const currencies = [
         'depth': '25,026,742',
         'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'TS3WJICST6DLQVHJQQAPSJTTIG3YBDEVUC23NWNYDVTUXRGO62RI2O6N'
     },
     {
         'code': 'ZRX',
@@ -165,7 +164,8 @@ export const currencies = [
         'depth': '5,026,742',
         'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
         'convert': '1',
-        'favorites': '2'
+        'favorites': '2',
+        'tokenOperation': 'ICST6DLUXRGBDEVUC23NWNYO62RI2QVPSJTTIG3YDVTTHJQQAS3WJO6N'
     }
-];
+]
 
