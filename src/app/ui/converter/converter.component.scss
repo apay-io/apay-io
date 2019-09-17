@@ -68,18 +68,19 @@
 
             &.BAT {
               width: 37px;
-              position: relative;
+              margin-top: -8px;
             }
 
             &.REP {
               height: 51px;
-              width: 69px;
+              width: 67px;
               object-fit: cover;
               object-position: top;
             }
 
             &.SALT {
               width: 32px;
+              margin-top: -8px;
             }
           }
         }
