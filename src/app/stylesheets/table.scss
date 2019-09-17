@@ -9,43 +9,45 @@ table {
   background: #fff;
 }
 
-::ng-deep mat-form-field div.mat-form-field-underline {
-  display: none;
-}
-
-::ng-deep mat-form-field div.mat-form-field-wrapper {
-  position: relative;
-  min-width: 60%;
-  display: flex;
-  align-items: center;
-  border-radius: 8px;
-  font-size: 12px;
-  height: 16px;
-  padding: 9px 5px 15px 26px;
-  margin-left: 20px;
-
-  @include mobile {
-    width: 100%;
-    margin-left: 22px;
+.search {
+  ::ng-deep mat-form-field div.mat-form-field-underline {
+    display: none;
   }
-}
 
-mat-form-field {
-  font-size: 14px;
-  width: 100%;
-  background: #fff;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
-
-  .icon {
+  ::ng-deep mat-form-field div.mat-form-field-wrapper {
     position: relative;
-    margin-right: -15px;
-    left: -19px;
-    top: 1px;
+    min-width: 60%;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 12px;
+    height: 16px;
+    padding: 9px 5px 15px 26px;
+    margin-left: 20px;
+
+    @include mobile {
+      width: 100%;
+      margin-left: 22px;
+    }
+  }
+
+  mat-form-field {
+    font-size: 14px;
+    width: 100%;
+    background: #fff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+    .icon {
+      position: relative;
+      margin-right: -15px;
+      left: -19px;
+      top: 1px;
+    }
   }
 }
 
@@ -64,29 +66,8 @@ mat-form-field {
   font-size: 12px;
   min-width: 35px;
 
-  &:nth-child(2) {
-    min-width: 106px;
-  }
-  &:nth-child(3) {
-    min-width: 120px;
-  }
-  &:nth-child(4) {
-    min-width: 120px;
-  }
-  &:nth-child(5) {
-    min-width: 130px;
-  }
-  &:nth-child(6) {
-    min-width: 170px;
-  }
-  &:nth-child(7) {
-    min-width: 130px;
-  }
   &:nth-child(8) {
-    min-width: 140px;
-  }
-  &:nth-child(9) {
-    min-width: 56px;
+    width: 190px;
   }
 }
 
@@ -276,17 +257,6 @@ mat-form-field {
 
     &:nth-child(1) {
       padding-left: 15px;
-      min-width: unset;
-    }
-
-    &:nth-child(2) {
-      min-width: unset;
-    }
-    &:nth-child(3) {
-      min-width: unset;
-    }
-    &:nth-child(4) {
-      min-width: unset;
     }
 
     &:last-of-type {
@@ -301,8 +271,6 @@ mat-form-field {
   object-fit: contain;
   position: relative; top: 5px;
 }
-
-
 
 .select-currency {
   position: absolute;
