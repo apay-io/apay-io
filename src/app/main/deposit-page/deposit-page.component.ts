@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {currencies} from "../../../assets/currencies-list";
-import {ModalService} from "../../services/modal/modal.service";
+import {currencies} from '../../../assets/currencies-list';
+import {ModalService} from '../../services/modal/modal.service';
 
 @Component({
   selector: 'app-deposit',
@@ -14,7 +14,7 @@ export class DepositPageComponent implements OnInit {
         code: null,
         name: null,
         icon: null,
-        tokenOperation: null
+        issuer: null
     };
     searchValue: string;
     arraySearchValue = [];
@@ -35,8 +35,8 @@ export class DepositPageComponent implements OnInit {
             code: event.code,
             name: event.name,
             icon: event.icon,
-            tokenOperation: event.tokenOperation
-        }
+            issuer: event.issuer,
+        };
     }
 
     search() {

@@ -35,14 +35,14 @@
                     At the moment we support following assets, choose the one you're interested in
 
                 </div>
-                <div *ngIf="selectedToken.code" class="right">
+                <div *ngIf="selectedToken.code && selectedToken.issuer" class="right">
                     <div class="title">
                         Trust
                     </div>
                     <div class="description">
                         First you must set trustline for asset
                         <span class="bold">{{selectedToken.code}}</span> to account:
-                        <span class="bold">{{selectedToken.tokenOperation}}</span>
+                        <span class="bold">{{selectedToken.issuer}}</span>
                     </div>
 
                     <div class="title">
