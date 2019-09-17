@@ -5,51 +5,6 @@
 .content {
   background: #eeeeee;
 
-  .head-title {
-    height: 122px;
-    background: #eeeeee;
-
-    .title {
-      color: #000;
-      text-align: center;
-      padding-top: 48px;
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    .button-create {
-      transition: 0.3s;
-      position: relative;
-      display: flex;
-      align-items: center;
-      padding: 8px 16px;
-      height: 30px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      border-radius: 8px;
-      background: rgb(255, 255, 255);
-      border: 1px solid rgb(223, 223, 223);
-      width: 142px;
-      margin-top: 0px;
-      margin-right: auto;
-      margin-left: auto;
-      color: rgb(15, 89, 209);
-
-      &:hover {
-        background: rgb(238, 238, 238);;
-      }
-
-      .text {
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        margin: 0px auto;
-        color: rgb(15, 89, 209);
-      }
-    }
-  }
-
   .wrapper-content {
     width: 100%;
     display: flex;
@@ -73,33 +28,6 @@
         box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
         align-items: center;
 
-        ::ng-deep .mat-form-field {
-          .mat-input-element {
-            color: #fff;
-            caret-color: #fff;
-
-          }
-          .mat-form-field-label {
-            color: #fff;
-          }
-          .mat-form-field-underline {
-            background-color: transparent;
-          }
-          .mat-form-field-ripple {
-            background-color: transparent;
-          }
-          .mat-form-field-required-marker {
-            color: #fff;
-          }
-        }
-
-        .search-currency {
-          width: 30%;
-          background: transparent;
-          color: #fff;
-          padding: 8px 8px 0;
-        }
-
         .title {
           width: 70%;
           color: #fff;
@@ -109,95 +37,153 @@
 
       .currency-info-block {
         width: 100%;
-        height: 534px;
-        background: #fff;
         display: flex;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-        box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
-        .left-empty-state {
-          width: 30%;
-          border-right: 1px solid #eee;
-          max-height: 534px;
-
-          .text {
-            font-size: 18px;
-            padding: 15px;
-
-            .bold {
-              font-weight: bold;
-            }
-
-            .reset {
-              margin-top: 10px;
-              color: rgb(15, 89, 209);
-              cursor: pointer;
-              font-weight: 500;
-            }
-          }
+        .select-currency {
+          display: none;
+          width: 100%;
+          height: 55px;
+          background: #fff;
+          border-bottom: 1px solid #eee;
         }
 
         .left {
+          margin-right: 20px;
           width: 30%;
           display: flex;
           flex-direction: column;
-          max-height: 534px;
-          overflow: auto;
+          max-height: 250px;
           border-right: 1px solid #eee;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
-          .currency {
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            transition: .3s;
-            cursor: pointer;
+          .search-currency {
+            width: 93%;
+            height: 45px;
+            background: transparent;
+            color: #000;
+            padding: 0 8px 0 14px;
+          }
 
-            .icon {
-              width: 35px;
-              height: 35px;
+          ::ng-deep .mat-form-field {
+            .mat-input-element {
+              color: #000;
+              caret-color: #000;
+
             }
-
-            .name {
-              margin-left: 10px;
-              font-size: 18px;
+            .mat-form-field-label {
+              color: #000;
             }
-
-            &:hover {
-              background: #eeeeee;
+            .mat-form-field-underline {
+              background-color: transparent;
             }
-
-            &.active {
-              background: #eeeeee;
+            .mat-form-field-ripple {
+              background-color: transparent;
+            }
+            .mat-form-field-required-marker {
+              color: #fff;
             }
           }
+
+          .token-list {
+            margin-right: 4px;
+            padding-top: 10px;
+            overflow: auto;
+
+            .left-empty-state {
+              max-height: 250px;
+              background: #fff;
+
+              .text {
+                font-size: 18px;
+                padding: 15px;
+
+                .bold {
+                  font-weight: bold;
+                }
+
+                .reset {
+                  margin-top: 10px;
+                  color: rgb(15, 89, 209);
+                  cursor: pointer;
+                  font-weight: 500;
+                }
+              }
+            }
+
+            .token {
+              padding: 4px;
+              display: flex;
+              align-items: center;
+              transition: .3s;
+              cursor: pointer;
+
+              .icon {
+                width: 35px;
+                height: 35px;
+              }
+
+              .name {
+                margin-left: 10px;
+                font-size: 18px;
+              }
+
+              &:hover {
+                background: #eeeeee;
+              }
+
+              &.active {
+                background: #eeeeee;
+              }
+            }
+          }
+
+          ::-webkit-scrollbar {
+            width: 3px; height: 3px;
+          }
+
+          ::-webkit-scrollbar-track-piece {
+            background-color: #fff;
+          }
+
+          ::-webkit-scrollbar-thumb {
+            height: 50px; background-color: #666; border-radius: 3px;
+          }
+
         }
 
         .right-empty-state {
-          width: 70%;
+          width: 64%;
           height: 100%;
-          padding: 30px;
+          min-height: 422px;
           display: flex;
           justify-content: center;
           align-items: center;
-          font-size: 18px;
+          font-size: 17px;
           color: #000;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
         }
 
         .right {
-          width: 70%;
-          padding: 30px;
-          background: #f9f9f9;
+          width: 65%;
+          height: 100%;
+          padding: 18px;
+          background: #fff;
+          border-radius: 8px;
+          box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
           .title {
-            margin-bottom: 20px;
-            font-size: 22px;
+            margin-bottom: 10px;
+            font-size: 18px;
             color: #000;
           }
 
           .description {
-            margin-bottom: 20px;
-            font-size: 18px;
+            margin-bottom: 10px;
+            font-size: 16px;
             color: #000;
             line-height: 1.5;
 
@@ -208,16 +194,16 @@
 
           .quote {
             position: relative;
-            margin-bottom: 20px;
-            font-size: 18px;
+            margin-bottom: 10px;
+            font-size: 16px;
             font-style: italic;
             color: red;
-            padding: 15px 0;
+            padding: 10px 0;
 
             &::before {
               content: "";
               width: 2px;
-              height: 50px;
+              height: 100%;
               background: red;
               position: absolute;
               left: -11px;
@@ -236,7 +222,7 @@
 
             .memo, .type {
               width: 49%;
-              margin-bottom: 20px;
+              margin-bottom: 10px;
             }
 
           }
@@ -250,6 +236,66 @@
 
     .bold {
       word-break: break-all;
+    }
+
+    .wrapper-content {
+      .container {
+        .currency-info-block {
+          flex-wrap: wrap;
+          box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+          .select-currency {
+            display: block;
+            padding: 10px 18px;
+          }
+
+          ::ng-deep .mat-form-field {
+            .mat-input-element {
+              color: #000;
+              caret-color: #a6a6a6;
+
+            }
+            .mat-form-field-label {
+              color: #a6a6a6;
+            }
+            .mat-form-field-underline {
+              background-color: transparent;
+            }
+            .mat-form-field-ripple {
+              background-color: transparent;
+            }
+            .mat-form-field-required-marker {
+              color: #fff;
+            }
+          }
+
+          ::ng-deep .mat-form-field-infix{
+            width: 100px;
+          }
+
+          .left {
+            display: none;
+          }
+
+          .right-empty-state {
+            width: 100%;
+            min-height: 122px;
+            border-radius: 0;
+            padding: 18px;
+            box-shadow: none;
+          }
+
+          .right {
+            width: 100%;
+            border-radius: 0;
+            box-shadow: none;
+
+            .quote {
+              padding: 5px 0;
+            }
+          }
+        }
+      }
     }
   }
 }

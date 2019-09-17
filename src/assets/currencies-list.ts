@@ -22,7 +22,8 @@ export const currencies = [
     'depth': '5,026,742',
     'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'convert': '1',
-    'favorites': '2'
+    'favorites': '2',
+    'issuer': 'GAWJSEVB6H4RIZX6FJJORJAXFLQDMFTKUAOU5UGFNWLPCYQ6A2O6PAYS'
   },
   {
     'code': 'BTC',

@@ -1,35 +1,41 @@
 <div class="content">
-    <div class="head-title">
-        <div class="title">
-            Papaya anchor for Stellar network
-        </div>
-    </div>
     <div class="wrapper-content">
         <div class="container">
-            <div class="head-block">
-                <mat-form-field class="search-currency">
-                    <input matInput  placeholder="Search" value="" [(ngModel)]="searchValue" (ngModelChange)="search()" #searchInput>
-                </mat-form-field>
-                <div class="title">
-                    Papaya anchor for Stellar network
-                </div>
-            </div>
             <div class="currency-info-block">
-                <div *ngIf="!arraySearchValue.length" class="left-empty-state">
-                    <div class="text">
-                        We couldn’t find any token that match <span class="bold">'{{searchValue}}'</span> in the network
-                        <div class="reset" (click)="clearSearch()">
-                            Reset results
-                        </div>
-                    </div>
+                <div class="select-currency">
+                    <mat-form-field>
+                        <mat-select [formControl]="tokenCtrl" placeholder="Token" #searchInput>
+                            <mat-select-search [formControl]="tokenFilterCtr"></mat-select-search>
+                            <mat-option *ngFor="let token of filteredTokens | async" (click)="selectToken(token)" [value]="token">
+                                {{token.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
-                <div *ngIf="arraySearchValue.length" class="left">
-                    <div class="currency" *ngFor="let item of arraySearchValue" [ngClass]="{'active': selectedToken.code === item.code}" (click)="selectToken(item)">
-                        <img class="icon" [src]="item.icon" alt="">
-                        <div class="name">
-                            {{item.name}}
+
+                <div class="left">
+                    <mat-form-field class="search-currency">
+                        <input matInput  placeholder="Search" value="" [formControl]="tokenFilterCtr" #searchInput>
+                    </mat-form-field>
+                    <div class="token-list">
+                        <div *ngIf="!arraySearchValue.length" class="left-empty-state">
+                            <div class="text">
+                                We couldn’t find any token that match <span class="bold">'{{tokenFilterCtr.value}}'</span> in the network
+                                <div class="reset" (click)="clearFilter()">
+                                    Reset results
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="arraySearchValue.length">
+                            <div class="token" *ngFor="let item of arraySearchValue" [ngClass]="{'active': selectedToken.code === item.code}" (click)="selectToken(item)">
+                                <!--<img class="icon" [src]="item.icon" alt="">-->
+                                <div class="name">
+                                    {{item.name}}
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
                 <div *ngIf="!selectedToken.code" class="right-empty-state">
                     At the moment we support following assets, choose the one you're interested in

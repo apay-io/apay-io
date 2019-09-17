@@ -17,6 +17,7 @@ import {TableMobileComponent} from './ui/table-mobile/table-mobile.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ConvertPageComponent} from './main/convert-page/convert-page.component';
 import {DepositPageComponent} from './main/deposit-page/deposit-page.component';
+import {MatSelectSearchModule} from "./ui/mat-select-search/mat-select-search.module";
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import {DepositPageComponent} from './main/deposit-page/deposit-page.component';
         MatInputModule,
         UiModule,
         CoreModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MatSelectSearchModule
     ],
     entryComponents: [AppComponent],
     declarations: [AppComponent, TableComponent, TableMobileComponent, ConverterComponent, ConvertPageComponent, DepositPageComponent],
