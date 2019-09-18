@@ -18,6 +18,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {ConvertPageComponent} from './main/convert-page/convert-page.component';
 import {DepositPageComponent} from './main/deposit-page/deposit-page.component';
 import {MatSelectSearchModule} from "./ui/mat-select-search/mat-select-search.module";
+import {WithdrawPageComponent} from "./main/withdraw-page/withdraw-page.component";
+import {ExchangeInfoComponent} from "./ui/exchange-info/exchange-info.component";
 
 @NgModule({
     imports: [
@@ -35,7 +37,16 @@ import {MatSelectSearchModule} from "./ui/mat-select-search/mat-select-search.mo
         MatSelectSearchModule
     ],
     entryComponents: [AppComponent],
-    declarations: [AppComponent, TableComponent, TableMobileComponent, ConverterComponent, ConvertPageComponent, DepositPageComponent],
+    declarations: [
+        AppComponent,
+        TableComponent,
+        TableMobileComponent,
+        ConverterComponent,
+        ExchangeInfoComponent,
+        ConvertPageComponent,
+        DepositPageComponent,
+        WithdrawPageComponent
+    ],
     bootstrap: [AppComponent],
     providers: [ModalService]
 })
