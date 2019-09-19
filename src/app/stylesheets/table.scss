@@ -104,6 +104,10 @@ table {
     &:first-of-type {
       padding-left: 14px;
     }
+
+    &:last-of-type {
+      padding-right: 0;
+    }
   }
 }
 

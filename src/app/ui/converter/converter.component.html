@@ -17,7 +17,7 @@
                 </div>
 
             </div>
-            <input #sell class="input-field" placeholder="Enter Amount" type="text">
+            <input #sell class="input-field" placeholder="Enter Amount" type="number">
         </div>
         <div class="wrapper-icon-convert" (click)="revertCurrency()">
             <svg class="icon-convert" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <input #buy class="input-field" placeholder="Enter Amount" type="text">
+            <input #buy class="input-field" placeholder="Enter Amount" type="number">
         </div>
         <div class="button-blue" (click)="this.modalService.open('signIn');">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
