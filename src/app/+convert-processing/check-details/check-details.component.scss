@@ -1,0 +1,77 @@
+@import "../../stylesheets/tools/media";
+@import "../../stylesheets/button";
+
+.container {
+  margin-top: 5px;
+  margin-left: 2px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  width: 710px;
+  padding: 21px;
+
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 52px;
+    margin-bottom: 30px;
+
+    .title {
+      color: rgb(57, 66, 71);
+      font-size: 30px;
+      font-weight: 700;
+    }
+  }
+
+  .details-info {
+    margin: 15px 0;
+
+    .title-details {
+      line-height: 1.43;
+      font-size: 15px;
+      color: rgb(179, 180, 180);
+    }
+
+    .description-details {
+      font-weight: 800;
+      line-height: 1.5;
+      font-size: 17px;
+      color: #000
+    }
+  }
+
+  .agreement-checkbox {
+    margin-top: 25px;
+
+    ::ng-deep .mat-checkbox-layout {
+      white-space: normal !important;
+    }
+
+    ::ng-deep .mat-checkbox-inner-container {
+      margin-top: 5px !important;
+    }
+
+    ::ng-deep .mat-checkbox .mat-checkbox-frame {
+      border-color: #efa344;
+      background-color: #fff;
+      border-radius: 4px;
+    }
+    ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+      background-color: #efa344;
+      border-radius: 4px;
+    }
+
+    ::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+      margin-top: 1px;
+      margin-left: 1px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .button-next {
+    margin-top: 30px;
+    max-width: 432px;
+  }
+}

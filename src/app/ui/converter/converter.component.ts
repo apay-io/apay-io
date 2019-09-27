@@ -1,7 +1,8 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalService} from "../../services/modal/modal.service";
 import {CurrencySelectionService} from "../../core/currency-selection.service";
 import {currencies} from "../../../assets/currencies-list";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-converter',
@@ -17,6 +18,8 @@ export class ConverterComponent implements OnInit {
   currencyInfoSave = {type: null, code: null};
   private tokensList = [];
     @Output() popupChange: EventEmitter<string> = new EventEmitter();
+    @Input() isProcessingConverter: boolean = false;
+    @Input() amountFormConverter: FormGroup;
 
     @ViewChild('buy', {static: false}) buyElement: ElementRef;
     @ViewChild('sell', {static: false}) sellElement: ElementRef;
@@ -35,6 +38,12 @@ export class ConverterComponent implements OnInit {
         name: 'Bitcoin',
         icon: 'https://apay.io/public/logo/btc.svg'
     };
+
+    if (this.isProcessingConverter) {
+        this.amountFormConverter.controls['fromCurrency'].setValue(this.currencySell)
+        this.amountFormConverter.controls['toCurrency'].setValue(this.currencyBuy)
+    }
+
     this.tokens = currencies;
     this.arraySearchValue = this.tokensList = this.tokens;
 
@@ -55,8 +64,14 @@ export class ConverterComponent implements OnInit {
   chooseCurrency(event, type) {
     if (type === 'sell') {
         this.currencySell = event;
+        if (this.isProcessingConverter) {
+            this.amountFormConverter.controls['fromCurrency'].setValue(this.currencySell)
+        }
     } else {
         this.currencyBuy = event;
+        if (this.isProcessingConverter) {
+            this.amountFormConverter.controls['toCurrency'].setValue(this.currencyBuy)
+        }
     }
     this.clearSearch();
   }

@@ -1,0 +1,159 @@
+<div class="wrapper">
+    <div class="steps-block">
+        <div class="title-row">
+            <div class="title">
+                Send your funds
+            </div>
+            <div class="transaction">
+            <span class="tx-id-title">
+                Transaction ID:
+            </span>
+                <span class="tx-id">
+                vx2qos8ymukxx4xz
+            </span>
+            </div>
+        </div>
+        <div class="step-wait" [ngClass]="{'active': stepWaiting === 1, 'done': stepWaiting > 1}">
+            <div class="info-step">
+                <div class="title">
+                    Getting confirmation
+                </div>
+                <div class="description">
+                    Once XLM is confirmed in the blockchain, we'll start exchanging it to BTC.
+                </div>
+            </div>
+            <div class="process">
+                <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#efa344">
+                    <g fill="none" fill-rule="evenodd">
+                        <g transform="translate(1 1)" stroke-width="2">
+                            <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+                            <path d="M36 18c0-9.94-8.06-18-18-18">
+                                <animateTransform
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 18 18"
+                                        to="360 18 18"
+                                        dur="1s"
+                                        repeatCount="indefinite"/>
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <div class="step-wait" [ngClass]="{'active': stepWaiting === 2, 'done': stepWaiting > 2}">
+            <div class="info-step">
+                <div class="title">
+                    Exchanging XLM to BTC
+                </div>
+                <div class="description">
+                    The process will take a few minutes. Please wait.
+                </div>
+            </div>
+            <div class="process">
+                <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#efa344">
+                    <g fill="none" fill-rule="evenodd">
+                        <g transform="translate(1 1)" stroke-width="2">
+                            <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+                            <path d="M36 18c0-9.94-8.06-18-18-18">
+                                <animateTransform
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 18 18"
+                                        to="360 18 18"
+                                        dur="1s"
+                                        repeatCount="indefinite"/>
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <div class="step-wait" [ngClass]="{'active': stepWaiting === 3, 'done': stepWaiting > 3}">
+            <div class="info-step">
+                <div class="title">
+                    Sending to you wallet
+                </div>
+                <div class="description">
+                    Now we are sending BTC to you recipient address. Check the wallet, once the transaction is complete.
+                </div>
+            </div>
+            <div class="process">
+                <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#efa344">
+                    <g fill="none" fill-rule="evenodd">
+                        <g transform="translate(1 1)" stroke-width="2">
+                            <circle stroke-opacity=".5" cx="18" cy="18" r="18"/>
+                            <path d="M36 18c0-9.94-8.06-18-18-18">
+                                <animateTransform
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 18 18"
+                                        to="360 18 18"
+                                        dur="1s"
+                                        repeatCount="indefinite"/>
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="info-block">
+        <div class="title-info">
+            <div class="text">
+                71.4 XLM
+            </div>
+            <div class="text">
+                0.00005 BTC
+            </div>
+        </div>
+        <div *ngIf="!showDetails" class="show-details" (click)="showDetails = !showDetails">
+            Show Details
+        </div>
+        <div *ngIf="showDetails" class="details">
+            <div class="row-details">
+                <div class="info-details">
+                    <div class="title">
+                        Changelly address:
+                    </div>
+                    <div class="description">
+                        GDXFDHFJSD23JDSKDHPUU
+                    </div>
+                </div>
+                <div class="copy">
+                    Copy
+                </div>
+            </div>
+            <div class="row-details">
+                <div class="info-details">
+                    <div class="title">
+                        Input hash:
+                    </div>
+                    <div class="description">
+                        00912323v213b131234vd32111
+                    </div>
+                </div>
+                <div class="copy">
+                    Copy
+                </div>
+            </div>
+            <div class="row-details">
+                <div class="info-details">
+                    <div class="title">
+                        Recipient address:
+                    </div>
+                    <div class="description">
+                        32rw8uth665dloippuuLCikGF
+                    </div>
+                </div>
+                <div class="copy">
+                    Copy
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showDetails" class="show-details" (click)="showDetails = !showDetails">
+            Hide Details
+        </div>
+    </div>
+</div>
+

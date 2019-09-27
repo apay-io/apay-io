@@ -27,22 +27,15 @@ import {ExchangeInfoComponent} from "./ui/exchange-info/exchange-info.component"
         BrowserAnimationsModule,
         FormsModule,
         HttpClientModule,
-        MaterialModule,
-        MatNativeDateModule,
         ReactiveFormsModule,
         MatInputModule,
         UiModule,
         CoreModule,
         AppRoutingModule,
-        MatSelectSearchModule
     ],
     entryComponents: [AppComponent],
     declarations: [
         AppComponent,
-        TableComponent,
-        TableMobileComponent,
-        ConverterComponent,
-        ExchangeInfoComponent,
         ConvertPageComponent,
         DepositPageComponent,
         WithdrawPageComponent

@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="title-row">
+        <div class="title">
+            Check details
+        </div>
+        <button
+                (click)="changeStep(2)"
+                mat-raised-button
+                class="button-back">
+            Back
+        </button>
+    </div>
+    <form [formGroup]="verifyForm" (ngSubmit)="changeStep(4)">
+        <div class="details-info">
+            <div class="title-details">
+                You send
+            </div>
+            <div class="description-details">
+                1 BTC
+            </div>
+        </div>
+        <div class="details-info">
+            <div class="title-details">
+                You get
+            </div>
+            <div class="description-details">
+                150,703.612 XLM
+            </div>
+        </div>
+        <div class="details-info">
+            <div class="title-details">
+                Recipient address
+            </div>
+            <div class="description-details">
+                GAVV2NZGRYYW7OB6FYUJHY37HZZQC5PIHMZKIZTYZDSTAI7R3ZJOV2AK
+            </div>
+        </div>
+        <div class="details-info">
+            <div class="title-details">
+                Exchange rate
+            </div>
+            <div class="description-details">
+                1 BTC ≈ 151,081.31528822 XLM
+            </div>
+        </div>
+        <div class="details-info">
+            <div class="title-details">
+                Exchange fee
+            </div>
+            <div class="description-details">
+                377.70328822 XLM
+            </div>
+        </div>
+        <div class="details-info">
+            <div class="title-details">
+                Network fee (will be excluded from the final amount)
+            </div>
+            <div class="description-details">
+                0.00001 XLM
+            </div>
+        </div>
+        <div class="details-info">
+            <div class="title-details">
+                Estimated arrival
+            </div>
+            <div class="description-details">
+                ≈ 5-30 minutes
+            </div>
+        </div>
+
+        <div class="agreement-checkbox">
+            <mat-checkbox formControlName="agreement" >
+                <span style="word-break: break-all;" class="">Your transaction might be subject to <a href="#" id="" class="">KYC</a> procedure. In this case you may be asked to verify your ID and the origin of the funds</span>
+            </mat-checkbox>
+        </div>
+        <button
+                [disabled]="!verifyForm.valid"
+                mat-raised-button
+                class="button-next">
+            Confirm and make payment
+        </button>
+    </form>
+</div>
+
