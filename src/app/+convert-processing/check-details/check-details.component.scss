@@ -31,13 +31,15 @@
       line-height: 1.43;
       font-size: 15px;
       color: rgb(179, 180, 180);
+      word-break: break-all;
     }
 
     .description-details {
       font-weight: 800;
       line-height: 1.5;
       font-size: 17px;
-      color: #000
+      color: #000;
+      word-break: break-all;
     }
   }
 
@@ -73,5 +75,41 @@
   .button-next {
     margin-top: 30px;
     max-width: 432px;
+  }
+
+
+  @include mobile {
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100vw;
+    padding: 0 0 21px;
+
+    .title-row {
+      padding: 21px 0;
+
+      .title {
+        margin-left: 71px;
+        font-size: 24px;
+      }
+
+      .button-back {
+        margin-right: 10px;
+      }
+    }
+
+    .details-info {
+      width: 92%;
+      margin: 30px 2.5% 0;
+    }
+
+    .agreement-checkbox {
+      width: 92%;
+      margin: 30px 2.5% 0;
+    }
+
+    .button-next {
+      margin: 30px 4% 0;
+      width: 92%;
+    }
   }
 }

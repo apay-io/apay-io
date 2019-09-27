@@ -1,3 +1,5 @@
+@import "../../stylesheets/tools/media";
+
 .steps-wrapper {
   display: flex;
   flex-direction: column;
@@ -60,6 +62,23 @@
       .icon-wrapper {
         background: #fff;
         border-color: #fff;
+      }
+    }
+  }
+
+  @include mobile {
+    padding-bottom: 90px;
+
+    .step {
+      margin: 15px 0 0;
+
+      .icon-wrapper {
+        position: absolute;
+      }
+
+      .title {
+        font-size: 24px;
+        margin-left: 70px;
       }
     }
   }

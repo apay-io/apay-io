@@ -58,4 +58,34 @@
     margin-top: 30px;
     max-width: 432px;
   }
+
+  @include mobile {
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100vw;
+    padding: 0 0 21px;
+
+    .title-row {
+      padding: 21px 0;
+
+      .title {
+        font-size: 24px;
+        margin-left: 71px;
+      }
+
+      .button-back {
+        margin-right: 10px;
+      }
+    }
+
+    .recipient-address {
+      width: 92%;
+      margin: 30px 2.5% 0;
+    }
+
+    .button-next {
+      margin: 30px 4% 0;
+      width: 92%;
+    }
+  }
 }

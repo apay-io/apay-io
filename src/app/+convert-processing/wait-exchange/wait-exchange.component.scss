@@ -187,4 +187,49 @@
       }
     }
   }
+
+
+  @include mobile {
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .steps-block {
+      flex-wrap: wrap;
+      margin: 0;
+      width: 100vw;
+      padding: 0 0 21px;
+
+      .title-row {
+        padding: 21px 0;
+        flex-wrap: wrap;
+        height: unset;
+
+        .title {
+          font-size: 24px;
+          margin-left: 71px;
+        }
+
+        .transaction {
+          margin-top: 10px;
+          width: 100%;
+          margin-left: 71px;
+          margin-right: 10px;
+        }
+      }
+
+      .step-wait {
+        .info-step {
+          width: 78%;
+        }
+
+        .process {
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .info-block {
+      margin-left: 0;
+    }
+  }
 }

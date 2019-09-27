@@ -95,6 +95,15 @@
 
     .agreement-checkbox {
       margin-top: 15px;
+
+      ::ng-deep .mat-checkbox-layout {
+        white-space: normal !important;
+      }
+
+      ::ng-deep .mat-checkbox-inner-container {
+        margin-top: 5px !important;
+      }
+
       ::ng-deep .mat-checkbox .mat-checkbox-frame {
         border-color: #efa344;
         background-color: #fff;
@@ -121,6 +130,10 @@
   .details {
     padding: 21px;
 
+    .title {
+      margin-left: 0;
+    }
+
     .title-details {
       line-height: 1.43;
       font-size: 15px;
@@ -132,6 +145,26 @@
       font-size: 17px;
       color: #000;
       margin-bottom: 20px;
+    }
+  }
+
+  @include mobile {
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100vw;
+
+    .title {
+      margin-top: 5px;
+      margin-left: 51px;
+      font-size: 24px;
+    }
+
+    .enter-amount {
+      width: 100%;
+    }
+
+    .details {
+      width: 100%;
     }
   }
 }

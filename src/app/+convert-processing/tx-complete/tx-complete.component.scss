@@ -109,4 +109,42 @@
       }
     }
   }
+
+  @include mobile {
+    flex-wrap: wrap;
+    width: 100vw;
+    padding: 0 0 21px;
+
+    .title-row {
+      flex-wrap: wrap;
+      padding: 21px 0;
+
+      .title {
+        .text {
+          font-size: 24px;
+        }
+      }
+
+      .tx-id {
+        margin-left: 76px;
+        margin-right: 20px;
+        font-size: 17px;
+      }
+    }
+    .exchange-info {
+      .from, .to {
+        .description {
+          font-size: 17px;
+        }
+      }
+    }
+
+    .exchange-details {
+      .item {
+        .title, .description {
+          font-size: 16px;
+        }
+      }
+    }
+  }
 }

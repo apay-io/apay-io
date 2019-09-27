@@ -106,4 +106,66 @@
       color: rgb(179, 180, 180);
     }
   }
+
+  @include mobile {
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100vw;
+    padding: 0 0 21px;
+
+    .title-row {
+      padding: 21px 0;
+      flex-wrap: wrap;
+
+      .title {
+        font-size: 24px;
+        margin-left: 71px;
+      }
+
+      .transaction {
+        margin-top: 10px;
+        width: 100%;
+        margin-left: 71px;
+        margin-right: 10px;
+      }
+    }
+
+    .content-block {
+      flex-wrap: wrap;
+      width: 92%;
+      margin: 0 auto;
+
+      .info {
+        .details-info {
+          .description-details {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            word-break: break-all;
+
+            .copy {
+              display: block;
+              margin-left: 0;
+            }
+          }
+        }
+      }
+
+      .qr-code {
+        margin-left: 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+    }
+
+    .info-line {
+      margin: 41px 0 -21px;
+      padding: 21px 0;
+      .text {
+        width: 92%;
+        margin: 0 2.5%;
+      }
+    }
+  }
 }
