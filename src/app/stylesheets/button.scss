@@ -43,3 +43,43 @@
     max-width: 200px;
   }
 }
+
+.button-next, .button-back {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  line-height: 38px;
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(57, 66, 71);
+  text-align: center;
+  cursor: pointer;
+  padding: 0 1.2rem;
+  background: rgba(179, 180, 180, 0.15);
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-image: initial;
+  border-radius: 4px;
+  text-decoration: none;
+  outline: 0;
+  transition: all 0.25s ease 0s;
+  box-shadow: none;
+}
+
+.button-next {
+  background:  #efa344;
+  color: #fff;
+}
+
+.button-back {
+  width: unset;
+  height: 40px;
+  margin: 0;
+  font-size: 14px;
+  box-shadow: none;
+}

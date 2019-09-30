@@ -21,7 +21,11 @@ const routes: Routes = [
   {
     path: 'withdraw',
     component: WithdrawPageComponent
-  }
+  },
+  {
+    path: 'processing',
+    loadChildren: './+convert-processing/convert-processing.module#ConvertProcessingModule'
+  },
 ];
 
 @NgModule({

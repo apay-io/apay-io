@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="enter-amount">
+        <div class="title">
+            Enter amount
+        </div>
+        <div class="convert-processing">
+            <form [formGroup]="amountForm" (ngSubmit)="changeStep(2)">
+                <app-converter [isProcessingConverter]="true" [amountFormConverter]="amountForm.controls.converter"></app-converter>
+                <div class="agreement-checkbox">
+                    <mat-checkbox formControlName="agreement" >I agree with Terms of Use, Privacy Policy and AML/KYC</mat-checkbox>
+                </div>
+                <button
+                        [disabled]="!amountForm.valid"
+                        mat-raised-button
+                        class="button-next">
+                    Next step
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="details">
+        <div class="title">
+            Details
+        </div>
+        <div class="title-details">
+            Expected exchange rate
+        </div>
+        <div class="description-details">
+            1 USD = 0.00490322 ETH
+        </div>
+        <div class="title-details">
+            Exchange fee
+        </div>
+        <div class="description-details">
+            0.00150774 ETH
+        </div>
+    </div>
+</div>
+

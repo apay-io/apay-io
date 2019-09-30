@@ -9,6 +9,45 @@
   display: flex;
   justify-content: center;
 
+  &.processing {
+    position: relative;
+
+    .converter {
+      flex-wrap: wrap;
+      justify-content: center;
+      box-shadow: none;
+      border: none;
+      padding: 0;
+      height: unset;
+
+      .currency-from-amount-field, .currency-to-amount-field {
+        width: 100%;
+        padding: 0 0 10px;
+
+        .input-field {
+          margin-right: 20px;
+          height: 50px;
+
+          &:focus {
+            border-color: #efa344;
+          }
+        }
+      }
+
+      .currency-to-amount-field {
+        padding: 10px 0;
+      }
+
+      .wrapper-icon-convert {
+        margin-right: 0;
+
+        .icon-convert {
+          color: #efa344;
+        }
+      }
+    }
+  }
+
   .converter-bg {
     position: absolute;
     width: 100%;

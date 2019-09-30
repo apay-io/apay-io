@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="title-row">
+        <div class="title">
+            Enter address
+        </div>
+        <button
+                (click)="changeStep(1)"
+                mat-raised-button
+                class="button-back">
+            Back
+        </button>
+    </div>
+    <form [formGroup]="addressForm" (ngSubmit)="changeStep(3)">
+        <div class="recipient-address">
+            <mat-form-field class="recipient-address" appearance="legacy">
+                <mat-label>Recipient address</mat-label>
+                <input matInput formControlName="address" placeholder="Enter your ETH wallet address">
+            </mat-form-field>
+        </div>
+        <button
+                [disabled]="!addressForm.valid"
+                mat-raised-button
+                class="button-next">
+            Next step
+        </button>
+    </form>
+</div>
+
