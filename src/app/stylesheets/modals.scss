@@ -1,7 +1,7 @@
 /* MODAL STYLES*/
 @import "./../stylesheets/tools/media.scss";
 
-modal {
+modal, .login {
   display: none;
 
   .modal {
@@ -22,7 +22,6 @@ modal {
 
     .modal-body {
       max-width: 410px;
-      //padding: 24px 24px 0;
       background: #fff;
       box-shadow: 0px 48px 48px rgba(20, 20, 20, 0.16), 0px 0px 24px rgba(20, 20, 20, 0.16);
       border-radius: 12px;
@@ -95,6 +94,36 @@ modal {
   }
 }
 
+.login {
+  display: block;
+  animation: none;
+
+  .modal {
+    .modal-body {
+      position: relative;
+      z-index: 1010;
+      -webkit-animation: fade-in 0.3s ease-in-out;
+      animation: fade-in 0.3s ease-in-out;
+      max-width: unset;
+    }
+  }
+
+  .modal-background {
+    z-index: 1005;
+  }
+
+  @media (max-width: 800px) {
+    .modal {
+      animation: none;
+
+      .modal-body {
+        -webkit-animation: slide-in 0.3s ease-in-out;
+        animation: slide-in 0.3s ease-in-out;
+      }
+    }
+  }
+}
+
 body.modal-open {
   overflow: hidden;
 
@@ -115,6 +144,24 @@ body.modal-open {
   border-top-right-radius: 8px;
   background: rgb(15, 89, 209);
   color: #fff;
+
+  .back {
+    cursor: pointer;
+    position: absolute;
+    z-index: 101;
+    left: 0;
+    top: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .icon-back {
+      width: 27px;
+      height: 27px;
+    }
+  }
 
   .close {
     cursor: pointer;

@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="profile-info">
-                <div class="button-sign-in">
+                <div class="button-sign-in" (click)="this.loginServices.open()">
                     Sign in
                 </div>
             </div>
@@ -81,74 +81,5 @@
     </div>
 </div>
 
-<modal id="signIn">
-    <div class="modal">
-        <div class="modal-body">
-            <div class="head-popup">
-                Select Wallet
-                <div class="close" (click)="this.modalService.close('signIn');">
-                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill-rule="evenodd" d="M.458.404c.582-.565 1.54-.524 2.123.04l9.406 9.485L21.435.444c.583-.564 1.54-.605 2.123-.04.582.565.582 1.453.041 2.058l-9.531 9.526 9.531 9.565c.541.565.541 1.494-.041 2.059-.582.524-1.54.524-2.123-.04l-9.448-9.486-9.406 9.485c-.583.565-1.54.565-2.123.04-.582-.564-.624-1.493-.041-2.058l9.531-9.565L.417 2.462C-.166 1.857-.124.97.458.404z"></path></svg>
-                </div>
-            </div>
-            <div class="content-popup">
-                <div class="button-sign-in">
-                    <img class="icon" src="./../assets/img/papaya.jpg" alt="">
-                    <div class="text">
-                        Sign in
-                    </div>
-                </div>
-                <div class="description">
-                    Don't have an account?
-                    <a class="link" href="#">
-                        Register now
-                    </a>
-                </div>
-                <div class="indent">
-                    <div class="line"></div>
-                    <div class="text">OR</div>
-                    <div class="line"></div>
-                </div>
-                <div class="external">
-                    <div class="description">
-                        Already have an external wallet?
-                    </div>
-                    <div class="wallets-wrapper">
-                        <div class="wallet">
-                            <div class="wallet-title">
-                                <img class="icon" src="./../assets/img/meta.png" alt="">
-                                MetaMask
-                            </div>
-                        </div>
-                        <div class="wallet">
-                            <div class="wallet-title">
-                                <img class="icon" src="./../assets/img/scatter.png" alt="">
-                                Scatter
-                            </div>
-                        </div>
-                        <div class="wallet">
-                            <div class="wallet-title">
-                                <img class="icon" src="./../assets/img/formatic.png" alt="">
-                                Fortmatic
-                            </div>
-                        </div>
-                        <div class="wallet big">
-                            <div class="wallet-title">
-                                <img class="icon" src="./../assets/img/trezor.png" alt="">
-                                Trezor
-                            </div>
-                        </div>
-                        <div class="wallet big">
-                            <div class="wallet-title">
-                                <img class="icon" src="./../assets/img/ledger.png" alt="">
-                                Ledger
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="modal-background"></div>
-</modal>
+<app-login></app-login>
 
