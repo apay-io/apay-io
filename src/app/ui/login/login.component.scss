@@ -1,0 +1,157 @@
+@import "../../stylesheets/tools/media";
+@import "../../stylesheets/button";
+@import "../../stylesheets/modals";
+
+.content {
+  background: #eeeeee;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 8px 8px;
+
+  .title {
+    margin-top: 16px;
+    color: rgb(57, 66, 71);
+    font-size: 22px;
+    font-weight: 700;
+    padding: 15px;
+  }
+
+  .access-wallet-list {
+    margin-top: 16px;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .item {
+      cursor: pointer;
+      width: calc(47% - 50px);
+      margin-left: 2%;
+      margin-right: 2%;
+      margin-bottom: 2%;
+      padding: 35px 25px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 8px;
+      box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+      transition: .3s;
+
+      .title-row {
+        display: flex;
+
+        .icon {
+          height: 22px;
+          margin-right: 10px;
+        }
+
+        .text {
+          color: #000;
+          font-size: 22px;
+        }
+      }
+
+      .description {
+        margin-top: 20px;
+        text-align: center;
+        color: #979797;
+        font-size: 16px;
+      }
+
+
+      &:nth-child(2n) {
+        margin-left: 0;
+      }
+
+      &:hover {
+        background: #fbfbfb;
+      }
+    }
+  }
+
+  .button-next {
+    width: 60%;
+    margin-bottom: 16px;
+    background: #0f59d1;
+  }
+
+  .login-wrapper {
+    min-height: 150px;
+    max-width: 600px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .input {
+      margin-top: 16px;
+      width: 60%;
+    }
+
+    .info {
+      position: relative;
+      background: #fff;
+      border-radius: 8px;
+      width: 80%;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .title-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .icon {
+          width: 24px;
+        }
+
+        .text {
+          margin-left: 10px;
+          text-align: center;
+          color: #000;
+          font-size: 22px;
+        }
+      }
+
+      .description {
+        text-align: center;
+        margin-top: 20px;
+        color: #979797;
+        font-size: 16px;
+      }
+    }
+  }
+
+  @include mobile {
+    .access-wallet-list {
+      .item {
+        width: 100%;
+
+        &:nth-child(2n) {
+          margin-left: 2%;
+        }
+      }
+    }
+
+    .button-next {
+      width: 90%;
+      max-width: 540px;
+    }
+
+    .login-wrapper {
+      .input {
+        width: 90%;
+        max-width: 540px;
+      }
+    }
+  }
+}

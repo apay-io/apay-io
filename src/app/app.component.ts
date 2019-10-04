@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ModalService} from "./services/modal/modal.service";
+import {LoginService} from "./core/login-service";
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,7 @@ import {ModalService} from "./services/modal/modal.service";
 })
 export class AppComponent {
   title = 'papaya';
-    constructor(public modalService: ModalService) {}
+    constructor(public loginServices: LoginService) {}
 }
 
 
