@@ -28,7 +28,9 @@
                         </div>
                         <div *ngIf="arraySearchValue.length">
                             <div class="token" *ngFor="let item of arraySearchValue" [ngClass]="{'active': selectedToken.code === item.code}" (click)="selectToken(item)">
-                                <!--<img class="icon" [src]="item.icon" alt="">-->
+                                <div class="wrapper-icon">
+                                    <img class="icon" [src]="item.icon" [ngClass]="item.code" alt="">
+                                </div>
                                 <div class="name">
                                     {{item.name}}
                                 </div>

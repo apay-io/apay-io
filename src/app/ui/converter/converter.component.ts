@@ -104,10 +104,8 @@ export class ConverterComponent implements OnInit {
       }
 
       this.searchValue = this.searchValue[0].toUpperCase() + this.searchValue.slice(1);
-      console.log(this.searchValue);
-      console.log(this.tokensList);
       this.arraySearchValue = this.tokensList.filter(
-          item => (item.name.indexOf(this.searchValue) > -1) ||  (item.code.indexOf(this.searchValue) > -1)
+          item => (item.name.indexOf(this.searchValue) > -1) || (item.code.indexOf(this.searchValue.toUpperCase()) > -1)
       );
   }
 
