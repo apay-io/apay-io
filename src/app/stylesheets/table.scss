@@ -7,6 +7,14 @@ table {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   background: #fff;
+
+  @include mobile {
+    border-radius: 0;
+  }
+}
+
+.full-width {
+  width: 100%;
 }
 
 .search {
@@ -103,6 +111,10 @@ table {
   @include mobile {
     &:first-of-type {
       padding-left: 14px;
+    }
+
+    &:last-of-type {
+      padding-right: 0;
     }
   }
 }

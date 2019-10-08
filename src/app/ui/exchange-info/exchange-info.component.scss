@@ -113,15 +113,41 @@
             }
 
             .token {
-              padding: 4px;
+              padding: 6px 15px;
               display: flex;
               align-items: center;
               transition: .3s;
               cursor: pointer;
 
-              .icon {
-                width: 35px;
-                height: 35px;
+              .wrapper-icon {
+                width: 46px;
+                height: 36px;
+                display: flex;
+                align-items: center;
+
+                .icon {
+                  width: 30px;
+                  height: 30px;
+                  object-fit: contain;
+
+                  &.MTL, &.BCH, &.XLM {
+                    height: 36px;
+                    width: 36px;
+                    margin-left: -3px;
+                  }
+
+                  &.BAT {
+                    position: relative;
+                  }
+
+                  &.REP {
+                    width: 44px;
+                    margin-left: -7px;
+                    margin-right: -6px;
+                    object-fit: cover;
+                    object-position: top;
+                  }
+                }
               }
 
               .name {

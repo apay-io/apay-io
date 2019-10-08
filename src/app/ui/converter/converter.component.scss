@@ -162,6 +162,7 @@
 
       .input-field {
         width: 100%;
+        min-height: 50px;
         padding: 0px 16px;
         border-width: 1px;
         border-style: solid;
@@ -170,7 +171,7 @@
         transition: all 300ms ease 0s;
         color: rgb(59, 59, 59);
         background: none;
-        font-size: 14px;
+        font-size: 16px;
         border-radius: 8px;
         text-align: left;
         height: 100%;
