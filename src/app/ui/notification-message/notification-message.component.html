@@ -1,0 +1,12 @@
+<div *ngIf="notify.msg | async as msg" class="notification"
+     [ngClass]="{
+    'is-danger': msg.style == 'error',
+    'is-success': msg.style == 'success',
+    'is-info': msg.style == 'info'
+  }">
+    <div class="toast" (click)="notify.clear()">
+        <div class="message">
+            {{ msg.content }}
+        </div>
+    </div>
+</div>
