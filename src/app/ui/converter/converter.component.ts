@@ -1,8 +1,10 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ModalService} from "../../services/modal/modal.service";
-import {CurrencySelectionService} from "../../core/currency-selection.service";
-import {currencies} from "../../../assets/currencies-list";
-import {FormGroup} from "@angular/forms";
+import {ModalService} from '../../services/modal/modal.service';
+import {CurrencySelectionService} from '../../core/currency-selection.service';
+import {currencies} from '../../../assets/currencies-list';
+import {FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
+import {StellarService} from '../../services/stellar/stellar.service';
 
 @Component({
   selector: 'app-converter',
@@ -15,64 +17,81 @@ export class ConverterComponent implements OnInit {
   currencySell;
   searchValue: string;
   arraySearchValue = [];
-  currencyInfoSave = {type: null, code: null};
+  currencyInfoSave = {type: '', code: ''};
   private tokensList = [];
-    @Output() popupChange: EventEmitter<string> = new EventEmitter();
-    @Input() isProcessingConverter: boolean = false;
-    @Input() amountFormConverter: FormGroup;
+  @Output() popupChange: EventEmitter<string> = new EventEmitter();
+  @Input() isProcessingConverter = false;
+  @Input() amountFormConverter: FormGroup;
 
-    @ViewChild('buy', {static: false}) buyElement: ElementRef;
-    @ViewChild('sell', {static: false}) sellElement: ElementRef;
+  @ViewChild('buy', {static: false}) buyElement: ElementRef;
+  @ViewChild('sell', {static: false}) sellElement: ElementRef;
 
 
-    constructor(public modalService: ModalService, public currencySelection: CurrencySelectionService) { }
+  constructor(
+    public modalService: ModalService,
+    public currencySelection: CurrencySelectionService,
+    private readonly router: Router,
+    private readonly stellarService: StellarService,
+  ) {
+  }
+
+  ngAfterViewInit() {
+    if (sessionStorage.getItem('amountBuy')) {
+      this.buyElement.nativeElement.value = sessionStorage.getItem('amountBuy');
+      this.calculateSell();
+    }
+    if (sessionStorage.getItem('amountSell')) {
+      this.sellElement.nativeElement.value = sessionStorage.getItem('amountSell');
+      this.calculateBuy();
+    }
+  }
 
   ngOnInit() {
-    this.currencyBuy = {
-        code: 'XDR',
-        name: 'Pays XDR',
-        icon: '/assets/img/xdr-coin.svg'
-    };
-    this.currencySell = {
-        code: 'BTC',
-        name: 'Bitcoin',
-        icon: 'https://apay.io/public/logo/btc.svg'
-    };
+    this.currencyBuy = currencies
+      .find(v => v.code === (sessionStorage.getItem('currencyBuy') || 'XDR'));
+    this.currencySell = currencies
+      .find(v => v.code === (sessionStorage.getItem('currencySell') || 'BTC'));
 
     if (this.isProcessingConverter) {
-        this.amountFormConverter.controls['fromCurrency'].setValue(this.currencySell)
-        this.amountFormConverter.controls['toCurrency'].setValue(this.currencyBuy)
+      this.amountFormConverter.controls['fromCurrency'].setValue(this.currencySell);
+      this.amountFormConverter.controls['toCurrency'].setValue(this.currencyBuy);
     }
 
     this.tokens = currencies;
     this.arraySearchValue = this.tokensList = this.tokens;
 
-      this.currencySelection.select
-          .subscribe((currencyInfo) => {
-              this.modalService.close('currencies');
+    this.currencySelection.select
+      .subscribe((currencyInfo) => {
+        this.modalService.close('currencies');
 
-              if (currencyInfo.typeCurrency === 'buy') {
-                  this.currencyBuy = currencyInfo.data;
-                  this.buyElement.nativeElement.focus();
-              } else {
-                  this.currencySell = currencyInfo.data;
-                  this.sellElement.nativeElement.focus();
-              }
-          });
-      }
+        if (currencyInfo.typeCurrency === 'buy') {
+          this.currencyBuy = currencyInfo.data;
+          sessionStorage.setItem('currencyBuy', this.currencyBuy.code);
+          this.buyElement.nativeElement.focus();
+        } else {
+          this.currencySell = currencyInfo.data;
+          sessionStorage.setItem('currencySell', this.currencySell.code);
+          this.sellElement.nativeElement.focus();
+        }
+        this.recalculateAmounts();
+      });
+  }
 
-  chooseCurrency(event, type) {
+  async chooseCurrency(event, type) {
     if (type === 'sell') {
-        this.currencySell = event;
-        if (this.isProcessingConverter) {
-            this.amountFormConverter.controls['fromCurrency'].setValue(this.currencySell)
-        }
+      this.currencySell = event;
+      if (this.isProcessingConverter) {
+        this.amountFormConverter.controls['fromCurrency'].setValue(this.currencySell);
+      }
+      sessionStorage.setItem('currencySell', this.currencySell.code);
     } else {
-        this.currencyBuy = event;
-        if (this.isProcessingConverter) {
-            this.amountFormConverter.controls['toCurrency'].setValue(this.currencyBuy)
-        }
+      this.currencyBuy = event;
+      if (this.isProcessingConverter) {
+        this.amountFormConverter.controls['toCurrency'].setValue(this.currencyBuy);
+      }
+      sessionStorage.setItem('currencyBuy', this.currencyBuy.code);
     }
+    await this.recalculateAmounts();
     this.clearSearch();
   }
 
@@ -82,34 +101,70 @@ export class ConverterComponent implements OnInit {
   }
 
   openPopupSell() {
-      this.modalService.open('currencies');
-      this.currencyInfoSave = {
-          type: 'sell',
-          code: this.currencySell.code
-      }
+    this.modalService.open('currencies');
+    this.currencyInfoSave = {
+      type: 'sell',
+      code: this.currencySell.code
+    };
   }
 
   openPopupBuy() {
-      this.modalService.open('currencies');
-      this.currencyInfoSave = {
-          type: 'buy',
-          code: this.currencyBuy.code
-      }
+    this.modalService.open('currencies');
+    this.currencyInfoSave = {
+      type: 'buy',
+      code: this.currencyBuy.code
+    };
   }
 
   search() {
-      if (this.searchValue.length < 2) {
-          this.arraySearchValue = this.tokensList;
-          return false;
-      }
+    if (this.searchValue.length < 2) {
+      this.arraySearchValue = this.tokensList;
+      return false;
+    }
 
-      this.searchValue = this.searchValue[0].toUpperCase() + this.searchValue.slice(1);
-      this.arraySearchValue = this.tokensList.filter(
-          item => (item.name.indexOf(this.searchValue) > -1) || (item.code.indexOf(this.searchValue.toUpperCase()) > -1)
-      );
+    this.searchValue = this.searchValue[0].toUpperCase() + this.searchValue.slice(1);
+    this.arraySearchValue = this.tokensList.filter(
+      item => (item.name.indexOf(this.searchValue) > -1) || (item.code.indexOf(this.searchValue.toUpperCase()) > -1)
+    );
   }
 
-  revertCurrency() {
-      [this.currencyBuy, this.currencySell] = [this.currencySell, this.currencyBuy];
+  async revertCurrency() {
+    [this.currencyBuy, this.currencySell] = [this.currencySell, this.currencyBuy];
+    sessionStorage.setItem('currencySell', this.currencySell.code);
+    sessionStorage.setItem('currencyBuy', this.currencyBuy.code);
+    await this.recalculateAmounts();
+  }
+
+  continue() {
+    sessionStorage.setItem('currencySell', this.currencySell.code);
+    sessionStorage.setItem('currencyBuy', this.currencyBuy.code);
+    this.router.navigate(['/processing']);
+  }
+
+  async calculateSell() {
+    sessionStorage.setItem('amountBuy', this.buyElement.nativeElement.value);
+    sessionStorage.removeItem('amountSell');
+    await this.recalculateAmounts();
+  }
+
+  async calculateBuy() {
+    sessionStorage.setItem('amountSell', this.sellElement.nativeElement.value);
+    sessionStorage.removeItem('amountBuy');
+    await this.recalculateAmounts();
+  }
+
+  private async recalculateAmounts() {
+    if (sessionStorage.getItem('amountSell')) {
+      const result = await this.stellarService.calculateBuy(this.currencySell, this.sellElement.nativeElement.value, this.currencyBuy);
+      console.log(result);
+      this.buyElement.nativeElement.value = result.destination_amount;
+    } else if (sessionStorage.getItem('amountBuy')) {
+      const result = await this.stellarService.calculateSell(this.currencySell, this.currencyBuy, this.buyElement.nativeElement.value);
+      console.log(result);
+      // todo: check for minimum values deposit/withdrawal
+      // todo: handle error when there is not enough liquidity to process the exchange
+      // todo: sanity check, compare to market rate and if difference > 3% - tell the user
+      this.sellElement.nativeElement.value = result.source_amount;
+    }
   }
 }

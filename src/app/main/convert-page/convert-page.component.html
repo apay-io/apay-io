@@ -1,21 +1,21 @@
 <div class="content">
     <div class="create-wallet">
         <div class="title">
-            Your smart crypto wallet
+            Exchange crypto
         </div>
         <div class="description">
-            Decentralized, simple and secure.
+            Using Stellar Decentralized Exchange
         </div>
-        <div class="button-create">
+        <div class="button-create" (click)="appComponent.loginServices.open()">
             <div class="text">
-                Create Wallet
+                Sign in
             </div>
         </div>
     </div>
     <app-converter></app-converter>
     <div class="wrapper-content">
         <div class="container">
-            <app-table></app-table>
+            <app-table [stats$]="stats$"></app-table>
         </div>
     </div>
 </div>

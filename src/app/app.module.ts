@@ -20,6 +20,7 @@ import {DepositPageComponent} from './main/deposit-page/deposit-page.component';
 import {MatSelectSearchModule} from "./ui/mat-select-search/mat-select-search.module";
 import {WithdrawPageComponent} from "./main/withdraw-page/withdraw-page.component";
 import {ExchangeInfoComponent} from "./ui/exchange-info/exchange-info.component";
+import {StellarService} from './services/stellar/stellar.service';
 
 @NgModule({
     imports: [
@@ -41,7 +42,7 @@ import {ExchangeInfoComponent} from "./ui/exchange-info/exchange-info.component"
         WithdrawPageComponent
     ],
     bootstrap: [AppComponent],
-    providers: [ModalService]
+    providers: [ModalService, StellarService]
 })
 export class AppModule { }
 

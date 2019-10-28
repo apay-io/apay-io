@@ -6,11 +6,7 @@ export class CurrencySelectionService {
 
     changeCurrency(rowData, type: 'buy' | 'sell') {
         const currencyInfo = {
-            data: {
-                'code': rowData.code,
-                'name': rowData.name,
-                'icon': rowData.icon
-            },
+            data: rowData,
             'typeCurrency': type
         };
 

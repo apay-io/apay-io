@@ -13,10 +13,11 @@ export class ConvertProcessingIndexComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.step = 1
+    this.step = 1;
+
   }
 
   nextStep(event) {
-    this.step = event
+    this.step = event;
   }
 }
