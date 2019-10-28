@@ -51,29 +51,29 @@
         <ng-container matColumnDef="change">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> 24H CHANGE</th>
             <td mat-cell *matCellDef="let row"><span class="change"
-                                                     [ngClass]="row.change[0] === '+' ? 'positive' : 'negative'">{{row.change}}% </span>
+                                                     [ngClass]="row.change >= 0 ? 'positive' : 'negative'">{{row.change.toFixed(2)}}% </span>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="usd">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> PRICE USD</th>
-            <td mat-cell *matCellDef="let row"><span class="price">${{row.usd}} </span></td>
+            <td mat-cell *matCellDef="let row"><span class="price">{{row.price.toPrecision(4) | currency:'USD':'symbol':'1.0-8'}} </span></td>
         </ng-container>
 
         <ng-container matColumnDef="volume">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> 24H VOLUME</th>
-            <td mat-cell *matCellDef="let row"> ${{row.volume}}</td>
+            <td mat-cell *matCellDef="let row"> {{row.volume | currency}}</td>
         </ng-container>
 
         <ng-container matColumnDef="depth">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> LIQUIDITY DEPTH</th>
-            <td mat-cell *matCellDef="let row"> ${{row.depth}}</td>
+            <td mat-cell *matCellDef="let row"> {{row.depthUsd | currency}}</td>
         </ng-container>
 
         <ng-container matColumnDef="graph">
             <th mat-header-cell *matHeaderCellDef>7D GRAPH</th>
             <td mat-cell *matCellDef="let row">
-                <svg class="sparkline" width="100" height="30" stroke-width="1"></svg>
+                <svg id="sparkline-{{row.code}}" class="sparkline" width="100" height="30" stroke-width="1"></svg>
             </td>
         </ng-container>
 
