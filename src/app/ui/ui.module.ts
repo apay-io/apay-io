@@ -11,6 +11,7 @@ import {TableComponent} from "./table/table.component";
 import {MatSelectSearchModule} from "./mat-select-search/mat-select-search.module";
 import {MaterialModule} from "../../../material-module";
 import {LoginComponent} from "./login/login.component";
+import {NotificationMessageComponent} from "./notification-message/notification-message.component";
 @NgModule({
   imports: [
     CommonModule,
@@ -29,7 +30,8 @@ import {LoginComponent} from "./login/login.component";
     TableMobileComponent,
     ConverterComponent,
     ExchangeInfoComponent,
-    LoginComponent
+    LoginComponent,
+    NotificationMessageComponent,
   ],
   exports: [
     ModalComponent,
@@ -37,7 +39,8 @@ import {LoginComponent} from "./login/login.component";
     TableMobileComponent,
     ConverterComponent,
     ExchangeInfoComponent,
-    LoginComponent
+    LoginComponent,
+    NotificationMessageComponent,
   ]
 })
 export class UiModule {}
