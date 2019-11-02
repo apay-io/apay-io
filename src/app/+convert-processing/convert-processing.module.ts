@@ -7,14 +7,15 @@ import {MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule} 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ModalService} from '../services/modal/modal.service';
 import {CoreModule} from '../core/core.module';
-import {ConvertProcessingIndexComponent} from "./convert-processing-index/convert-processing-index.component";
-import {EnterAmountComponent} from "./enter-amount/enter-amount.component";
-import {MatSelectSearchModule} from "../ui/mat-select-search/mat-select-search.module";
-import {EnterAddressComponent} from "./enter-address/enter-address.component";
-import {CheckDetailsComponent} from "./check-details/check-details.component";
-import {SendFundsComponent} from "./send-funds/send-funds.component";
-import {WaitExchangeComponent} from "./wait-exchange/wait-exchange.component";
-import {TxCompleteComponent} from "./tx-complete/tx-complete.component";
+import {ConvertProcessingIndexComponent} from './convert-processing-index/convert-processing-index.component';
+import {EnterAmountComponent} from './enter-amount/enter-amount.component';
+import {MatSelectSearchModule} from '../ui/mat-select-search/mat-select-search.module';
+import {EnterAddressComponent} from './enter-address/enter-address.component';
+import {CheckDetailsComponent} from './check-details/check-details.component';
+import {SendFundsComponent} from './send-funds/send-funds.component';
+import {WaitExchangeComponent} from './wait-exchange/wait-exchange.component';
+import {TxCompleteComponent} from './tx-complete/tx-complete.component';
+import { QrCodeModule } from 'ng-qrcode';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {TxCompleteComponent} from "./tx-complete/tx-complete.component";
     MatSelectModule,
     MatSelectSearchModule,
     MatCheckboxModule,
+    QrCodeModule,
   ],
   providers: [
     ModalService,

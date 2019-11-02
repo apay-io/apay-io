@@ -8,7 +8,7 @@
                 Transaction ID:
             </span>
             <span class="tx-id">
-                vx2qos8ymukxx4xz
+                {{orderParams.id}}
             </span>
         </div>
     </div>
@@ -22,7 +22,7 @@
                     Send
                 </div>
                 <div class="description-details">
-                    1 BTC
+                  {{orderParams.amountIn}} {{orderParams.currencyIn.code}}
                 </div>
             </div>
             <div class="details-info">
@@ -30,7 +30,7 @@
                     To address
                 </div>
                 <div class="description-details">
-                    34hzKRg4PuDo2BoF6iptTzxAyJ9ghsNQb1
+                    {{orderParams.addressIn}}
                     <span class="copy">
                         Copy
                     </span>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="qr-code" (click)="changeStep(5)">
-            <img src="./../../../assets/img/qr-test.png" alt="">
+          <qr-code value="{{orderParams.addressIn}}" size="200" errorCorrectionLevel="M"></qr-code>
         </div>
     </div>
     <div class="info-line">

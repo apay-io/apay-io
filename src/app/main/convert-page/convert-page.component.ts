@@ -15,14 +15,11 @@ export class ConvertPageComponent implements OnInit {
     public stats$: Observable<any>;
 
     constructor(
-      private notify: NotifyService,
       private readonly http: HttpClient,
       public readonly appComponent: AppComponent,
     ) {}
 
     ngOnInit() {
-        //use for test notifi
-        // this.notify.update('test', 'error');
       this.stats$ = this.http.get('https://apay.io/api/stats');
     }
 }

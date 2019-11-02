@@ -5,6 +5,7 @@ import {currencies} from '../../../assets/currencies-list';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {StellarService} from '../../services/stellar/stellar.service';
+import {NotifyService} from '../../core/notify.service';
 
 @Component({
   selector: 'app-converter',
@@ -13,8 +14,8 @@ import {StellarService} from '../../services/stellar/stellar.service';
 })
 export class ConverterComponent implements OnInit {
   tokens;
-  currencyBuy;
-  currencySell;
+  currencyOut;
+  currencyIn;
   searchValue: string;
   arraySearchValue = [];
   currencyInfoSave = {type: '', code: ''};
@@ -29,6 +30,7 @@ export class ConverterComponent implements OnInit {
 
   constructor(
     public modalService: ModalService,
+    private notify: NotifyService,
     public currencySelection: CurrencySelectionService,
     private readonly router: Router,
     private readonly stellarService: StellarService,
@@ -36,25 +38,18 @@ export class ConverterComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (sessionStorage.getItem('amountBuy')) {
-      this.buyElement.nativeElement.value = sessionStorage.getItem('amountBuy');
-      this.calculateSell();
-    }
-    if (sessionStorage.getItem('amountSell')) {
-      this.sellElement.nativeElement.value = sessionStorage.getItem('amountSell');
-      this.calculateBuy();
-    }
+    this.recalculateAmounts();
   }
 
   ngOnInit() {
-    this.currencyBuy = currencies
-      .find(v => v.code === (sessionStorage.getItem('currencyBuy') || 'XDR'));
-    this.currencySell = currencies
-      .find(v => v.code === (sessionStorage.getItem('currencySell') || 'BTC'));
+    this.currencyOut = currencies
+      .find(v => v.code === (sessionStorage.getItem('currencyOut') || 'XDR'));
+    this.currencyIn = currencies
+      .find(v => v.code === (sessionStorage.getItem('currencyIn') || 'BTC'));
 
     if (this.isProcessingConverter) {
-      this.amountFormConverter.controls['fromCurrency'].setValue(this.currencySell);
-      this.amountFormConverter.controls['toCurrency'].setValue(this.currencyBuy);
+      this.amountFormConverter.controls['currencyIn'].setValue(this.currencyIn);
+      this.amountFormConverter.controls['currencyOut'].setValue(this.currencyOut);
     }
 
     this.tokens = currencies;
@@ -65,12 +60,12 @@ export class ConverterComponent implements OnInit {
         this.modalService.close('currencies');
 
         if (currencyInfo.typeCurrency === 'buy') {
-          this.currencyBuy = currencyInfo.data;
-          sessionStorage.setItem('currencyBuy', this.currencyBuy.code);
+          this.currencyOut = currencyInfo.data;
+          sessionStorage.setItem('currencyOut', this.currencyOut.code);
           this.buyElement.nativeElement.focus();
         } else {
-          this.currencySell = currencyInfo.data;
-          sessionStorage.setItem('currencySell', this.currencySell.code);
+          this.currencyIn = currencyInfo.data;
+          sessionStorage.setItem('currencyIn', this.currencyIn.code);
           this.sellElement.nativeElement.focus();
         }
         this.recalculateAmounts();
@@ -79,17 +74,17 @@ export class ConverterComponent implements OnInit {
 
   async chooseCurrency(event, type) {
     if (type === 'sell') {
-      this.currencySell = event;
+      this.currencyIn = event;
       if (this.isProcessingConverter) {
-        this.amountFormConverter.controls['fromCurrency'].setValue(this.currencySell);
+        this.amountFormConverter.controls['currencyIn'].setValue(this.currencyIn);
       }
-      sessionStorage.setItem('currencySell', this.currencySell.code);
+      sessionStorage.setItem('currencyIn', this.currencyIn.code);
     } else {
-      this.currencyBuy = event;
+      this.currencyOut = event;
       if (this.isProcessingConverter) {
-        this.amountFormConverter.controls['toCurrency'].setValue(this.currencyBuy);
+        this.amountFormConverter.controls['currencyOut'].setValue(this.currencyOut);
       }
-      sessionStorage.setItem('currencyBuy', this.currencyBuy.code);
+      sessionStorage.setItem('currencyOut', this.currencyOut.code);
     }
     await this.recalculateAmounts();
     this.clearSearch();
@@ -104,7 +99,7 @@ export class ConverterComponent implements OnInit {
     this.modalService.open('currencies');
     this.currencyInfoSave = {
       type: 'sell',
-      code: this.currencySell.code
+      code: this.currencyIn.code
     };
   }
 
@@ -112,7 +107,7 @@ export class ConverterComponent implements OnInit {
     this.modalService.open('currencies');
     this.currencyInfoSave = {
       type: 'buy',
-      code: this.currencyBuy.code
+      code: this.currencyOut.code
     };
   }
 
@@ -129,42 +124,56 @@ export class ConverterComponent implements OnInit {
   }
 
   async revertCurrency() {
-    [this.currencyBuy, this.currencySell] = [this.currencySell, this.currencyBuy];
-    sessionStorage.setItem('currencySell', this.currencySell.code);
-    sessionStorage.setItem('currencyBuy', this.currencyBuy.code);
+    [this.currencyOut, this.currencyIn] = [this.currencyIn, this.currencyOut];
+    sessionStorage.setItem('currencyIn', this.currencyIn.code);
+    sessionStorage.setItem('currencyOut', this.currencyOut.code);
     await this.recalculateAmounts();
   }
 
   continue() {
-    sessionStorage.setItem('currencySell', this.currencySell.code);
-    sessionStorage.setItem('currencyBuy', this.currencyBuy.code);
+    sessionStorage.setItem('currencyIn', this.currencyIn.code);
+    sessionStorage.setItem('currencyOut', this.currencyOut.code);
     this.router.navigate(['/processing']);
   }
 
   async calculateSell() {
-    sessionStorage.setItem('amountBuy', this.buyElement.nativeElement.value);
-    sessionStorage.removeItem('amountSell');
+    sessionStorage.setItem('amountOut', this.buyElement.nativeElement.value);
+    sessionStorage.removeItem('amountIn');
     await this.recalculateAmounts();
   }
 
   async calculateBuy() {
-    sessionStorage.setItem('amountSell', this.sellElement.nativeElement.value);
-    sessionStorage.removeItem('amountBuy');
+    sessionStorage.setItem('amountIn', this.sellElement.nativeElement.value);
+    sessionStorage.removeItem('amountOut');
     await this.recalculateAmounts();
   }
 
   private async recalculateAmounts() {
-    if (sessionStorage.getItem('amountSell')) {
-      const result = await this.stellarService.calculateBuy(this.currencySell, this.sellElement.nativeElement.value, this.currencyBuy);
-      console.log(result);
-      this.buyElement.nativeElement.value = result.destination_amount;
-    } else if (sessionStorage.getItem('amountBuy')) {
-      const result = await this.stellarService.calculateSell(this.currencySell, this.currencyBuy, this.buyElement.nativeElement.value);
-      console.log(result);
-      // todo: check for minimum values deposit/withdrawal
-      // todo: handle error when there is not enough liquidity to process the exchange
-      // todo: sanity check, compare to market rate and if difference > 3% - tell the user
-      this.sellElement.nativeElement.value = result.source_amount;
+    try {
+      if (sessionStorage.getItem('amountIn')) {
+        const result = await this.stellarService.calculateBuy(this.currencyIn, sessionStorage.getItem('amountIn'), this.currencyOut);
+        console.log(result);
+        this.sellElement.nativeElement.value = sessionStorage.getItem('amountIn');
+        this.buyElement.nativeElement.value = result.destination_amount;
+        if (this.isProcessingConverter) {
+          this.amountFormConverter.controls['amountIn'].setValue(sessionStorage.getItem('amountIn'));
+          this.amountFormConverter.controls['amountOut'].setValue(result.destination_amount);
+        }
+      } else if (sessionStorage.getItem('amountOut')) {
+        const result = await this.stellarService.calculateSell(this.currencyIn, this.currencyOut, sessionStorage.getItem('amountOut'));
+        console.log(result);
+        // todo: check for minimum values deposit/withdrawal
+        // todo: sanity check, compare to market rate and if difference > 5% - tell the user
+        this.sellElement.nativeElement.value = result.source_amount;
+        this.buyElement.nativeElement.value = sessionStorage.getItem('amountOut');
+        if (this.isProcessingConverter) {
+          this.amountFormConverter.controls['amountIn'].setValue(result.source_amount);
+          this.amountFormConverter.controls['amountOut'].setValue(sessionStorage.getItem('amountOut'));
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      this.notify.update('Unable to find a path on the network. Please try later or different amount', 'error');
     }
   }
 }

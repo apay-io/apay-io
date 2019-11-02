@@ -9,12 +9,17 @@ import {ModalService} from '../../services/modal/modal.service';
 export class ConvertProcessingIndexComponent implements OnInit {
   public step: number;
 
+  public orderParams = {};
+
   constructor(public modalService: ModalService) {
   }
 
   ngOnInit() {
-    this.step = 1;
-
+    // if (sessionStorage.getItem('id')) {
+    //   this.step = 4;
+    // } else {
+      this.step = 1;
+    // }
   }
 
   nextStep(event) {
