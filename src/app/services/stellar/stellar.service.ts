@@ -16,8 +16,7 @@ export class StellarService {
         return parseFloat(record.source_amount) < parseFloat(acc.source_amount) ? record : acc;
       });
     } else {
-      return 'error'
-      // throw new Error('Unable to find path');
+      throw new Error('Unable to find path');
     }
   }
 
@@ -33,8 +32,7 @@ export class StellarService {
           return parseFloat(record.destination_amount) > parseFloat(acc.destination_amount) ? record : acc;
       });
     } else {
-      return 'error'
-      // throw new Error('Unable to find path');
+      throw new Error('Unable to find path');
     }
   }
 }
