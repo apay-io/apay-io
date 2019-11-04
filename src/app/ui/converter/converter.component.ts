@@ -16,9 +16,9 @@ export class ConverterComponent implements OnInit {
   tokens;
   currencyOut;
   currencyIn;
-    timerBuy;
-    timerSell;
-    stateButton = 'disabled';
+  timerOut;
+  timerIn;
+  stateButton = 'disabled';
   searchValue: string;
   arraySearchValue = [];
   currencyInfoSave = {type: '', code: ''};
@@ -145,8 +145,8 @@ export class ConverterComponent implements OnInit {
   async calculateSell() {
     sessionStorage.setItem('amountOut', this.buyElement.nativeElement.value);
     sessionStorage.removeItem('amountIn');
-      clearTimeout(this.timerSell)
-      this.timerSell = setTimeout(async () => {
+      clearTimeout(this.timerIn)
+      this.timerIn = setTimeout(async () => {
           await this.recalculateAmounts()
       }, 600)
   }
@@ -154,8 +154,8 @@ export class ConverterComponent implements OnInit {
   async calculateBuy() {
     sessionStorage.setItem('amountIn', this.sellElement.nativeElement.value);
     sessionStorage.removeItem('amountOut');
-      clearTimeout(this.timerBuy)
-      this.timerBuy = setTimeout(async () => {
+      clearTimeout(this.timerOut)
+      this.timerOut = setTimeout(async () => {
           await this.recalculateAmounts()
       }, 600)
   }
@@ -183,8 +183,13 @@ export class ConverterComponent implements OnInit {
           this.amountFormConverter.controls['amountOut'].setValue(sessionStorage.getItem('amountOut'));
         }
       }
+
+      this.stateButton = 'active';
+      this.notify.clear();
     } catch (err) {
       console.log(err);
+      this.stateButton = 'disabled';
+      this.buyElement.nativeElement.value = '';
       this.notify.update('Unable to find a path on the network. Please try later or different amount', 'error');
     }
   }

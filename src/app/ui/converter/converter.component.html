@@ -3,7 +3,7 @@
     <div class="converter">
         <div class="currency-from-amount-field">
             <div class="min-info">
-                min {{currencySell.minDeposit}}
+                min {{currencyIn.minDeposit}}
             </div>
             <div class="wrapper" (click)="openPopupSell()">
                 <div class="wrapper-icon">
@@ -125,9 +125,9 @@
                 </div>
             </div>
         </div>
-<!--        <div class="table-mobile">-->
-<!--            <app-table-mobile  [currencyInfo]="currencyInfoSave"></app-table-mobile>-->
-<!--        </div>-->
+        <div class="table-mobile">
+            <app-table-mobile  [currencyInfo]="currencyInfoSave"></app-table-mobile>
+        </div>
       </div>
     </div>
   </div>
