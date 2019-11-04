@@ -171,7 +171,6 @@ export class ConverterComponent implements OnInit {
   private async recalculateAmounts() {
     if (sessionStorage.getItem('amountSell')) {
       const result = await this.stellarService.calculateBuy(this.currencySell, this.sellElement.nativeElement.value, this.currencyBuy);
-      console.log(result);
       this.buyElement.nativeElement.value = result.destination_amount;
 
       if (result === 'error') {
