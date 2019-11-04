@@ -3,7 +3,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {sparkline} from '@fnando/sparkline';
 import {CurrencySelectionService} from "../../core/currency-selection.service";
-import {currencies} from '../../../assets/currencies-list';
+import {GetCurrenciesServices} from "../../core/get-currencies.services";
 
 export interface UserData {
     icon: string;
@@ -31,15 +31,18 @@ export class TableMobileComponent implements OnInit {
     searchValue;
 
     constructor(
-        public currencySelectionService: CurrencySelectionService
-    ) {
-        this.currencies = currencies;
-        this.dataSource = new MatTableDataSource(this.currencies);
-    }
+        public currencySelectionService: CurrencySelectionService,
+        private getCurrencies: GetCurrenciesServices,
+    ) {}
 
     ngOnInit() {
-        // this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.getCurrencies.state$.subscribe((data: any) => {
+            if (data.length) {
+                this.currencies = data
+                this.dataSource = new MatTableDataSource(this.currencies);
+                this.dataSource.sort = this.sort;
+            }
+        })
     }
 
     applyFilter(filterValue: string) {

@@ -5,6 +5,7 @@ import {currencies} from '../../../assets/currencies-list';
 import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {StellarService} from '../../services/stellar/stellar.service';
+import {NotifyService} from "../../core/notify.service";
 
 @Component({
   selector: 'app-converter',
@@ -14,6 +15,9 @@ import {StellarService} from '../../services/stellar/stellar.service';
 export class ConverterComponent implements OnInit {
   tokens;
   currencyBuy;
+  timerBuy;
+  timerSell;
+  stateButton = 'disabled';
   currencySell;
   searchValue: string;
   arraySearchValue = [];
@@ -32,6 +36,7 @@ export class ConverterComponent implements OnInit {
     public currencySelection: CurrencySelectionService,
     private readonly router: Router,
     private readonly stellarService: StellarService,
+    private notify: NotifyService
   ) {
   }
 
@@ -136,6 +141,10 @@ export class ConverterComponent implements OnInit {
   }
 
   continue() {
+    if (this.stateButton === 'disabled') {
+      return false
+    }
+
     sessionStorage.setItem('currencySell', this.currencySell.code);
     sessionStorage.setItem('currencyBuy', this.currencyBuy.code);
     this.router.navigate(['/processing']);
@@ -144,13 +153,19 @@ export class ConverterComponent implements OnInit {
   async calculateSell() {
     sessionStorage.setItem('amountBuy', this.buyElement.nativeElement.value);
     sessionStorage.removeItem('amountSell');
-    await this.recalculateAmounts();
+    clearTimeout(this.timerSell)
+    this.timerSell = setTimeout(async () => {
+        await this.recalculateAmounts()
+    }, 600)
   }
 
   async calculateBuy() {
     sessionStorage.setItem('amountSell', this.sellElement.nativeElement.value);
     sessionStorage.removeItem('amountBuy');
-    await this.recalculateAmounts();
+    clearTimeout(this.timerBuy)
+    this.timerBuy = setTimeout(async () => {
+        await this.recalculateAmounts()
+    }, 600)
   }
 
   private async recalculateAmounts() {
@@ -158,13 +173,32 @@ export class ConverterComponent implements OnInit {
       const result = await this.stellarService.calculateBuy(this.currencySell, this.sellElement.nativeElement.value, this.currencyBuy);
       console.log(result);
       this.buyElement.nativeElement.value = result.destination_amount;
+
+      if (result === 'error') {
+        this.stateButton = 'disabled';
+        this.buyElement.nativeElement.value = '';
+        this.notify.update('Incorrect value entered', 'error');
+        return false
+      }
+      this.stateButton = 'active';
+      this.notify.clear();
+
     } else if (sessionStorage.getItem('amountBuy')) {
       const result = await this.stellarService.calculateSell(this.currencySell, this.currencyBuy, this.buyElement.nativeElement.value);
       console.log(result);
+      this.sellElement.nativeElement.value = result.source_amount;
+
+      if (result === 'error') {
+        this.stateButton = 'disabled';
+        this.sellElement.nativeElement.value = '';
+        this.notify.update('Incorrect value entered', 'error');
+        return false
+      }
+      this.stateButton = 'active';
+      this.notify.clear();
       // todo: check for minimum values deposit/withdrawal
       // todo: handle error when there is not enough liquidity to process the exchange
       // todo: sanity check, compare to market rate and if difference > 3% - tell the user
-      this.sellElement.nativeElement.value = result.source_amount;
     }
   }
 }

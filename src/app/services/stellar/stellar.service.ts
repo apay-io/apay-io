@@ -16,7 +16,8 @@ export class StellarService {
         return parseFloat(record.source_amount) < parseFloat(acc.source_amount) ? record : acc;
       });
     } else {
-      throw new Error('Unable to find path');
+      return 'error'
+      // throw new Error('Unable to find path');
     }
   }
 
@@ -28,11 +29,12 @@ export class StellarService {
     ).call();
     const records = filter(result.records, (record) => record.path.length <= 1);
     if (records.length > 0) {
-      return reduce(records, (acc, record) => {
-        return parseFloat(record.destination_amount) > parseFloat(acc.destination_amount) ? record : acc;
+        return reduce(records, (acc, record) => {
+          return parseFloat(record.destination_amount) > parseFloat(acc.destination_amount) ? record : acc;
       });
     } else {
-      throw new Error('Unable to find path');
+      return 'error'
+      // throw new Error('Unable to find path');
     }
   }
 }

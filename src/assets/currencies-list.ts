@@ -10,7 +10,10 @@ export const currencies = [
     'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GAWJSEVB6H4RIZX6FJJORJAXFLQDMFTKUAOU5UGFNWLPCYQ6A2O6PAYS'
+    'issuer': 'GAWJSEVB6H4RIZX6FJJORJAXFLQDMFTKUAOU5UGFNWLPCYQ6A2O6PAYS',
+    'minDeposit': '',
+    'minWithdraw': '',
+    'minWithdrawFee': '',
   },
   {
     'code': 'XLM',
@@ -22,7 +25,10 @@ export const currencies = [
     'depth': '5,026,742',
     'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'convert': '1',
-    'favorites': '2'
+    'favorites': '2',
+    'minDeposit': '',
+    'minWithdraw': '',
+    'minWithdrawFee': '',
   },
   {
     'code': 'BTC',
@@ -35,7 +41,10 @@ export const currencies = [
     'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GAUTUYY2THLF7SGITDFMXJVYH3LHDSMGEAKSBU267M2K7A3W543CKUEF'
+    'issuer': 'GAUTUYY2THLF7SGITDFMXJVYH3LHDSMGEAKSBU267M2K7A3W543CKUEF',
+    'minDeposit': '0.0002',
+    'minWithdraw': '0.001',
+    'minWithdrawFee': '0.0005',
   },
   {
     'code': 'BCH',
@@ -48,7 +57,10 @@ export const currencies = [
     'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GAEGOS7I6TYZSVHPSN76RSPIVL3SELATXZWLFO4DIAFYJF7MPAHFE7H4'
+    'issuer': 'GAEGOS7I6TYZSVHPSN76RSPIVL3SELATXZWLFO4DIAFYJF7MPAHFE7H4',
+    'minDeposit': '0.001',
+    'minWithdraw': '0.004',
+    'minWithdrawFee': '0.002',
   },
   {
     'code': 'ETH',
@@ -61,7 +73,10 @@ export const currencies = [
     'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
+    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+    'minDeposit': '0.001',
+    'minWithdraw': '0.01',
+    'minWithdrawFee': '0.005',
   },
   {
     'code': 'LTC',
@@ -74,7 +89,10 @@ export const currencies = [
     'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP'
+    'issuer': 'GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP',
+    'minDeposit': '0.01',
+    'minWithdraw': '0.05',
+    'minWithdrawFee': '0.025',
   },
   {
     'code': 'BAT',
@@ -87,7 +105,10 @@ export const currencies = [
     'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
+    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+    'minDeposit': '2',
+    'minWithdraw': '10',
+    'minWithdrawFee': '5',
   },
   {
     'code': 'KIN',
@@ -100,7 +121,10 @@ export const currencies = [
     'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
+    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+    'minDeposit': '',
+    'minWithdraw': '20000',
+    'minWithdrawFee': '10000',
   },
   {
     'code': 'LINK',
@@ -113,7 +137,10 @@ export const currencies = [
     'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
+    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+    'minDeposit': '2',
+    'minWithdraw': '10',
+    'minWithdrawFee': '5',
   },
   {
     'code': 'MTL',
@@ -126,7 +153,10 @@ export const currencies = [
     'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
+    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+    'minDeposit': '0.3',
+    'minWithdraw': '1',
+    'minWithdrawFee': '0.5',
   },
   {
     'code': 'OMG',
@@ -139,7 +169,10 @@ export const currencies = [
     'graph': [1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 9, 9, 8, 8, 7],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
+    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+    'minDeposit': '0.1',
+    'minWithdraw': '0.4',
+    'minWithdrawFee': '0.2',
   },
   {
     'code': 'REP',
@@ -152,7 +185,10 @@ export const currencies = [
     'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
+    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+    'minDeposit': '0.02',
+    'minWithdraw': '0.1',
+    'minWithdrawFee': '0.05',
   },
   {
     'code': 'SALT',
@@ -165,7 +201,10 @@ export const currencies = [
     'graph': [9, 7, 5, 4, 8, 4, 1, 2, 4, 8, 4, 1, 2, 5, 6],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
+    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+    'minDeposit': '0.5',
+    'minWithdraw': '2',
+    'minWithdrawFee': '1',
   },
   {
     'code': 'ZRX',
@@ -178,7 +217,10 @@ export const currencies = [
     'graph': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'convert': '1',
     'favorites': '2',
-    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR'
+    'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+    'minDeposit': '0.5',
+    'minWithdraw': '4',
+    'minWithdrawFee': '2',
   }
 ];
 
