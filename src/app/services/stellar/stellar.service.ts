@@ -4,11 +4,11 @@ import {reduce, filter} from 'lodash';
 export class StellarService {
   private server = new Server('https://horizon.stellar.org');
 
-  async calculateSell(sellCurrency, buyCurrency, buyAmount) {
+  async calculateSell(currencyIn, currencyOut, amountOut) {
     const result = await this.server.strictReceivePaths(
-      [new Asset(sellCurrency.code, sellCurrency.issuer)],
-      new Asset(buyCurrency.code, buyCurrency.issuer),
-      buyAmount
+      [new Asset(currencyIn.code, currencyIn.issuer)],
+      new Asset(currencyOut.code, currencyOut.issuer),
+      amountOut
     ).call();
     const records = filter(result.records, (record) => record.path.length <= 1);
     if (records.length > 0) {
@@ -21,11 +21,11 @@ export class StellarService {
     }
   }
 
-  async calculateBuy(sellCurrency, sellAmount, buyCurrency) {
+  async calculateBuy(currencyIn, amountIn, currencyOut) {
     const result = await this.server.strictSendPaths(
-      new Asset(sellCurrency.code, sellCurrency.issuer),
-      sellAmount,
-      [new Asset(buyCurrency.code, buyCurrency.issuer)],
+      new Asset(currencyIn.code, currencyIn.issuer),
+      amountIn,
+      [new Asset(currencyOut.code, currencyOut.issuer)],
     ).call();
     const records = filter(result.records, (record) => record.path.length <= 1);
     if (records.length > 0) {

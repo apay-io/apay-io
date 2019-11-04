@@ -16,7 +16,7 @@
                 You send
             </div>
             <div class="description-details">
-                1 BTC
+                {{orderParams.amountIn}} {{orderParams.currencyIn.code}}
             </div>
         </div>
         <div class="details-info">
@@ -24,7 +24,7 @@
                 You get
             </div>
             <div class="description-details">
-                150,703.612 XLM
+                {{orderParams.amountOut}} {{orderParams.currencyOut.code}}
             </div>
         </div>
         <div class="details-info">
@@ -32,15 +32,16 @@
                 Recipient address
             </div>
             <div class="description-details">
-                GAVV2NZGRYYW7OB6FYUJHY37HZZQC5PIHMZKIZTYZDSTAI7R3ZJOV2AK
+                {{orderParams.addressOut}}
             </div>
         </div>
-        <div class="details-info">
+        <div class="details-info" *ngIf="orderParams.rate">
             <div class="title-details">
                 Exchange rate
             </div>
             <div class="description-details">
-                1 BTC ≈ 151,081.31528822 XLM
+              1 {{ orderParams.currencyIn.code }} = {{ orderParams.rate.toPrecision(6)|number:'1.0-8' }} {{ orderParams.currencyOut.code }}<br/>
+              1 {{ orderParams.currencyOut.code }} = {{ (1/orderParams.rate).toPrecision(6)|number:'1.0-8' }} {{ orderParams.currencyIn.code }}
             </div>
         </div>
         <div class="details-info">
@@ -48,7 +49,7 @@
                 Exchange fee
             </div>
             <div class="description-details">
-                377.70328822 XLM
+                0%
             </div>
         </div>
         <div class="details-info">
@@ -56,7 +57,7 @@
                 Network fee (will be excluded from the final amount)
             </div>
             <div class="description-details">
-                0.00001 XLM
+
             </div>
         </div>
         <div class="details-info">
@@ -68,11 +69,11 @@
             </div>
         </div>
 
-        <div class="agreement-checkbox">
-            <mat-checkbox formControlName="agreement" >
-                <span style="word-break: break-all;" class="">Your transaction might be subject to <a href="#" id="" class="">KYC</a> procedure. In this case you may be asked to verify your ID and the origin of the funds</span>
-            </mat-checkbox>
-        </div>
+<!--        <div class="agreement-checkbox">-->
+<!--            <mat-checkbox formControlName="agreement" >-->
+<!--                <span style="word-break: break-all;" class="">Your transaction might be subject to <a href="#" id="" class="">KYC</a> procedure. In this case you may be asked to verify your ID and the origin of the funds</span>-->
+<!--            </mat-checkbox>-->
+<!--        </div>-->
         <button
                 [disabled]="!verifyForm.valid"
                 mat-raised-button

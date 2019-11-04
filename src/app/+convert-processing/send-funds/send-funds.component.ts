@@ -1,6 +1,7 @@
-import {Component, ElementRef, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {EventEmitter} from "@angular/core";
+import {Component, ElementRef, Input, OnInit, Output, ViewChild, ViewChildren} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {EventEmitter} from '@angular/core';
+import * as QRCode from 'qrcode';
 
 @Component({
   selector: 'app-send-funds',
@@ -8,19 +9,24 @@ import {EventEmitter} from "@angular/core";
   styleUrls: ['./send-funds.component.scss']
 })
 export class SendFundsComponent implements OnInit {
-    addressForm: FormGroup;
+  addressForm: FormGroup;
 
-    @Output() currentStep: EventEmitter<number> = new EventEmitter<number>();
+  @Input()
+  orderParams;
+  @Output() currentStep: EventEmitter<number> = new EventEmitter<number>();
+
+  @ViewChildren('canvas')
+  canvas;
 
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
-      this.addressForm = this.fb.group({
-          'address': ['', [
-              Validators.required
-          ]],
-      });
+    this.addressForm = this.fb.group({
+      'address': ['', [
+        Validators.required
+      ]],
+    });
   }
 
   changeStep(event) {

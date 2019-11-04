@@ -1,6 +1,6 @@
-import {Component, ElementRef, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {EventEmitter} from "@angular/core";
+import {Component, ElementRef, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-enter-address',
@@ -8,22 +8,28 @@ import {EventEmitter} from "@angular/core";
   styleUrls: ['./enter-address.component.scss']
 })
 export class EnterAddressComponent implements OnInit {
-    addressForm: FormGroup;
+  addressForm: FormGroup;
 
-    @Output() currentStep: EventEmitter<number> = new EventEmitter<number>();
+  @Input()
+  orderParams;
+  @Output() currentStep: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit() {
-      this.addressForm = this.fb.group({
-          'address': ['', [
-              Validators.required
-          ]],
-      });
+    this.addressForm = this.fb.group({
+      'address': ['', [
+        Validators.required
+      ]],
+    });
+    this.addressForm.valueChanges.subscribe((form) => {
+      this.orderParams.addressOut = form.address;
+    });
+    //todo: validate address
   }
 
   changeStep(event) {
-      this.currentStep.emit(event);
+    this.currentStep.emit(event);
   }
 }

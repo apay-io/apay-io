@@ -8,7 +8,7 @@
             Enter amount
         </div>
         <div [hidden]="this.step !== 1">
-            <app-enter-amount (currentStep)="nextStep($event)"></app-enter-amount>
+            <app-enter-amount [orderParams]="orderParams" (currentStep)="nextStep($event)"></app-enter-amount>
         </div>
     </div>
     <div class="step" [ngClass]="{'done': this.step > 2, 'active': this.step === 2}">
@@ -20,7 +20,7 @@
             Enter address
         </div>
         <div [hidden]="this.step !== 2">
-            <app-enter-address (currentStep)="nextStep($event)"></app-enter-address>
+            <app-enter-address [orderParams]="orderParams" (currentStep)="nextStep($event)"></app-enter-address>
         </div>
     </div>
     <div class="step" [ngClass]="{'done': this.step > 3, 'active': this.step === 3}">
@@ -32,7 +32,7 @@
             Check details
         </div>
         <div [hidden]="this.step !== 3">
-            <app-check-details (currentStep)="nextStep($event)"></app-check-details>
+            <app-check-details [orderParams]="orderParams" (currentStep)="nextStep($event)"></app-check-details>
         </div>
     </div>
     <div class="step" [ngClass]="{'done': this.step > 4, 'active': this.step === 4}">
@@ -44,7 +44,7 @@
             Send your funds
         </div>
         <div [hidden]="this.step !== 4">
-            <app-send-funds (currentStep)="nextStep($event)"></app-send-funds>
+            <app-send-funds [orderParams]="orderParams" (currentStep)="nextStep($event)"></app-send-funds>
         </div>
     </div>
     <div class="step" [ngClass]="{'done': this.step > 5, 'active': this.step === 5}">

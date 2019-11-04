@@ -23,7 +23,8 @@
     "rxjs": "6.5.3",
     "stellar-sdk": "latest",
     "web-animations-js": "2.3.2",
-    "zone.js": "0.10.2"
+    "zone.js": "0.10.2",
+    "ng-qrcode": "latest"
   },
   "scripts": {
     "ng": "ng",

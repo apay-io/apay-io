@@ -61,7 +61,7 @@ export class ExchangeInfoComponent implements OnInit, OnDestroy {
     public tokenFilterCtr: FormControl = new FormControl();
     public tokenWithdraw: FormControl = new FormControl();
     public filteredTokens: ReplaySubject<Token[]> = new ReplaySubject<Token[]>(1);
-    private tokens : Token[] = currencies;
+    private tokens: Token[] = currencies;
 
     constructor(
         public modalService: ModalService
