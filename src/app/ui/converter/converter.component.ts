@@ -6,6 +6,8 @@ import {FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {StellarService} from '../../services/stellar/stellar.service';
 import {NotifyService} from '../../core/notify.service';
+import {MatTableDataSource} from "@angular/material/table";
+import {GetCurrenciesServices} from "../../core/get-currencies.services";
 
 @Component({
   selector: 'app-converter',
@@ -18,7 +20,8 @@ export class ConverterComponent implements OnInit {
   currencyIn;
   timerOut;
   timerIn;
-  stateButton = 'disabled';
+  stateButton;
+  getInfoCurrencies;
   searchValue: string;
   arraySearchValue = [];
   currencyInfoSave = {type: '', code: ''};
@@ -37,7 +40,7 @@ export class ConverterComponent implements OnInit {
     public currencySelection: CurrencySelectionService,
     private readonly router: Router,
     private readonly stellarService: StellarService,
-  ) {
+    private getCurrencies: GetCurrenciesServices) {
   }
 
   ngAfterViewInit() {
@@ -45,6 +48,11 @@ export class ConverterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getCurrencies.state$.subscribe((data: any) => {
+      if (data.length) {
+        this.getInfoCurrencies = data;
+      }
+    })
     this.currencyOut = currencies
       .find(v => v.code === (sessionStorage.getItem('currencyOut') || 'XDR'));
     this.currencyIn = currencies
@@ -143,21 +151,28 @@ export class ConverterComponent implements OnInit {
   }
 
   async calculateSell() {
+    this.stateButton = 'disabled';
     sessionStorage.setItem('amountOut', this.buyElement.nativeElement.value);
     sessionStorage.removeItem('amountIn');
-      clearTimeout(this.timerIn)
-      this.timerIn = setTimeout(async () => {
-          await this.recalculateAmounts()
-      }, 600)
+    clearTimeout(this.timerOut)
+    this.timerOut = setTimeout(async () => {
+      await this.recalculateAmounts()
+    }, 600)
   }
 
   async calculateBuy() {
+    this.stateButton = 'disabled';
     sessionStorage.setItem('amountIn', this.sellElement.nativeElement.value);
     sessionStorage.removeItem('amountOut');
-      clearTimeout(this.timerOut)
-      this.timerOut = setTimeout(async () => {
-          await this.recalculateAmounts()
-      }, 600)
+    clearTimeout(this.timerIn)
+    this.timerIn = setTimeout(async () => {
+      if (this.sellElement.nativeElement.value < this.currencyIn.minDeposit) {
+        this.buyElement.nativeElement.value = '';
+        this.notify.update('Minimum value for ' + this.currencyIn.code + ' - ' + this.currencyIn.minDeposit, 'error');
+        return false
+      }
+      await this.recalculateAmounts()
+    }, 600)
   }
 
   private async recalculateAmounts() {
@@ -186,6 +201,14 @@ export class ConverterComponent implements OnInit {
 
       this.stateButton = 'active';
       this.notify.clear();
+
+      const inConvertToDollars = this.getInfoCurrencies.find(item => item.code === this.currencyIn.code).price * this.sellElement.nativeElement.value;
+      const outConvertToDollars = this.getInfoCurrencies.find(item => item.code === this.currencyOut.code).price * this.buyElement.nativeElement.value;
+      const outDifferentPercent = outConvertToDollars / 100 * 5;
+
+      if (Math.abs(inConvertToDollars - outConvertToDollars) >= outDifferentPercent) {
+        this.notify.update('Selling the current amount of currency at this price is not profitable', 'info');
+      }
     } catch (err) {
       console.log(err);
       this.stateButton = 'disabled';
