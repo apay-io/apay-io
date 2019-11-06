@@ -10,8 +10,7 @@ import {GetCurrenciesServices} from "./core/get-currencies.services";
 export class AppComponent {
   title = 'papaya';
     constructor(public loginServices: LoginService,
-                public getCurrencies: GetCurrenciesServices) {
-      this.getCurrencies.get()
+                ) {
     }
 }
 

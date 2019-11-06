@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalService} from '../../services/modal/modal.service';
 import {CurrencySelectionService} from '../../core/currency-selection.service';
 import {currencies} from '../../../assets/currencies-list';
@@ -14,13 +14,14 @@ import {GetCurrenciesServices} from "../../core/get-currencies.services";
   templateUrl: './converter.component.html',
   styleUrls: ['./converter.component.scss']
 })
-export class ConverterComponent implements OnInit {
+export class ConverterComponent implements OnInit, OnDestroy {
   tokens;
   currencyOut;
   currencyIn;
   timerOut;
   timerIn;
-  stateButton;
+  stateButton = 'disabled';
+  getCurrenciesSub;
   getInfoCurrencies;
   searchValue: string;
   arraySearchValue = [];
@@ -36,7 +37,7 @@ export class ConverterComponent implements OnInit {
 
   constructor(
     public modalService: ModalService,
-    private notify: NotifyService,
+    public notify: NotifyService,
     public currencySelection: CurrencySelectionService,
     private readonly router: Router,
     private readonly stellarService: StellarService,
@@ -44,11 +45,15 @@ export class ConverterComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.recalculateAmounts();
+    if (sessionStorage.getItem('amountIn')) {
+      this.recalculateAmounts();
+    }
   }
 
   ngOnInit() {
-    this.getCurrencies.state$.subscribe((data: any) => {
+    this.getCurrencies.get()
+
+    this.getCurrenciesSub = this.getCurrencies.state$.subscribe((data: any) => {
       if (data.length) {
         this.getInfoCurrencies = data;
       }
@@ -81,6 +86,10 @@ export class ConverterComponent implements OnInit {
         }
         this.recalculateAmounts();
       });
+  }
+
+  ngOnDestroy() {
+    this.getCurrenciesSub.unsubscribe();
   }
 
   async chooseCurrency(event, type) {
@@ -190,7 +199,6 @@ export class ConverterComponent implements OnInit {
         const result = await this.stellarService.calculateSell(this.currencyIn, this.currencyOut, sessionStorage.getItem('amountOut'));
         console.log(result);
         // todo: check for minimum values deposit/withdrawal
-        // todo: sanity check, compare to market rate and if difference > 5% - tell the user
         this.sellElement.nativeElement.value = result.source_amount;
         this.buyElement.nativeElement.value = sessionStorage.getItem('amountOut');
         if (this.isProcessingConverter) {

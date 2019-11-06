@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {sparkline} from '@fnando/sparkline';
@@ -21,7 +21,7 @@ export interface UserData {
   styleUrls: ['./table.component.scss']
 })
 
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnDestroy {
     displayedColumns: string[] = ['icon', 'name', 'change', 'usd', 'volume', 'depth', 'graph', 'convert'];
     dataSource: MatTableDataSource<UserData>;
 
@@ -30,6 +30,7 @@ export class TableComponent implements OnInit {
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;
     currencies;
+    getCurrenciesSub;
     initSparklineTimeOut;
     selected = 'USD';
 
@@ -38,7 +39,7 @@ export class TableComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.getCurrencies.state$.subscribe((data: any) => {
+        this.getCurrenciesSub = this.getCurrencies.state$.subscribe((data: any) => {
             if (data.length) {
                 this.currencies = data
                 this.dataSource = new MatTableDataSource(this.currencies);
@@ -57,6 +58,12 @@ export class TableComponent implements OnInit {
                 });
             }
         })
+    }
+
+    ngOnDestroy() {
+      if (this.getCurrenciesSub) {
+        this.getCurrenciesSub.unsubscribe();
+      }
     }
 
     applyFilter(filterValue: string) {
