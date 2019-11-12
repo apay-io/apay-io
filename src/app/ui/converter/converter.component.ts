@@ -215,7 +215,8 @@ export class ConverterComponent implements OnInit, OnDestroy {
       const outDifferentPercent = outConvertToDollars / 100 * 5;
 
       if (Math.abs(inConvertToDollars - outConvertToDollars) >= outDifferentPercent) {
-        this.notify.update('Selling the current amount of currency at this price is not profitable', 'info');
+        this.notify.update('Selling the current amount of currency at this price is not profitable', 'error');
+        this.stateButton = 'disabled';
       }
     } catch (err) {
       console.log(err);
