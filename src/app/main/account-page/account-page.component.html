@@ -1,0 +1,110 @@
+<div class="content">
+    <div class="wrapper">
+        <div class="general-chart">
+            <div class="title-wrapper">
+                <div class="title">
+                    Notional Balance
+                </div>
+                <div class="description">
+                    $ 1.618
+                </div>
+                <div class="description red">
+                    -8.2%
+                </div>
+            </div>
+            <div style="width: 100%">
+                <canvas baseChart
+                        [options]="doughnutChartOptions"
+                        [data]="doughnutChartData"
+                        [labels]="doughnutChartLabels"
+                        [chartType]="doughnutChartType"></canvas>
+            </div>
+        </div>
+        <div class="table-chart">
+            <!--<div *ngIf="chart">-->
+                <!--<canvas id="canvas">{{ chart }}</canvas>-->
+            <!--</div>-->
+            <div style="width: 100%">
+                <canvas baseChart
+                        [options]="barChartOptions"
+                        [colors]="lineChartColors"
+                        [data]="ChartData"
+                        [labels]="ChartLabels"
+                        [chartType]="ChartType"></canvas>
+            </div>
+        </div>
+        <div class="table">
+            <div class="row title">
+                <div class="cell">
+
+                </div>
+                <div class="cell">
+                    Balance
+                </div>
+                <div class="cell">
+                    %
+                </div>
+                <div class="cell">
+                    Value(XDR)
+                </div>
+                <div class="cell">
+                    Change 300
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell">
+                    BTC
+                </div>
+                <div class="cell">
+                    0.01
+                </div>
+                <div class="cell">
+                    30%
+                </div>
+                <div class="cell">
+                    97
+                </div>
+                <div class="cell">
+                    + 5%
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell">
+                    XDR
+                </div>
+                <div class="cell">
+                    100
+                </div>
+                <div class="cell">
+                    33%
+                </div>
+                <div class="cell">
+                    100
+                </div>
+                <div class="cell">
+                    -
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="cell">
+                    XLM
+                </div>
+                <div class="cell">
+                    1000
+                </div>
+                <div class="cell">
+                    37%
+                </div>
+                <div class="cell">
+                    109
+                </div>
+                <div class="cell">
+                    - 2%
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

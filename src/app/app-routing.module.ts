@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {ConvertPageComponent} from "./main/convert-page/convert-page.component";
 import {DepositPageComponent} from "./main/deposit-page/deposit-page.component";
 import {WithdrawPageComponent} from "./main/withdraw-page/withdraw-page.component";
+import {AccountPageComponent} from "./main/account-page/account-page.component";
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'processing',
     loadChildren: './+convert-processing/convert-processing.module#ConvertProcessingModule'
+  },
+  {
+    path: 'account',
+    component: AccountPageComponent
   },
 ];
 

@@ -21,5 +21,6 @@ export class ConvertPageComponent implements OnInit {
 
     ngOnInit() {
       this.stats$ = this.http.get('https://apay.io/api/stats');
+      console.log(this.stats$)
     }
 }

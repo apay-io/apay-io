@@ -16,15 +16,17 @@
     "@angular/router": "8.2.3",
     "@fnando/sparkline": "^0.3.10",
     "angular-in-memory-web-api": "0.5.4",
+    "chart.js": "^2.9.3",
     "core-js": "3.3.3",
     "hammerjs": "2.0.8",
     "lodash": "latest",
     "moment": "2.24.0",
+    "ng-qrcode": "latest",
+    "ng2-charts": "^2.3.0",
     "rxjs": "6.5.3",
     "stellar-sdk": "latest",
     "web-animations-js": "2.3.2",
-    "zone.js": "0.10.2",
-    "ng-qrcode": "latest"
+    "zone.js": "0.10.2"
   },
   "scripts": {
     "ng": "ng",
