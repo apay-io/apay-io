@@ -6,12 +6,12 @@
   .wrapper {
     display: flex;
     flex-wrap: wrap;
-    height: 400px;
     max-width: 1169px;
     margin: 0 auto;
+    padding-bottom: 80px;
 
     .general-chart {
-      width: 50%;
+      width: 40%;
       height: 400px;
       display: flex;
       justify-content: center;
@@ -44,7 +44,7 @@
     }
 
     .table-chart {
-      width: 50%;
+      width: 60%;
       height: 400px;
       display: flex;
       justify-content: center;
@@ -52,48 +52,101 @@
       position: relative;
     }
 
-    .table {
-      background: #fff;
+    .table-wrapper {
       width: 100%;
-      font-size: 14px;
-      border-radius: 8px;
-      box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
-      .row {
-        display: flex;
+      .table {
+        position: relative;
+        margin-top: 15px;
+        background: #fff;
         width: 100%;
-        height: 60px;
-        transition: .3s;
-        cursor: pointer;
+        font-size: 14px;
+        border-radius: 8px;
+        box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
-        &.title {
-          border-top-left-radius: 8px;
-          border-top-right-radius: 8px;
-          background: #f9f9f9;
-          cursor: default;
-        }
-
-        &:last-child {
-          border-bottom-left-radius: 8px;
-          border-bottom-right-radius: 8px;
-        }
-
-        .cell {
-          min-width: 20%;
-          flex:1 1 auto;
+        .row {
           display: flex;
-          align-items: center;
-          justify-content: center;
-          border-bottom: 1px solid #dfdfdf;
-          color: #979797;
-        }
+          width: 100%;
+          height: 60px;
+          transition: .3s;
+          cursor: pointer;
 
-        &.active {
-          background: #f9f9f9;
-        }
+          &.title {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            background: #f9f9f9;
+            cursor: default;
+          }
 
-        &:hover {
-          background: #f9f9f9;
+          &:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+          }
+
+          .cell {
+            min-width: 20%;
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #dfdfdf;
+            color: #979797;
+
+            .icon {
+              margin-right: 20px;
+              width: 25px;
+              height: 25px;
+              object-fit: contain;
+            }
+          }
+
+          &.active {
+            background: #f9f9f9;
+          }
+
+          &:hover {
+            background: #f9f9f9;
+          }
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    .wrapper {
+      .general-chart {
+        width: 100%;
+        height: 280px;
+
+        .title-wrapper {
+          margin-top: 5px;
+
+          .title {
+            width: 53px;
+          }
+        }
+      }
+
+      .table-chart {
+        margin-left: -10px;
+        width: 100%;
+        height: 350px;
+      }
+
+      .table-wrapper {
+        overflow: auto;
+
+        .table {
+          margin-top: 5px;
+          min-width: 500px;
+
+          .row {
+            .cell {
+              .icon {
+                margin-right: 10px;
+              }
+            }
+          }
         }
       }
     }
