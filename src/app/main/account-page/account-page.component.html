@@ -21,47 +21,54 @@
             </div>
         </div>
         <div class="table-chart">
-            <div id="chart" style="width: 100%; height: 100%"></div>
+            <div style="width: 100%">
+                <canvas baseChart
+                        [options]="barChartOptions"
+                        [colors]="lineChartColors"
+                        [data]="ChartData"
+                        [labels]="ChartLabels"
+                        [chartType]="ChartType"></canvas>
+            </div>
         </div>
         <div class="table-wrapper">
             <div class="table">
-            <div class="row title">
-                <div class="cell">
+                <div class="row title">
+                    <div class="cell">
 
+                    </div>
+                    <div class="cell">
+                        Balance
+                    </div>
+                    <div class="cell">
+                        %
+                    </div>
+                    <div class="cell">
+                        Value(XDR)
+                    </div>
+                    <div class="cell">
+                        Change 300
+                    </div>
                 </div>
-                <div class="cell">
-                    Balance
-                </div>
-                <div class="cell">
-                    %
-                </div>
-                <div class="cell">
-                    Value(XDR)
-                </div>
-                <div class="cell">
-                    Change 300
+
+                <div class="row" *ngFor="let item of dataWallet" (click)="drawingChart('ALL', 30,'days')">
+                    <div class="cell">
+                        <img class="icon" [src]="item.icon" alt="">
+                        {{item.code}}
+                    </div>
+                    <div class="cell">
+                        {{item.balance}}
+                    </div>
+                    <div class="cell">
+                        {{item.percent}}
+                    </div>
+                    <div class="cell">
+                        {{item.value}}
+                    </div>
+                    <div class="cell">
+                        {{item.change}}
+                    </div>
                 </div>
             </div>
-
-            <div class="row" *ngFor="let item of dataWallet" (click)="drawingChart()">
-                <div class="cell">
-                    <img class="icon" [src]="item.icon" alt="">
-                    {{item.code}}
-                </div>
-                <div class="cell">
-                    {{item.balance}}
-                </div>
-                <div class="cell">
-                    {{item.percent}}
-                </div>
-                <div class="cell">
-                    {{item.value}}
-                </div>
-                <div class="cell">
-                    {{item.change}}
-                </div>
-            </div>
-        </div>
         </div>
     </div>
 </div>
