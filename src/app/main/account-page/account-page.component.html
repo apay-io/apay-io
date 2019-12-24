@@ -3,7 +3,7 @@
         <div class="general-chart">
             <div class="title-wrapper">
                 <div class="title">
-                    Notional Balance
+                    Total Balance
                 </div>
                 <div class="description">
                     $ 1.618
@@ -12,7 +12,7 @@
                     -8.2%
                 </div>
             </div>
-            <div style="width: 100%">
+            <div class="chart">
                 <canvas baseChart
                         [options]="doughnutChartOptions"
                         [data]="doughnutChartData"
@@ -24,7 +24,7 @@
             <div style="width: 100%">
                 <canvas baseChart
                         [options]="barChartOptions"
-                        [colors]="lineChartColors"
+                        [colors]="barChartColors"
                         [data]="ChartData"
                         [labels]="ChartLabels"
                         [chartType]="ChartType"></canvas>
@@ -48,6 +48,9 @@
                     <div class="cell">
                         Change 300
                     </div>
+                    <div class="cell">
+
+                    </div>
                 </div>
 
                 <div class="row" *ngFor="let item of dataWallet" (click)="drawingChart('ALL', 30,'days')">
@@ -65,10 +68,47 @@
                         {{item.value}}
                     </div>
                     <div class="cell">
-                        {{item.change}}
+                        {{item.change === 0 ? '-' : item.change + '%'}}
+                    </div>
+                    <div class="cell">
+                        <div class="buttons">
+                            <div class="button-convert">
+                                <div class="text">
+                                    Deposit
+                                </div>
+                            </div>
+                            <div class="button-convert">
+                                <div class="text">
+                                    Withdraw
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row title">
+                    <div class="cell">
+                        Total
+                    </div>
+                    <div class="cell">
+
+                    </div>
+                    <div class="cell">
+
+                    </div>
+                    <div class="cell">
+                        {{sumValue}}
+                    </div>
+                    <div class="cell">
+                        {{sumChange}}%
+                    </div>
+                    <div class="cell">
+
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="open-trustline">
+            open TrustLine
         </div>
     </div>
 </div>

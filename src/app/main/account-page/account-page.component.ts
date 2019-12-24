@@ -18,19 +18,23 @@ export interface Data {
 
 export class AccountPageComponent implements OnInit {
   dataWallet = testData;
+  sumValue = 0;
+  sumChange = 0;
   public doughnutChartLabels = [];
   public doughnutChartData = [];
   public doughnutChartType = 'doughnut';
+
+  public ChartLabels = [];
+  public ChartData = [];
+  public debounceFlag = false;
+  public ChartType = 'line';
 
   constructor(
     private readonly http: HttpClient,
     public readonly appComponent: AppComponent,
   ) {}
 
-  public ChartLabels = [];
-  public ChartData = [];
-  public ChartType = 'line';
-  lineChartColors: Color[] = [
+  barChartColors: Color[] = [
     {
       borderColor: '#0f59d1',
       backgroundColor: '#0f59d11f',
@@ -42,7 +46,12 @@ export class AccountPageComponent implements OnInit {
     legend: {
       display: false,
     },
-    responsive: true
+    responsive: true,
+    'onClick' : function (evt, item) {
+      console.log ('legend onClick', evt);
+      console.log('legd item', item);
+    }
+
   };
 
   public barChartOptions: any = {
@@ -60,20 +69,29 @@ export class AccountPageComponent implements OnInit {
     scales: {
       xAxes: [{
         ticks: {
-          fontColor: "#000",
-          fixedSize: 3,
+          fontColor: "#a5a5a5",
+          maxTicksLimit: 6,
+          maxRotation: 0,
         },
         type: "time",
         time: {
           // unit: "month"
-          tooltipFormat: "ll"
-        }
+          tooltipFormat: "ll",
+        },
+        gridLines: {
+          display: false ,
+          color: "#FFFFFF"
+        },
       }],
       yAxes: [{
         ticks: {
-          fontColor: "#000",
-          fixedSize: 1,
-        }
+          fontColor: "#a5a5a5",
+          maxTicksLimit: 5,
+        },
+        gridLines: {
+          display: false ,
+          color: "#FFFFFF"
+        },
       }]
     },
     tooltips: {
@@ -86,8 +104,11 @@ export class AccountPageComponent implements OnInit {
   ngOnInit() {
     this.drawingChart('AED', 30,"days")
     this.dataWallet.map((item) => {
-      this.doughnutChartData.push(item.value);
+      this.doughnutChartData.push(item.percent);
       this.doughnutChartLabels.push(item.code);
+      console.log(item.value, item.change)
+      this.sumValue += +item.value;
+      this.sumChange += +item.change;
     });
   }
 
@@ -98,12 +119,26 @@ export class AccountPageComponent implements OnInit {
   }
 
   async updateChart (select_val, time, nowtime) {
+    if (this.debounceFlag) {
+      return false
+    }
+    this.debounceFlag = true;
     this.ChartLabels = [];
     this.ChartData = [];
+    setTimeout(() => {
+      this.debounceFlag = false;
+    }, 1000);
     return this.http.get(`https://back.paysxdr.com/ratesHistory?start=${time}&finish=${nowtime}&base=${select_val}&currency=XDR`).subscribe((data: [Data]) => {
       data.map(item => {
         this.ChartLabels.push(item.date);
-        this.ChartData.push(item.val);
+        let reductionValue;
+        if (item.val.toString().length > 7) {
+          reductionValue = item.val;
+          reductionValue = reductionValue.toFixed(5);
+        } else {
+          reductionValue = item.val
+        }
+        this.ChartData.push(reductionValue);
       })
     });
   }

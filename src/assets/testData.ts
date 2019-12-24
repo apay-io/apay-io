@@ -6,7 +6,7 @@ export const testData = [
     'balance': 0.01,
     'percent': '30',
     'value': '97',
-    'change': '+5%',
+    'change': '+5',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
   },
   {
@@ -16,7 +16,7 @@ export const testData = [
     'balance': 100,
     'percent': '33',
     'value': '100',
-    'change': '-',
+    'change': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
   },
   {
@@ -26,7 +26,7 @@ export const testData = [
     'balance': 1000,
     'percent': '37',
     'value': '109',
-    'change': '-2%',
+    'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
   }
 ];
