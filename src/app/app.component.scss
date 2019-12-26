@@ -53,7 +53,12 @@
           }
 
           .text {
+            margin-right: 25px;
             color: #fff;
+
+            &:nth-last-of-type {
+              margin-right: 0;
+            }
           }
 
           &:hover {
