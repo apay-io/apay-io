@@ -43,7 +43,8 @@ export class LoginComponent implements OnInit {
         }, 300)
     }
 
-    closeModal() {
+    closeModal(account) {
+      localStorage.setItem('account', account);
         this.loginServices.close();
         this.clear();
     }
