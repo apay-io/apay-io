@@ -35,7 +35,8 @@ import {ChartsModule} from "ng2-charts";
         UiModule,
         CoreModule,
         AppRoutingModule,
-        ChartsModule
+        ChartsModule,
+        MaterialModule,
     ],
     entryComponents: [AppComponent],
     declarations: [

@@ -4,6 +4,8 @@ import {AppComponent} from '../../app.component';
 import {testData} from "../../../assets/testData";
 import {Color} from "ng2-charts";
 import * as moment from 'moment';
+import {ModalService} from "../../services/modal/modal.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 export interface Data {
   date: string;
@@ -20,6 +22,9 @@ export class AccountPageComponent implements OnInit {
   dataWallet = testData;
   sumValue = 0;
   sumChange = 0;
+  hideLowBalanceFlag;
+  searchValue;
+  arraySearchValue;
   public doughnutChartLabels = [];
   public doughnutChartData = [];
   public doughnutChartType = 'doughnut';
@@ -28,11 +33,38 @@ export class AccountPageComponent implements OnInit {
   public ChartData = [];
   public debounceFlag = false;
   public ChartType = 'line';
+  public activeElem = 0;
+  public testDataDepositModal = [
+    {
+      name: 'BCH',
+      min: '0.00200000',
+      fee: '0.001',
+      balance: '0.0031990'
+    },
+    {
+      name: 'BEP2',
+      min: '0.20000000',
+      fee: '0.002',
+      balance: '12.2031990'
+    }
+  ];
+
+  depositForm: FormGroup;
 
   constructor(
     private readonly http: HttpClient,
     public readonly appComponent: AppComponent,
-  ) {}
+    public modalService: ModalService
+  ) {
+    this.depositForm = new FormGroup({
+      recipient: new FormControl('', [
+        Validators.required,
+      ]),
+      amount: new FormControl('', [
+        Validators.required,
+      ])
+    });
+  }
 
   barChartColors: Color[] = [
     {
@@ -47,10 +79,11 @@ export class AccountPageComponent implements OnInit {
       display: false,
     },
     responsive: true,
+    cutoutPercentage: 75,
     'onClick' : function (evt, item) {
       console.log ('legend onClick', evt);
       console.log('legd item', item);
-    }
+    },
 
   };
 
@@ -102,11 +135,14 @@ export class AccountPageComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.arraySearchValue = this.dataWallet
     this.drawingChart('AED', 30,"days")
     this.dataWallet.map((item) => {
+      if (item.balance === 0) {
+        return false
+      }
       this.doughnutChartData.push(item.percent);
       this.doughnutChartLabels.push(item.code);
-      console.log(item.value, item.change)
       this.sumValue += +item.value;
       this.sumChange += +item.change;
     });
@@ -141,5 +177,41 @@ export class AccountPageComponent implements OnInit {
         this.ChartData.push(reductionValue);
       })
     });
+  }
+
+  openModal (event, modalName) {
+    event.stopPropagation();
+    this.modalService.open(modalName);
+    this.depositForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.testDataDepositModal[0].balance), Validators.min(+this.testDataDepositModal[0].min)]);
+  }
+
+  changeNetwork(index, min, balance) {
+    this.activeElem = index;
+    this.depositForm.controls['amount'].setValidators([Validators.required, Validators.max(balance), Validators.min(min)]);
+    this.depositForm.reset();
+  }
+
+  sendDeposit () {
+    //submit form deposit
+  }
+
+  onCheckboxChagen(event) {
+    if (event.checked) {
+      this.hideLowBalanceFlag = true;
+      return false;
+    }
+    this.hideLowBalanceFlag = false;
+  }
+
+  search() {
+    if (this.searchValue.length < 2) {
+      this.arraySearchValue = this.dataWallet;
+      return false;
+    }
+
+    this.searchValue = this.searchValue[0].toUpperCase() + this.searchValue.slice(1);
+    this.arraySearchValue = this.dataWallet.filter(
+      item => (item.name.indexOf(this.searchValue) > -1) || (item.code.indexOf(this.searchValue.toUpperCase()) > -1)
+    );
   }
 }
