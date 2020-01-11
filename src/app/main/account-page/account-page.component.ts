@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AppComponent} from '../../app.component';
-import {testData} from "../../../assets/testData";
-import {Color} from "ng2-charts";
+import {testData} from '../../../assets/testData';
+import {Color} from 'ng2-charts';
 import * as moment from 'moment';
 import {ModalService} from "../../services/modal/modal.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {StellarService} from '../../services/stellar/stellar.service';
 
 export interface Data {
   date: string;
@@ -33,6 +34,7 @@ export class AccountPageComponent implements OnInit {
   public ChartData = [];
   public debounceFlag = false;
   public ChartType = 'line';
+  private account: string;
   public activeElem = 0;
   public testDataDepositModal = [
     {
@@ -54,6 +56,7 @@ export class AccountPageComponent implements OnInit {
   constructor(
     private readonly http: HttpClient,
     public readonly appComponent: AppComponent,
+    private readonly stellarService: StellarService,
     public modalService: ModalService
   ) {
     this.depositForm = new FormGroup({
@@ -83,8 +86,7 @@ export class AccountPageComponent implements OnInit {
     'onClick' : function (evt, item) {
       console.log ('legend onClick', evt);
       console.log('legd item', item);
-    },
-
+    }
   };
 
   public barChartOptions: any = {
@@ -102,41 +104,46 @@ export class AccountPageComponent implements OnInit {
     scales: {
       xAxes: [{
         ticks: {
-          fontColor: "#a5a5a5",
+          fontColor: '#a5a5a5',
           maxTicksLimit: 6,
           maxRotation: 0,
         },
-        type: "time",
+        type: 'time',
         time: {
           // unit: "month"
-          tooltipFormat: "ll",
+          tooltipFormat: 'll',
         },
         gridLines: {
           display: false ,
-          color: "#FFFFFF"
+          color: '#FFFFFF'
         },
       }],
       yAxes: [{
         ticks: {
-          fontColor: "#a5a5a5",
+          fontColor: '#a5a5a5',
           maxTicksLimit: 5,
         },
         gridLines: {
           display: false ,
-          color: "#FFFFFF"
+          color: '#FFFFFF'
         },
       }]
     },
     tooltips: {
-      position: "nearest",
-      mode: "index",
+      position: 'nearest',
+      mode: 'index',
       intersect: false,
     },
   };
 
   ngOnInit() {
-    this.arraySearchValue = this.dataWallet
-    this.drawingChart('AED', 30,"days")
+    this.arraySearchValue = this.dataWallet;
+    this.account = localStorage.getItem('account');
+    if (this.account) {
+      this.stellarService.balances(this.account)
+        .then(console.log);
+    }
+    this.drawingChart('AED', 30, 'days');
     this.dataWallet.map((item) => {
       if (item.balance === 0) {
         return false
@@ -148,15 +155,15 @@ export class AccountPageComponent implements OnInit {
     });
   }
 
-  async drawingChart(select_val, time_amount,time_type) {
-      const nowtime = moment().format("YYYY-MM-DD");
-      const time = moment().subtract(time_amount,  time_type).format("YYYY-MM-DD");
+  async drawingChart(select_val, time_amount, time_type) {
+      const nowtime = moment().format('YYYY-MM-DD');
+      const time = moment().subtract(time_amount,  time_type).format('YYYY-MM-DD');
       await this.updateChart(select_val, time, nowtime);
   }
 
   async updateChart (select_val, time, nowtime) {
     if (this.debounceFlag) {
-      return false
+      return false;
     }
     this.debounceFlag = true;
     this.ChartLabels = [];
@@ -172,10 +179,10 @@ export class AccountPageComponent implements OnInit {
           reductionValue = item.val;
           reductionValue = reductionValue.toFixed(5);
         } else {
-          reductionValue = item.val
+          reductionValue = item.val;
         }
         this.ChartData.push(reductionValue);
-      })
+      });
     });
   }
 

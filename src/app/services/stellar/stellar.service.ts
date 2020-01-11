@@ -1,8 +1,14 @@
-import {Asset, Server} from 'stellar-sdk';
+import {Asset, Server, AssetType, Horizon} from 'stellar-sdk';
 import {reduce, filter} from 'lodash';
+import BalanceLine = Horizon.BalanceLine;
 
 export class StellarService {
   private server = new Server('https://horizon.stellar.org');
+  knownIssuers = [
+    'GAUTUYY2THLF7SGITDFMXJVYH3LHDSMGEAKSBU267M2K7A3W543CKUEF',
+    'GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP',
+    'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
+  ];
 
   async calculateSell(currencyIn, currencyOut, amountOut) {
     const result = await this.server.strictReceivePaths(
@@ -33,6 +39,24 @@ export class StellarService {
       });
     } else {
       throw new Error('Unable to find path');
+    }
+  }
+
+  async balances(account: string) {
+    try {
+      const result = await this.server.loadAccount(account);
+      return result.balances
+        .filter((item: BalanceLine) => {
+          return item.asset_type === 'native' || this.knownIssuers.find(issuer => issuer === item.asset_issuer);
+        }).map((item: BalanceLine) => {
+        return {
+          code: (item.asset_type === 'native' ? 'XLM' : item.asset_code),
+          amount: item.balance,
+        };
+      });
+    } catch (err) {
+      console.error(err);
+      return [];
     }
   }
 }
