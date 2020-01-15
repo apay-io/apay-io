@@ -180,7 +180,7 @@
               min-width: 35px;
             }
 
-            .buttons {
+            .buttons-group {
               display: flex;
               justify-content: center;
               width: 100%;
@@ -213,6 +213,11 @@
 
                 &:hover {
                   background: rgb(238, 238, 238);
+                }
+
+                &.disabled {
+                  cursor: default;
+                  background: #e8e8e8;
                 }
               }
 
@@ -283,7 +288,7 @@
   }
 }
 
-.deposit-modal {
+.operations-modal {
   max-width: 650px;
   margin-left: 2%;
   margin-right: 2%;
@@ -297,7 +302,7 @@
   }
 
   .amount {
-    margin-bottom: 15px;
+    margin-bottom: 35px;
     display: flex;
     position: relative;
 
@@ -313,8 +318,14 @@
         color: #979797;
 
         &.currency {
+          cursor: pointer;
+          transition: .3s;
           margin-left: 6px;
           color: #efa344;
+
+          &:hover {
+            color: #ffae49;
+          }
         }
       }
     }
@@ -322,8 +333,16 @@
     .min {
       position: absolute;
       left: 0;
-      bottom: -5px;
+      bottom: -25px;
       color: #000;
+      font-size: 14px;
+    }
+
+    .error {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      color: #ed0000;
       font-size: 14px;
     }
   }
@@ -337,23 +356,50 @@
       color: #979797;
     }
 
-    .value {
+    .text {
       color: #000;
+    }
+
+    &.deposit {
+      margin-top: 0;
+      flex-direction: column;
+
+      .title {
+        width: unset;
+        font-weight: 800;
+        color: #000;
+        margin-bottom: 20px;
+      }
+
+      .text {
+        color: #979797;
+        line-height: 23px;
+      }
     }
   }
 
-  .select-currency {
-    padding-bottom: 20px;
+  .select-wrapper {
+    padding-bottom: 35px;
 
     .title {
       color: #000;
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 15px;
+      font-weight: 600;
     }
 
-    .networks {
+    .address {
+      width: 100%;
+      padding-bottom: 20px;
+      color: #efa344;
+      font-size: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .selects {
       display: flex;
-      flex-wrap: wrap;
 
       .item {
         border-radius: 4px;
@@ -364,22 +410,52 @@
         transition: .3s;
         position: relative;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        &:nth-last-of-type {
+        &:last-child {
           margin-right: 0;
+        }
+
+        .icon {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          margin-right: 5px;
+          transition: .3s;
+
+          &.copy {
+            fill: none;
+            stroke: #000;
+          }
         }
 
         .text {
           color: #000;
           transition: .3s;
-          font-size: 18px;
+          font-size: 17px;
           text-align: center;
+          font-weight: 600;
+
+          @include mobile {
+            font-size: 14px;
+          }
         }
 
         &:hover {
           border: 1px solid #efa344;
           .text {
             color: #efa344;
+          }
+
+          .icon {
+            fill: #efa344;
+
+            &.copy {
+              fill: none;
+              stroke: #efa344;
+            }
           }
         }
 
@@ -410,6 +486,7 @@
 
 .button-next {
   margin-top: 25px;
+  background:  #0f59d1;
 }
 
 ::ng-deep .mat-form-field {

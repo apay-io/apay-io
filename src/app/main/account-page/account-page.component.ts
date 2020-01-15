@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AppComponent} from '../../app.component';
-import {testData} from '../../../assets/testData';
+import {accountData} from '../../../assets/accountData';
 import {Color} from 'ng2-charts';
 import * as moment from 'moment';
 import {ModalService} from "../../services/modal/modal.service";
@@ -20,12 +20,15 @@ export interface Data {
 })
 
 export class AccountPageComponent implements OnInit {
-  dataWallet = testData;
+  dataWallet = accountData;
+  rates;
+  percent;
   sumValue = 0;
   sumChange = 0;
   hideLowBalanceFlag;
   searchValue;
   arraySearchValue;
+  address;
   public doughnutChartLabels = [];
   public doughnutChartData = [];
   public doughnutChartType = 'doughnut';
@@ -36,7 +39,7 @@ export class AccountPageComponent implements OnInit {
   public ChartType = 'line';
   private account: string;
   public activeElem = 0;
-  public testDataDepositModal = [
+  public testDataModal = [
     {
       name: 'BCH',
       min: '0.00200000',
@@ -51,20 +54,20 @@ export class AccountPageComponent implements OnInit {
     }
   ];
 
-  depositForm: FormGroup;
+  withdrawForm: FormGroup;
+  regexpAmount = /^[0-9]*[.,]?[0-9]+$/;
 
-  constructor(
-    private readonly http: HttpClient,
-    public readonly appComponent: AppComponent,
-    private readonly stellarService: StellarService,
-    public modalService: ModalService
-  ) {
-    this.depositForm = new FormGroup({
+  constructor(private readonly http: HttpClient,
+              public readonly appComponent: AppComponent,
+              private readonly stellarService: StellarService,
+              public modalService: ModalService) {
+    this.withdrawForm = new FormGroup({
       recipient: new FormControl('', [
         Validators.required,
       ]),
       amount: new FormControl('', [
         Validators.required,
+        Validators.pattern(this.regexpAmount)
       ])
     });
   }
@@ -76,8 +79,13 @@ export class AccountPageComponent implements OnInit {
     },
   ];
 
-  public doughnutChartOptions: any = {
+  datasets: any[] = [
+    {
+      backgroundColor: []
+    }
+  ];
 
+  public doughnutChartOptions: any = {
     legend: {
       display: false,
     },
@@ -90,7 +98,6 @@ export class AccountPageComponent implements OnInit {
   };
 
   public barChartOptions: any = {
-
     legend: {
       display: false,
     },
@@ -114,7 +121,7 @@ export class AccountPageComponent implements OnInit {
           tooltipFormat: 'll',
         },
         gridLines: {
-          display: false ,
+          display: false,
           color: '#FFFFFF'
         },
       }],
@@ -124,7 +131,7 @@ export class AccountPageComponent implements OnInit {
           maxTicksLimit: 5,
         },
         gridLines: {
-          display: false ,
+          display: false,
           color: '#FFFFFF'
         },
       }]
@@ -137,31 +144,53 @@ export class AccountPageComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.http.get(`https://rates.apay.io`).subscribe((data: [Data]) => {
+      this.rates = data;
+    });
+
+    // test address
+    this.address = '1GJSDJFHJKfhjsdSDKFH3FDSFJ349GGDSfg8DSFk';
+
     this.arraySearchValue = this.dataWallet;
     this.account = localStorage.getItem('account');
     if (this.account) {
       this.stellarService.balances(this.account)
-        .then(console.log);
+        .then((result) => {
+          result.map(item => {
+            const findToken = this.dataWallet.find(x => x.code === item.code);
+            findToken.balance = item.amount;
+            // findToken.value = +item.amount * this.rates[item.code]
+
+            //test rates = 50
+            findToken.value = +item.amount * 50;
+            this.sumValue += findToken.value;
+
+            const generateRandomColor = `rgba(${this.randomNumber()}, ${this.randomNumber()}, ${this.randomNumber()}, 1)`;
+            this.datasets[0].backgroundColor.push(generateRandomColor);
+          });
+          this.percent = 100 / this.sumValue;
+
+          this.drawingChart('AED', 30, 'days');
+          this.dataWallet.map((item) => {
+            if (item.balance === '0') {
+              return false
+            }
+            item.percent = (this.percent * item.value).toFixed(2)
+            this.doughnutChartData.push(item.percent);
+            this.doughnutChartLabels.push(item.code);
+            this.sumChange += +item.change;
+          });
+        });
     }
-    this.drawingChart('AED', 30, 'days');
-    this.dataWallet.map((item) => {
-      if (item.balance === 0) {
-        return false
-      }
-      this.doughnutChartData.push(item.percent);
-      this.doughnutChartLabels.push(item.code);
-      this.sumValue += +item.value;
-      this.sumChange += +item.change;
-    });
   }
 
   async drawingChart(select_val, time_amount, time_type) {
-      const nowtime = moment().format('YYYY-MM-DD');
-      const time = moment().subtract(time_amount,  time_type).format('YYYY-MM-DD');
-      await this.updateChart(select_val, time, nowtime);
+    const nowtime = moment().format('YYYY-MM-DD');
+    const time = moment().subtract(time_amount, time_type).format('YYYY-MM-DD');
+    await this.updateChart(select_val, time, nowtime);
   }
 
-  async updateChart (select_val, time, nowtime) {
+  async updateChart(select_val, time, nowtime) {
     if (this.debounceFlag) {
       return false;
     }
@@ -186,23 +215,30 @@ export class AccountPageComponent implements OnInit {
     });
   }
 
-  openModal (event, modalName) {
+  openModal(event, balance, modalName) {
     event.stopPropagation();
+    if (balance === '0' && modalName === 'withdraw') {
+      return false
+    }
     this.modalService.open(modalName);
-    this.depositForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.testDataDepositModal[0].balance), Validators.min(+this.testDataDepositModal[0].min)]);
+    this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.testDataModal[this.activeElem].balance), Validators.min(+this.testDataModal[this.activeElem].min), Validators.pattern(this.regexpAmount)]);
   }
 
   changeNetwork(index, min, balance) {
     this.activeElem = index;
-    this.depositForm.controls['amount'].setValidators([Validators.required, Validators.max(balance), Validators.min(min)]);
-    this.depositForm.reset();
+    this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(balance), Validators.min(min), Validators.pattern(this.regexpAmount)]);
+    this.withdrawForm.reset();
   }
 
-  sendDeposit () {
+  get _amount() {
+    return this.withdrawForm.get('amount')
+  }
+
+  sendWithdrawForm() {
     //submit form deposit
   }
 
-  onCheckboxChagen(event) {
+  isHideLowBalanceCheckbox(event) {
     if (event.checked) {
       this.hideLowBalanceFlag = true;
       return false;
@@ -220,5 +256,13 @@ export class AccountPageComponent implements OnInit {
     this.arraySearchValue = this.dataWallet.filter(
       item => (item.name.indexOf(this.searchValue) > -1) || (item.code.indexOf(this.searchValue.toUpperCase()) > -1)
     );
+  }
+
+  randomNumber() {
+    return Math.ceil(Math.random() * 255);
+  }
+
+  addFullBalance(balance) {
+    this.withdrawForm.controls['amount'].setValue(balance);
   }
 }
