@@ -157,19 +157,16 @@ export class AccountPageComponent implements OnInit {
       this.stellarService.balances(this.account)
         .then((result) => {
           result.map(item => {
+            const findIndexToken = this.dataWallet.findIndex(x => x.code === item.code);
+            this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken,1));
             const findToken = this.dataWallet.find(x => x.code === item.code);
             findToken.balance = item.amount;
-            // findToken.value = +item.amount * this.rates[item.code]
+            findToken.value = +(+item.amount / this.rates[item.code] * this.rates['XDR']).toFixed(6);
+            this.sumValue = +(this.sumValue + findToken.value).toFixed(6);
 
-            //test rates = 50
-            findToken.value = +item.amount * 50;
-            this.sumValue += findToken.value;
-
-            const generateRandomColor = `rgba(${this.randomNumber()}, ${this.randomNumber()}, ${this.randomNumber()}, 1)`;
-            this.datasets[0].backgroundColor.push(generateRandomColor);
+            this.datasets[0].backgroundColor.unshift(findToken.color);
           });
           this.percent = 100 / this.sumValue;
-
           this.drawingChart('AED', 30, 'days');
           this.dataWallet.map((item) => {
             if (item.balance === '0') {
@@ -224,12 +221,6 @@ export class AccountPageComponent implements OnInit {
     this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.testDataModal[this.activeElem].balance), Validators.min(+this.testDataModal[this.activeElem].min), Validators.pattern(this.regexpAmount)]);
   }
 
-  changeNetwork(index, min, balance) {
-    this.activeElem = index;
-    this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(balance), Validators.min(min), Validators.pattern(this.regexpAmount)]);
-    this.withdrawForm.reset();
-  }
-
   get _amount() {
     return this.withdrawForm.get('amount')
   }
@@ -256,10 +247,6 @@ export class AccountPageComponent implements OnInit {
     this.arraySearchValue = this.dataWallet.filter(
       item => (item.name.indexOf(this.searchValue) > -1) || (item.code.indexOf(this.searchValue.toUpperCase()) > -1)
     );
-  }
-
-  randomNumber() {
-    return Math.ceil(Math.random() * 255);
   }
 
   addFullBalance(balance) {

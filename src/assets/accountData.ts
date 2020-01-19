@@ -8,6 +8,7 @@ export const accountData = [
     'value': 0,
     'change': '+5',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#211265'
   },
   {
     'code': 'XLM',
@@ -18,6 +19,7 @@ export const accountData = [
     'value': 0,
     'change': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#000000'
   },
   {
     'code': 'BTC',
@@ -28,6 +30,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#f8a036'
   },
   {
     'code': 'BCH',
@@ -38,6 +41,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#548d1d'
   },
   {
     'code': 'ETH',
@@ -48,6 +52,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#9c68aa'
   },
   {
     'code': 'LTC',
@@ -58,6 +63,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#315d9e'
   },
   {
     'code': 'BAT',
@@ -68,6 +74,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#ff5000'
   },
   {
     'code': 'KIN',
@@ -78,6 +85,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#005fff'
   },
   {
     'code': 'LINK',
@@ -88,6 +96,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#3fa0f1'
   },
   {
     'code': 'MTL',
@@ -98,6 +107,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#1e1f25'
   },
   {
     'code': 'OMG',
@@ -108,6 +118,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#1a53f0'
   },
   {
     'code': 'REP',
@@ -118,6 +129,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#ae9fc1'
   },
   {
     'code': 'SALT',
@@ -128,6 +140,7 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#369da3'
   },
   {
     'code': 'ZRX',
@@ -138,5 +151,6 @@ export const accountData = [
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+    'color': '#000'
   }
 ];

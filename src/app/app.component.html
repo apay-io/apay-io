@@ -34,9 +34,21 @@
                     </div>
                 </div>
             </div>
-            <div class="profile-info">
+            <div *ngIf="!loginFlag" class="profile-info">
                 <div class="button-sign-in" (click)="this.loginServices.open()">
                     Sign in
+                </div>
+            </div>
+            <div *ngIf="loginFlag" class="profile-info">
+                <div class="public-key" [text-copy]="publicKey">
+                    {{this.publicKeyPart}}
+                </div>
+                <svg class="icon" [text-copy]="publicKey"
+                     width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 5V4C15 2.89543 14.1046 2 13 2H4C2.89543 2 2 2.89543 2 4V13C2 14.1046 2.89543 15 4 15H5M11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div class="button-sign-out" (click)="logout()">
+                    Logout
                 </div>
             </div>
         </div>
@@ -78,5 +90,5 @@
     </div>
 </div>
 
-<app-login></app-login>
+<app-login (outFlagLogin)='receiveLoginFlag($event)'></app-login>
 

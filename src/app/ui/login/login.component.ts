@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalService} from "../../services/modal/modal.service";
 import {LoginService} from "../../core/login-service";
 
@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
     step = 'choose';
 
     @Input() currentComponent: string;
+    @Output() public outFlagLogin = new EventEmitter();
 
     @ViewChild('address', {static: false}) ElementAddress: ElementRef;
     @ViewChild('trezor', {static: false}) ElementTrezor: ElementRef;
@@ -43,10 +44,11 @@ export class LoginComponent implements OnInit {
         }, 300)
     }
 
-    closeModal(account) {
+    login(account) {
       localStorage.setItem('account', account);
-        this.loginServices.close();
-        this.clear();
+      this.outFlagLogin.emit(true);
+      this.loginServices.close();
+      this.clear();
     }
 
     clear() {
