@@ -51,6 +51,11 @@ export class LoginComponent implements OnInit {
       this.clear();
     }
 
+    closeModal() {
+      this.loginServices.close();
+      this.clear();
+    }
+
     clear() {
         this.step = 'choose'
     }

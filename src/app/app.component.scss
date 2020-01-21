@@ -87,26 +87,31 @@
           cursor: pointer;
         }
 
-        .icon {
-          cursor: pointer;
-          width: 25px;
-          height: 25px;
-          object-fit: cover;
-          margin-right: 5px;
-          transition: .3s;
-          fill: none;
-          stroke: #fff;
-        }
-
-        .public-key {
-          cursor: pointer;
+        .public-key-wrapper {
+          display: flex;
+          align-items: center;
           border: 1px solid #fff;
           border-radius: 8px;
-          line-height: normal;
-          padding: 4px 8px;
-          color: rgb(255, 255, 255);
-          font-weight: 500;
-          margin-right: 15px;
+          min-height: 30px;
+          cursor: pointer;
+
+          .public-key {
+            line-height: normal;
+            padding: 4px 8px;
+            color: rgb(255, 255, 255);
+            font-weight: 500;
+            margin-right: 5px;
+          }
+
+          .icon {
+            width: 17px;
+            height: 17px;
+            object-fit: cover;
+            margin-right: 8px;
+            transition: .3s;
+            fill: none;
+            stroke: #fff;
+          }
         }
       }
     }

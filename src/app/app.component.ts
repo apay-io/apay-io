@@ -42,6 +42,15 @@ export class AppComponent implements OnInit{
     this.publicKey = '';
     this.router.navigate(['/']);
   }
+
+  routeAccount() {
+    if (this.loginFlag) {
+      this.router.navigate(['/account']);
+      return false;
+    }
+
+    this.loginServices.open()
+  }
 }
 
 

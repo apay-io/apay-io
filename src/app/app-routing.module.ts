@@ -9,7 +9,8 @@ import {AccountPageComponent} from "./main/account-page/account-page.component";
 const routes: Routes = [
   {
     path: '',
-    component: ConvertPageComponent
+    redirectTo: 'convert',
+    pathMatch: 'full'
   },
   {
     path: 'convert',
