@@ -91,12 +91,12 @@
                     </div>
                     <div class="cell">
                         <div class="buttons-group">
-                            <div class="button-convert" (click)="openModal($event, item.balance, 'deposit');">
+                            <div class="button-convert" (click)="openModal($event, item, 'deposit');">
                                 <div class="text">
                                     Deposit
                                 </div>
                             </div>
-                            <div class="button-convert" [ngClass]="{'disabled' : item.balance === '0'}" (click)="openModal($event, item.balance, 'withdraw');">
+                            <div class="button-convert" [ngClass]="{'disabled' : item.balance === '0'}" (click)="openModal($event, item, 'withdraw');">
                                 <div class="text">
                                     Withdraw
                                 </div>
@@ -141,19 +141,19 @@
             <div class="content-popup">
                 <form [formGroup]="withdrawForm" class="operations-modal" (ngSubmit)="sendWithdrawForm()">
                     <mat-form-field class="full-width">
-                        <input matInput placeholder="Recipient's {{testDataModal[activeElem].name}} Address" formControlName="recipient"  value="">
+                        <input matInput placeholder="Recipient's {{currentToken.code}} Address" formControlName="recipient"  value="">
                     </mat-form-field>
                     <div class="amount">
                         <div class="balance">
                             <div class="text">
                                 Available Balance
                             </div>
-                            <div class="text currency" (click)="addFullBalance(testDataModal[activeElem].balance)">
-                                {{testDataModal[activeElem].balance}} {{testDataModal[activeElem].name}}
+                            <div class="text currency" (click)="addFullBalance(currentToken.balance)">
+                                {{currentToken.balance}} {{currentToken.code}}
                             </div>
                         </div>
                         <div class="min">
-                            Minimum Withdrawal: {{testDataModal[activeElem].min}} {{testDataModal[activeElem].name}}
+                            Minimum Withdrawal: {{testDataModal[activeElem].min}} {{currentToken.code}}
                         </div>
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Amount" maxlength="18" formControlName="amount" autocomplete="off" value="">
@@ -178,7 +178,7 @@
                             Transaction Fee:
                         </div>
                         <div class="text">
-                            {{testDataModal[activeElem].fee}} {{testDataModal[activeElem].name}}
+                            {{testDataModal[activeElem].fee}} {{currentToken.code}}
                         </div>
                     </div>
                     <div class="info">
@@ -186,7 +186,7 @@
                             You Will Get:
                         </div>
                         <div class="text">
-                            0.0000000 {{testDataModal[activeElem].name}}
+                            0.0000000 {{currentToken.code}}
                         </div>
                     </div>
                     <button
@@ -216,27 +216,24 @@
                 <div class="operations-modal">
                     <div class="info deposit">
                         <div class="title">
-                            Send only BCH to this deposit address.
+                            Send only {{currentToken.code}} to this deposit address.
                         </div>
                         <div class="text">
-                            Sending coin or token other than BCH to this address may result in the loss of your deposit.
+                            Sending coin or token other than {{currentToken.code}} to this address may result in the loss of your deposit.
                         </div>
                     </div>
                     <div class="address-wrapper">
                         <div class="info">
                             <div class="title">
-                                BCH Address
+                                {{currentToken.code}} Address
                             </div>
-                            <div class="address">
+                            <div class="address" [ngClass]="{'load': !address}">
                                 {{address}}
-                            </div>
-                        </div>
-                        <div class="copy-btn" [text-copy]="address">
-                            <svg class="icon copy" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15 5V4C15 2.89543 14.1046 2 13 2H4C2.89543 2 2 2.89543 2 4V13C2 14.1046 2.89543 15 4 15H5M11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <div class="text">
-                                Copy Address
+                                <span [text-copy]="address">
+                                    <svg class="icon copy" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15 5V4C15 2.89543 14.1046 2 13 2H4C2.89543 2 2 2.89543 2 4V13C2 14.1046 2.89543 15 4 15H5M11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
                             </div>
                         </div>
                     </div>

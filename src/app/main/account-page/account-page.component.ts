@@ -13,6 +13,13 @@ export interface Data {
   val: string;
 }
 
+interface Token {
+  code: string,
+  name: string,
+  icon: string,
+  balance: string
+}
+
 @Component({
   selector: 'app-convert-page',
   templateUrl: './account-page.component.html',
@@ -29,6 +36,12 @@ export class AccountPageComponent implements OnInit {
   searchValue;
   arraySearchValue;
   address;
+  currentToken: Token = {
+    code: '',
+    name: '',
+    icon: '',
+    balance: ''
+  };
   public doughnutChartLabels = [];
   public doughnutChartData = [];
   public doughnutChartType = 'doughnut';
@@ -148,9 +161,6 @@ export class AccountPageComponent implements OnInit {
       this.rates = data;
     });
 
-    // test address
-    this.address = '1GJSDJFHJKfhjsdSDKFH3FDSFJ349GGDSfg8DSFk';
-
     this.arraySearchValue = this.dataWallet;
     this.account = localStorage.getItem('account');
     if (this.account) {
@@ -212,13 +222,20 @@ export class AccountPageComponent implements OnInit {
     });
   }
 
-  openModal(event, balance, modalName) {
+  openModal(event, item, modalName) {
     event.stopPropagation();
-    if (balance === '0' && modalName === 'withdraw') {
+    this.currentToken = item;
+    if (item.balance === '0' && modalName === 'withdraw') {
       return false
     }
     this.modalService.open(modalName);
-    this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.testDataModal[this.activeElem].balance), Validators.min(+this.testDataModal[this.activeElem].min), Validators.pattern(this.regexpAmount)]);
+    if (modalName === 'deposit') {
+      this.getToken(item.code);
+    }
+    if (modalName === 'withdraw') {
+      this.withdrawForm.reset();
+      this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.currentToken.balance), Validators.min(+this.testDataModal[this.activeElem].min), Validators.pattern(this.regexpAmount)]);
+    }
   }
 
   get _amount() {
@@ -251,5 +268,16 @@ export class AccountPageComponent implements OnInit {
 
   addFullBalance(balance) {
     this.withdrawForm.controls['amount'].setValue(balance);
+  }
+
+
+  getToken (code) {
+    this.address = '';
+    return this.http.get(`https://api.apay.io/api/deposit?account=` + this.account + `&asset_code=` + code).subscribe((data) => {
+      this.address = data['how'];
+      if (this.address.indexOf('address') !== -1) {
+        this.address = this.address.split('address: ')[1];
+      }
+    });
   }
 }

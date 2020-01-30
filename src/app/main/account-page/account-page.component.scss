@@ -389,7 +389,7 @@
     .info {
       display: flex;
       flex-direction: column;
-      max-width: 50%;
+      width: 100%;
 
       .title {
         color: #000;
@@ -403,62 +403,46 @@
         padding-bottom: 20px;
         color: #efa344;
         font-size: 18px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-
-    .copy-btn {
-      border-radius: 4px;
-      border: 1px solid #d4d4d4;
-      padding: 15px 20px;
-      height: 100%;
-      min-width: 100px;
-      transition: .3s;
-      position: relative;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      .icon {
-        width: 25px;
-        height: 25px;
-        object-fit: cover;
-        margin-right: 5px;
-        transition: .3s;
-
-        &.copy {
-          fill: none;
-          stroke: #000;
-        }
-      }
-
-      .text {
-        color: #000;
-        transition: .3s;
-        font-size: 17px;
-        text-align: center;
-        font-weight: 600;
-
-        @include mobile {
-          font-size: 14px;
-        }
-      }
-
-      &:hover {
-        border: 1px solid #efa344;
-        .text {
-          color: #efa344;
-        }
+        word-break: break-all;
 
         .icon {
-          fill: #efa344;
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          transition: .3s;
+          position: relative;
+          top: 5px;
+          margin-left: 5px;
+          cursor: pointer;
 
           &.copy {
             fill: none;
-            stroke: #efa344;
+            stroke: #000;
+          }
+
+          &:hover {
+            fill: #efa344;
+
+            &.copy {
+              fill: none;
+              stroke: #efa344;
+            }
+          }
+        }
+
+        &.load {
+          width: 100%;
+          animation-duration: 1s;
+          animation-fill-mode: forwards;
+          animation-iteration-count: infinite;
+          animation-name: loaderData;
+          animation-timing-function: linear;
+          background: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);
+          background-size: 800px 50px;
+          position: relative;
+
+          .icon {
+            opacity: 0;
           }
         }
       }
