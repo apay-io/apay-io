@@ -71,8 +71,9 @@
                 </div>
 
                 <div class="row" *ngFor="let item of arraySearchValue" [ngClass]="{'hide': this.hideLowBalanceFlag && item.balance === '0'}" (click)="drawingChart('ALL', 30,'days')">
-                    <div class="cell">
+                    <div class="cell" [ngClass]="{'empty': !item.icon}">
                         <img class="icon" [ngClass]="item.code" [src]="item.icon" alt="">
+                        <div class="empty-state"></div>
                         <div class="name-currency">
                             {{item.code}}
                         </div>
@@ -84,19 +85,19 @@
                         {{item.balance == '0' ? '-' : item.percent}}
                     </div>
                     <div class="cell">
-                        {{item.balance == '0' ? '-' : item.value}}
+                        {{item.value == '0' ? '-' : item.value}}
                     </div>
                     <div class="cell">
                         {{item.balance === '0' ? '-' : item.change + '%'}}
                     </div>
                     <div class="cell">
                         <div class="buttons-group">
-                            <div class="button-convert" (click)="openModal($event, item, 'deposit');">
+                            <div class="button-convert" [ngClass]="{'disabled' : item.deposit === 'disable'}" (click)="openModal($event, item, 'deposit');">
                                 <div class="text">
                                     Deposit
                                 </div>
                             </div>
-                            <div class="button-convert" [ngClass]="{'disabled' : item.balance === '0'}" (click)="openModal($event, item, 'withdraw');">
+                            <div class="button-convert" [ngClass]="{'disabled' : item.balance === '0' || item.withdraw === 'disable'}" (click)="openModal($event, item, 'withdraw');">
                                 <div class="text">
                                     Withdraw
                                 </div>
@@ -153,7 +154,7 @@
                             </div>
                         </div>
                         <div class="min">
-                            Minimum Withdrawal: {{testDataModal[activeElem].min}} {{currentToken.code}}
+                            Minimum Withdrawal: {{this.withdrawToken.min_amount}} {{currentToken.code}}
                         </div>
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Amount" maxlength="18" formControlName="amount" autocomplete="off" value="">
@@ -178,7 +179,7 @@
                             Transaction Fee:
                         </div>
                         <div class="text">
-                            {{testDataModal[activeElem].fee}} {{currentToken.code}}
+                            {{_amount.value * ( 1 - (withdrawToken.fee_percent !== 0 ? withdrawToken.fee_percent : 0)) - withdrawToken.fee_fixed}} {{currentToken.code}}
                         </div>
                     </div>
                     <div class="info">
@@ -186,7 +187,7 @@
                             You Will Get:
                         </div>
                         <div class="text">
-                            0.0000000 {{currentToken.code}}
+                            {{_amount.value * (withdrawToken.fee_percent !== 0 ? withdrawToken.fee_percent : 1) + withdrawToken.fee_fixed}}  {{currentToken.code}}
                         </div>
                     </div>
                     <button

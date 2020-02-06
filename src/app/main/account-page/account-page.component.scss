@@ -148,6 +148,25 @@
             border-bottom: 1px solid #dfdfdf;
             color: #979797;
 
+            &.empty {
+              .icon {
+                display: none;
+              }
+
+              .empty-state {
+                display: block;
+              }
+            }
+
+            .empty-state {
+              display: none;
+              margin-right: 20px;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              background: #c4c4c4;
+            }
+
             &:last-of-type {
               min-width: 30%;
             }

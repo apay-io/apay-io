@@ -46,12 +46,11 @@ export class StellarService {
     try {
       const result = await this.server.loadAccount(account);
       return result.balances
-        .filter((item: BalanceLine) => {
-          return item.asset_type === 'native' || this.knownIssuers.find(issuer => issuer === item.asset_issuer);
-        }).map((item: BalanceLine) => {
+        .map((item: BalanceLine) => {
         return {
           code: (item.asset_type === 'native' ? 'XLM' : item.asset_code),
-          amount: item.balance,
+          balance: item.balance,
+          asset_type: item.asset_type
         };
       });
     } catch (err) {

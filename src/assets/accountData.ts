@@ -2,155 +2,211 @@ export const accountData = [
   {
     'code': 'XDR',
     'name': 'Pays XDR',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': '/assets/img/xdr-coin.svg',
     'balance': '0',
     'percent': '30',
     'value': 0,
     'change': '+5',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#211265'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#211265',
+    'address': 'native'
   },
   {
     'code': 'XLM',
     'name': 'Lumen',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': '/assets/img/XLM.png',
     'balance': '0',
     'percent': '33',
     'value': 0,
     'change': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#000000'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#000000',
+    'address': 'native'
   },
   {
     'code': 'BTC',
     'name': 'Bitcoin',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/btc.svg',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#f8a036'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#f8a036',
+    'address': 'non-native'
   },
   {
     'code': 'BCH',
     'name': 'Bitcoin Cash',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/bch.svg',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#548d1d'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#548d1d',
+    'address': 'non-native'
   },
   {
     'code': 'ETH',
     'name': 'Ethereum',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/eth.png',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#9c68aa'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#9c68aa',
+    'address': 'non-native'
   },
   {
     'code': 'LTC',
     'name': 'Litecoin',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/ltc.png',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#315d9e'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#315d9e',
+    'address': 'non-native'
   },
   {
     'code': 'BAT',
     'name': 'Basic Attention Token',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/bat.svg',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#ff5000'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#ff5000',
+    'address': 'non-native'
   },
   {
     'code': 'KIN',
     'name': 'Kin',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/kin.svg',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#005fff'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#005fff',
+    'address': 'non-native'
   },
   {
     'code': 'LINK',
     'name': 'ChainLink',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/link.svg',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#3fa0f1'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#3fa0f1',
+    'address': 'non-native'
   },
   {
     'code': 'MTL',
     'name': 'Metal',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/mtl.svg',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#1e1f25'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#1e1f25',
+    'address': 'non-native'
   },
   {
     'code': 'OMG',
     'name': 'OmiseGo',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/omg.svg',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#1a53f0'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#1a53f0',
+    'address': 'non-native'
   },
   {
     'code': 'REP',
     'name': 'Augur',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/rep.png',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#ae9fc1'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#ae9fc1',
+    'address': 'non-native'
   },
   {
     'code': 'SALT',
     'name': 'SALT',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/salt.svg',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#369da3'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#369da3',
+    'address': 'non-native'
   },
   {
     'code': 'ZRX',
     'name': '0xProject',
+    'baseUrl': 'https://api.apay.io/api',
     'icon': 'https://apay.io/public/logo/zrx.svg',
     'balance': '0',
     'percent': '37',
     'value': 0,
     'change': '-2',
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'color': '#000'
+    'deposit': 'active',
+    'withdraw': 'active',
+    'color': '#000',
+    'address': 'non-native'
   }
 ];
