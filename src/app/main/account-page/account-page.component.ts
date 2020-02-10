@@ -194,14 +194,14 @@ export class AccountPageComponent implements OnInit {
               if (this.rates[item.code]) {
                 dataToken.value = +(+item.balance / this.rates[item.code] * this.rates['XDR']).toFixed(6);
               }
-              this.dataWallet.push(dataToken)
+              this.dataWallet.unshift(dataToken)
             }
           });
           this.percent = 100 / this.sumValue;
           this.drawingChart('AED', 30, 'days');
           this.dataWallet.map((item) => {
             if (item.balance && item.value) {
-              item.percent = (this.percent * item.value).toFixed(2)
+              item.percent = (this.percent * item.value).toFixed(2);
               this.doughnutChartData.push(item.percent);
               this.doughnutChartLabels.push(item.code);
               this.sumChange += +item.change;

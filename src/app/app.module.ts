@@ -49,6 +49,5 @@ import {ChartsModule} from "ng2-charts";
     bootstrap: [AppComponent],
     providers: [ModalService, StellarService]
 })
-export class AppModule { }
-
-platformBrowserDynamic().bootstrapModule(AppModule);
+export class AppModule {
+}
