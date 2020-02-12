@@ -12,7 +12,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#211265',
-    'address': 'native'
+    'address': 'native',
+    'trustline': false
   },
   {
     'code': 'XLM',
@@ -27,7 +28,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#000000',
-    'address': 'native'
+    'address': 'native',
+    'trustline': false
   },
   {
     'code': 'BTC',
@@ -42,7 +44,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#f8a036',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'BCH',
@@ -57,7 +60,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#548d1d',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'ETH',
@@ -72,7 +76,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#9c68aa',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'LTC',
@@ -87,7 +92,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#315d9e',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'BAT',
@@ -102,7 +108,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#ff5000',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'KIN',
@@ -117,7 +124,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#005fff',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'LINK',
@@ -132,7 +140,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#3fa0f1',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'MTL',
@@ -147,7 +156,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#1e1f25',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'OMG',
@@ -162,7 +172,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#1a53f0',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'REP',
@@ -177,7 +188,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#ae9fc1',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'SALT',
@@ -192,7 +204,8 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#369da3',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   },
   {
     'code': 'ZRX',
@@ -207,6 +220,7 @@ export const accountData = [
     'deposit': 'active',
     'withdraw': 'active',
     'color': '#000',
-    'address': 'non-native'
+    'address': 'non-native',
+    'trustline': false
   }
 ];

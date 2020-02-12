@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import {ModalService} from "../../services/modal/modal.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {StellarService} from '../../services/stellar/stellar.service';
+import {NotifyService} from "../../core/notify.service";
 
 export interface Data {
   date: string;
@@ -20,7 +21,8 @@ interface Token {
   balance: string,
   deposit: string,
   withdraw: string,
-  baseUrl: string
+  baseUrl: string,
+  trustline: boolean,
 }
 
 @Component({
@@ -32,6 +34,8 @@ interface Token {
 export class AccountPageComponent implements OnInit {
   dataWallet = accountData;
   rates = {};
+  isLoading = false;
+  buttonText;
   percent: number;
   sumValue:number = 0;
   sumChange:number = 0;
@@ -46,7 +50,8 @@ export class AccountPageComponent implements OnInit {
     balance: '',
     deposit: 'active',
     withdraw: 'active',
-    baseUrl: ''
+    baseUrl: '',
+    trustline: false
   };
   public doughnutChartLabels = [];
   public doughnutChartData = [];
@@ -69,7 +74,8 @@ export class AccountPageComponent implements OnInit {
   constructor(private readonly http: HttpClient,
               public readonly appComponent: AppComponent,
               private readonly stellarService: StellarService,
-              public modalService: ModalService) {
+              public modalService: ModalService,
+              private notify: NotifyService) {
     this.withdrawForm = new FormGroup({
       recipient: new FormControl('', [
         Validators.required,
@@ -168,6 +174,9 @@ export class AccountPageComponent implements OnInit {
               this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken,1));
               const findToken = this.dataWallet.find(x => x.code === item.code);
               findToken.balance = item.balance;
+
+              //todo: all trustline are hard-coded
+              findToken.trustline = true;
               if (this.rates[item.code]) {
                 findToken.value = +(+item.balance / this.rates[item.code] * this.rates['XDR']).toFixed(6);
                 this.sumValue = +(this.sumValue + findToken.value).toFixed(6);
@@ -188,7 +197,8 @@ export class AccountPageComponent implements OnInit {
                 'deposit': 'active',
                 'withdraw': 'disable',
                 'color': '#a39ca0',
-                'address': 'native'
+                'address': 'native',
+                'trustline': false
               }
 
               if (this.rates[item.code]) {
@@ -260,6 +270,11 @@ export class AccountPageComponent implements OnInit {
     }
     if (modalName === 'withdraw') {
       this.withdrawForm.reset();
+      if (this.currentToken.trustline) {
+        this.buttonText = 'Submit';
+      } else {
+        this.buttonText = 'Prepare transaction';
+      }
       if (item.code === 'XLM') {
         this.withdrawToken = {
           'fee_percent': 0,
@@ -289,7 +304,16 @@ export class AccountPageComponent implements OnInit {
   }
 
   sendWithdrawForm() {
-    //submit form deposit
+    //test submit form deposit
+    this.isLoading = true;
+    this.withdrawForm.disable();
+    this.buttonText = 'Processing';
+    setTimeout(() => {
+      this.withdrawForm.enable()
+      this.isLoading = false;
+      this.modalService.close('withdraw');
+      this.notify.update('Transaction completed successfully!', 'success');
+    }, 3000)
   }
 
   isHideLowBalanceCheckbox(event) {
