@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from "./core/login-service";
 import {Router} from "@angular/router";
+import {GetCurrenciesServices} from "./core/get-currencies.services";
 
 @Component({
   selector: 'app-root',
@@ -51,6 +52,7 @@ export class AppComponent implements OnInit{
 
     this.loginServices.open()
   }
+
 }
 
 

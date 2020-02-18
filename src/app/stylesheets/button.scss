@@ -35,6 +35,15 @@
     line-height: normal;
   }
 
+  &.disabled {
+    background: rgba(0,0,0,.12);
+    border-color: rgba(0,0,0,.12);
+
+    &:hover {
+      background: rgba(0,0,0,.12);
+    }
+  }
+
   &:hover {
     background: rgb(14, 80, 188);
   }

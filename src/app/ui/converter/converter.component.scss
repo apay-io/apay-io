@@ -73,6 +73,7 @@
     .currency-from-amount-field, .currency-to-amount-field {
       display: flex;
       margin-right: 10px;
+      position: relative;
 
       .wrapper {
         display: flex;
@@ -222,7 +223,7 @@
       height: 244px;
 
       .currency-from-amount-field, .currency-to-amount-field {
-        margin-bottom: 20px;
+        margin-bottom: 30px;
       }
 
       .wrapper-icon-convert {

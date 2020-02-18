@@ -153,6 +153,13 @@
     margin: 0;
     width: 100vw;
 
+    .button-next {
+      &.step-1 {
+        position: relative;
+        top: 310px;
+      }
+    }
+
     .title {
       margin-top: 5px;
       margin-left: 51px;
@@ -164,6 +171,8 @@
     }
 
     .details {
+      position: relative;
+      top: -90px;
       width: 100%;
     }
   }
