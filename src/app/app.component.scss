@@ -20,6 +20,7 @@
       align-items: center;
 
       .logo {
+        position: relative;
         text-decoration: none;
         cursor: pointer;
         color: #fff;
@@ -30,6 +31,15 @@
 
         &:hover {
           opacity: 1;
+        }
+
+        .beta {
+          color: #fff;
+          font-size: 9px;
+          position: absolute;
+          z-index: 3;
+          top: 0;
+          right: -24px;
         }
       }
 
@@ -143,6 +153,10 @@
       height: 24px;
       margin-bottom: 4px;
       fill: rgb(15, 89, 209);
+
+      &.withdraw {
+        transform: rotate(180deg);
+      }
     }
 
     .title-bar-footer {

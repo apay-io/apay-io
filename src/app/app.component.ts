@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {LoginService} from "./core/login-service";
+import {GetCurrenciesServices} from "./core/get-currencies.services";
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,9 @@ import {LoginService} from "./core/login-service";
 })
 export class AppComponent {
   title = 'papaya';
-    constructor(public loginServices: LoginService) {}
+    constructor(public loginServices: LoginService,
+                ) {
+    }
 }
 
 

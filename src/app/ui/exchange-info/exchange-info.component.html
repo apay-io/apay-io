@@ -61,8 +61,8 @@
                         Submit Stellar account you want to link
                     </div>
 
-                    <div class="quote">
-                        Attention! Minimum deposit is 0.001 {{selectedToken.code}}. Any funds below that are ignored.
+                    <div class="quote" *ngIf="selectedToken.minDeposit !== ''">
+                        Attention! Minimum deposit is {{selectedToken.minDeposit}} {{selectedToken.code}}. Any funds below that are ignored.
                     </div>
 
                     <div class="stellar-block">
@@ -96,9 +96,9 @@
                         How to Withdraw
                     </div>
 
-                    <div class="quote">
-                        Attention! Minimum withdrawal is 10 {{selectedToken.code}}. Any funds below that are ignored.<br>
-                        Withdrawal fee 5 {{selectedToken.code}} applies to every transaction<br>
+                    <div class="quote" *ngIf="selectedToken.minWithdraw !== ''">
+                        Attention! Minimum withdrawal is {{selectedToken.minWithdraw}} {{selectedToken.code}}. Any funds below that are ignored.<br>
+                        Withdrawal fee {{selectedToken.minWithdrawFee}} {{selectedToken.code}} applies to every transaction<br>
                         We send outgoing transactions out every minute.
                     </div>
 

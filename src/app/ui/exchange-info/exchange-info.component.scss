@@ -180,6 +180,8 @@
         }
 
         .right-empty-state {
+          padding: 10px;
+          margin: 0 -10px -10px 0;
           width: 64%;
           height: 100%;
           min-height: 422px;
@@ -311,6 +313,7 @@
           }
 
           .right-empty-state {
+            margin: 0;
             width: 100%;
             min-height: 122px;
             border-radius: 0;
