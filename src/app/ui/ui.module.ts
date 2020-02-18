@@ -12,6 +12,7 @@ import {MatSelectSearchModule} from "./mat-select-search/mat-select-search.modul
 import {MaterialModule} from "../../../material-module";
 import {LoginComponent} from "./login/login.component";
 import {NotificationMessageComponent} from "./notification-message/notification-message.component";
+import {TextCopyDirective} from "../_directives/text-copy.directive";
 @NgModule({
   imports: [
     CommonModule,
@@ -32,6 +33,7 @@ import {NotificationMessageComponent} from "./notification-message/notification-
     ExchangeInfoComponent,
     LoginComponent,
     NotificationMessageComponent,
+    TextCopyDirective
   ],
   exports: [
     ModalComponent,
@@ -41,6 +43,7 @@ import {NotificationMessageComponent} from "./notification-message/notification-
     ExchangeInfoComponent,
     LoginComponent,
     NotificationMessageComponent,
+    TextCopyDirective
   ]
 })
 export class UiModule {}

@@ -78,6 +78,11 @@
   outline: 0;
   transition: all 0.25s ease 0s;
   box-shadow: none;
+
+  &.load {
+    background: #0f59d182;
+    color: #fff;
+  }
 }
 
 .button-next {

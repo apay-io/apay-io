@@ -31,7 +31,6 @@ import { QrCodeModule } from 'ng-qrcode';
     CommonModule,
     CoreModule,
     ConvertProcessingRoutingModule,
-    CommonModule,
     FormsModule,
     MatInputModule,
     MatFormFieldModule,

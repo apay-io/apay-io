@@ -1,0 +1,506 @@
+@import "../../stylesheets/tools/media";
+@import "../../stylesheets/modals";
+
+.content {
+  background: #eeeeee;
+
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1169px;
+    margin: 0 auto;
+    padding-bottom: 80px;
+    background: #fff;
+
+    .general-chart {
+      width: 40%;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      .chart {
+        position: absolute;
+        width: 140%;
+      }
+
+      .title-wrapper {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        font-size: 16px;
+
+        .title {
+          font-size: 14px;
+          color: #000;
+        }
+      }
+    }
+
+    .table-chart {
+      width: 60%;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .controls-table {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      .search {
+        margin-left: 20px;
+        width: 150px;
+
+        ::ng-deep mat-form-field div.mat-form-field-underline {
+          display: none;
+        }
+
+        ::ng-deep mat-form-field div.mat-form-field-wrapper {
+          width: 90%;
+          position: relative;
+          display: flex;
+          align-items: center;
+          border-radius: 8px;
+          font-size: 14px;
+          height: 16px;
+          padding: 9px 5px 15px 26px;
+        }
+
+        mat-form-field {
+          font-size: 16px;
+          width: 130px;
+          background: #fff;
+          height: 60px;
+          display: flex;
+          align-items: center;
+
+          .icon {
+            position: relative;
+            margin-right: -15px;
+            left: -19px;
+            top: 1px;
+          }
+
+          @include mobile {
+            width: 80px;
+          }
+        }
+
+        @include mobile {
+          width: 110px;
+        }
+      }
+
+      .hide-low-balance {
+        font-size: 14px;
+      }
+    }
+
+    .table-wrapper {
+      width: 100%;
+
+      .table {
+        position: relative;
+        margin-top: 15px;
+        background: #fff;
+        width: 100%;
+        font-size: 14px;
+
+        .row {
+          display: flex;
+          width: 100%;
+          height: 60px;
+          transition: .3s;
+          cursor: pointer;
+
+          &.hide {
+            display: none;
+          }
+
+          &.title {
+            background: #f9f9f9;
+            cursor: default;
+          }
+
+          .cell {
+            min-width: 14%;
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #dfdfdf;
+            color: #979797;
+
+            &.empty {
+              .icon {
+                display: none;
+              }
+
+              .empty-state {
+                display: block;
+              }
+            }
+
+            .empty-state {
+              display: none;
+              margin-right: 20px;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              background: #c4c4c4;
+            }
+
+            &:last-of-type {
+              min-width: 30%;
+            }
+
+            .icon {
+              margin-right: 20px;
+              width: 30px;
+              height: 30px;
+              object-fit: contain;
+
+              &.MTL, &.BCH, &.XLM {
+                height: 36px;
+                width: 36px;
+                margin-left: -3px;
+              }
+
+              &.BAT {
+                position: relative;
+              }
+
+              &.REP {
+                width: 44px;
+                margin-left: -7px;
+                object-fit: cover;
+                object-position: top;
+              }
+            }
+
+            .name-currency {
+              min-width: 35px;
+            }
+
+            .buttons-group {
+              display: flex;
+              justify-content: center;
+              width: 100%;
+
+              .button-convert {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 12px 16px;
+                margin: 0 10px;
+                height: 15px;
+                width: 90px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 500;
+                border-radius: 8px;
+                background: rgb(255, 255, 255);
+                border: 1px solid rgb(223, 223, 223);
+                transition: 0.3s;
+
+                .text {
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                  line-height: normal;
+                  text-align: center;
+                  color: #000;
+                }
+
+                &:hover {
+                  background: rgb(238, 238, 238);
+                }
+
+                &.disabled {
+                  cursor: default;
+                  background: #e8e8e8;
+                }
+              }
+
+              @include mobile {
+                .button-convert {
+                  padding: 9px 14px;
+                  width: unset;
+                  height: unset;
+                }
+              }
+            }
+          }
+
+          &.active {
+            background: #f9f9f9;
+          }
+
+          &:hover {
+            background: #f9f9f9;
+          }
+        }
+      }
+    }
+  }
+
+  @include mobile {
+    .wrapper {
+      .general-chart {
+        margin: 15px 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        .chart {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          min-width: 630px;
+        }
+
+        .title-wrapper {
+          margin-top: 5px;
+        }
+      }
+
+      .table-chart {
+        width: 100%;
+        height: 100%;
+      }
+
+      .table-wrapper {
+        overflow: auto;
+
+        .table {
+          margin-top: 5px;
+          min-width: 710px;
+
+          .row {
+            .cell {
+              .icon {
+                margin-right: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.operations-modal {
+  max-width: 650px;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 2%;
+  display: flex;
+  flex-direction: column;
+  width: 96%;
+
+  .full-width {
+    width: 100%;
+  }
+
+  .amount {
+    margin-bottom: 35px;
+    display: flex;
+    position: relative;
+
+    .balance {
+      position: absolute;
+      z-index: 2;
+      top: 23px;
+      right: 0;
+      display: flex;
+
+      .text {
+        font-size: 14px;
+        color: #979797;
+
+        &.currency {
+          cursor: pointer;
+          transition: .3s;
+          margin-left: 6px;
+          color: #efa344;
+
+          &:hover {
+            color: #ffae49;
+          }
+        }
+      }
+    }
+
+    .min {
+      position: absolute;
+      left: 0;
+      bottom: -25px;
+      color: #000;
+      font-size: 14px;
+    }
+
+    .error {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      color: #ed0000;
+      font-size: 14px;
+    }
+  }
+
+  .info {
+    margin-top: 15px;
+    display: flex;
+
+    .title {
+      width: 140px;
+      color: #979797;
+    }
+
+    .text {
+      color: #000;
+    }
+
+    &.deposit {
+      margin-top: 0;
+      padding-bottom: 15px;
+      flex-direction: column;
+
+      .title {
+        width: unset;
+        font-weight: 800;
+        color: #000;
+        margin-bottom: 20px;
+      }
+
+      .text {
+        color: #979797;
+        line-height: 23px;
+      }
+    }
+  }
+
+  .address-wrapper {
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .title {
+        color: #000;
+        font-size: 18px;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .address {
+        width: 100%;
+        padding-bottom: 20px;
+        color: #efa344;
+        font-size: 18px;
+        word-break: break-all;
+
+        .icon {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          transition: .3s;
+          position: relative;
+          top: 5px;
+          margin-left: 5px;
+          cursor: pointer;
+
+          &.copy {
+            fill: none;
+            stroke: #000;
+          }
+
+          &:hover {
+            fill: #efa344;
+
+            &.copy {
+              fill: none;
+              stroke: #efa344;
+            }
+          }
+        }
+
+        &.load {
+          width: 100%;
+          animation-duration: 1s;
+          animation-fill-mode: forwards;
+          animation-iteration-count: infinite;
+          animation-name: loaderData;
+          animation-timing-function: linear;
+          background: linear-gradient(to right, #eee 8%, #ddd 18%, #eee 33%);
+          background-size: 800px 50px;
+          position: relative;
+
+          .icon {
+            opacity: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .qr-code {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 60%;
+      object-fit: contain;
+    }
+  }
+}
+
+.button-next {
+  margin-top: 25px;
+  background:  #0f59d1;
+}
+
+::ng-deep .mat-form-field {
+  .mat-input-element {
+    color: #000;
+    caret-color: #000;
+
+  }
+  .mat-form-field-label {
+    color: #979797;
+  }
+  .mat-form-field-underline {
+    background-color: #979797;
+  }
+  .mat-form-field-ripple {
+    background-color: #979797;
+  }
+  .mat-form-field-required-marker {
+    color: #fff;
+  }
+  .mat-form-field-empty.mat-form-field-label {
+    color: #979797;
+  }
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: #979797;
+  }
+  .mat-focused {
+    background-color: #979797;
+  }
+}

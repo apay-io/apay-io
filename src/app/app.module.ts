@@ -21,6 +21,8 @@ import {MatSelectSearchModule} from "./ui/mat-select-search/mat-select-search.mo
 import {WithdrawPageComponent} from "./main/withdraw-page/withdraw-page.component";
 import {ExchangeInfoComponent} from "./ui/exchange-info/exchange-info.component";
 import {StellarService} from './services/stellar/stellar.service';
+import {AccountPageComponent} from "./main/account-page/account-page.component";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
     imports: [
@@ -33,17 +35,19 @@ import {StellarService} from './services/stellar/stellar.service';
         UiModule,
         CoreModule,
         AppRoutingModule,
+        ChartsModule,
+        MaterialModule,
     ],
     entryComponents: [AppComponent],
     declarations: [
         AppComponent,
         ConvertPageComponent,
         DepositPageComponent,
-        WithdrawPageComponent
+        WithdrawPageComponent,
+        AccountPageComponent
     ],
     bootstrap: [AppComponent],
     providers: [ModalService, StellarService]
 })
-export class AppModule { }
-
-platformBrowserDynamic().bootstrapModule(AppModule);
+export class AppModule {
+}
