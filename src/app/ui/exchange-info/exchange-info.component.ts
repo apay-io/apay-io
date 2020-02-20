@@ -1,23 +1,23 @@
 import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {ModalService} from "../../services/modal/modal.service";
-import {currencies} from "../../../assets/currencies-list";
-import {ReplaySubject, Subject} from "rxjs/index";
-import {MatSelect} from "@angular/material";
-import {takeUntil} from "rxjs/internal/operators";
-import {FormControl} from "@angular/forms";
+import {ModalService} from '../../services/modal/modal.service';
+import {currencies} from '../../../assets/currencies-list';
+import {ReplaySubject, Subject} from 'rxjs/index';
+import {takeUntil} from 'rxjs/internal/operators';
+import {FormControl} from '@angular/forms';
+import {MatSelect} from '@angular/material/select';
 
 interface Token {
-    code: string,
-    name: string,
-    icon: string,
-    issuer?: string,
-    change: string,
-    usd: string,
-    volume: string,
-    depth: string,
-    graph: Array<number>,
-    convert: string,
-    favorites: string,
+    code: string;
+    name: string;
+    icon: string;
+    issuer?: string;
+    change: string;
+    usd: string;
+    volume: string;
+    depth: string;
+    graph: Array<number>;
+    convert: string;
+    favorites: string;
 }
 
 export interface memoTypes {
@@ -27,10 +27,10 @@ export interface memoTypes {
 
 
 export interface selectedToken {
-    code: string,
-    name: string,
-    icon: string,
-    issuer: string
+    code: string;
+    name: string;
+    icon: string;
+    issuer: string;
 }
 
 

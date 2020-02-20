@@ -5,10 +5,11 @@ import {
   ViewChild
 } from '@angular/core';
 
-import {Subject} from "rxjs/index";
+import {Subject} from 'rxjs/index';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatOption, MatSelect } from '@angular/material';
 import { take, takeUntil } from 'rxjs/operators';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
 
 /* tslint:disable:member-ordering */
 /**
@@ -138,7 +139,7 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
 
   constructor(@Inject(MatSelect) public matSelect: MatSelect,
               private changeDetectorRef: ChangeDetectorRef) {
-    
+
 
   }
 
@@ -309,7 +310,7 @@ export class MatSelectSearchComponent implements OnInit, OnDestroy, AfterViewIni
     this.overlayClassSet = true;
   }
 
-  
+
   /**
    * Initializes handling <mat-select [multiple]="true">
    * Note: to improve this code, mat-select should be extended to allow disabling resetting the selection while filtering.

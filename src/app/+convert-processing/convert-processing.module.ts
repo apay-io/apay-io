@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import {ConvertProcessingRoutingModule} from './convert-processing.routing.module';
 import {UiModule} from '../ui/ui.module';
-import {MatCheckboxModule, MatFormFieldModule, MatInputModule, MatSelectModule} from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ModalService} from '../services/modal/modal.service';
 import {CoreModule} from '../core/core.module';
@@ -16,6 +15,10 @@ import {SendFundsComponent} from './send-funds/send-funds.component';
 import {WaitExchangeComponent} from './wait-exchange/wait-exchange.component';
 import {TxCompleteComponent} from './tx-complete/tx-complete.component';
 import { QrCodeModule } from 'ng-qrcode';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
