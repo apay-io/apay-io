@@ -91,7 +91,7 @@
                         <div class="buttons-group">
                             <div class="button-convert" [ngClass]="{'disabled' : item.deposit === 'disable'}" (click)="openModal($event, item, 'deposit');">
                                 <div class="text">
-                                    Deposit
+                                    {{item.trustline ? 'Deposit': 'Prepare'}}
                                 </div>
                             </div>
                             <div class="button-convert" [ngClass]="{'disabled' : item.balance === '0' || item.withdraw === 'disable'}" (click)="openModal($event, item, 'withdraw');">
@@ -251,6 +251,52 @@
                     <div class="qr-code">
                         <img src="./../../../assets/img/qr-test.png" alt="">
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>
+
+<modal id="prepare-transaction">
+    <div class="modal">
+        <div class="modal-body">
+            <div class="head-popup">
+                Prepare transaction
+                <div class="close" (click)="modalService.close('prepare-transaction');">
+                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill-rule="evenodd" d="M.458.404c.582-.565 1.54-.524 2.123.04l9.406 9.485L21.435.444c.583-.564 1.54-.605 2.123-.04.582.565.582 1.453.041 2.058l-9.531 9.526 9.531 9.565c.541.565.541 1.494-.041 2.059-.582.524-1.54.524-2.123-.04l-9.448-9.486-9.406 9.485c-.583.565-1.54.565-2.123.04-.582-.564-.624-1.493-.041-2.058l9.531-9.565L.417 2.462C-.166 1.857-.124.97.458.404z"></path></svg>
+                </div>
+            </div>
+            <div class="content-popup">
+                <div class="operations-modal">
+                    <div class="info deposit">
+                        <!--<div class="title">-->
+                        <!--Prepare transaction-->
+                        <!--</div>-->
+                        <div class="text">
+                            You are going to Establich trustline or pay {{currentToken.code}} to {{currentToken.code}}.
+                        </div>
+                    </div>
+                    <div class="address-wrapper">
+                        <div class="info">
+                            <div class="title">
+                                Transaction id
+                            </div>
+                            <div class="address tx" [ngClass]="{'load': !txId}">
+                                <span class="tx-id">{{txId}}</span>
+                                <span [text-copy]="txId">
+                                    <svg class="icon copy" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15 5V4C15 2.89543 14.1046 2 13 2H4C2.89543 2 2 2.89543 2 4V13C2 14.1046 2.89543 15 4 15H5M11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <a target="_blank" [href]="'http://cosmic.link/?xdr=' + txId"
+                       class="button-next external-link">
+                        <span>Sign</span>
+                        <img class="external-icon" src="./../../../assets/img/external-link.svg" alt="">
+                    </a>
                 </div>
             </div>
         </div>

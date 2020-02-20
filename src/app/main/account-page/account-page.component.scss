@@ -415,6 +415,19 @@
         font-size: 18px;
         word-break: break-all;
 
+        &.tx {
+          display: flex;
+          align-items: flex-end;
+        }
+
+        .tx-id {
+          width: 90%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          display: block;
+        }
+
         .icon {
           width: 25px;
           height: 25px;

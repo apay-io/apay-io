@@ -79,6 +79,19 @@
   transition: all 0.25s ease 0s;
   box-shadow: none;
 
+  &.external-link {
+    width: auto;
+  }
+
+  .external-icon {
+    width: 15px;
+    height: 15px;
+    position: relative;
+    top: -10px;
+    right: -10px;
+    object-fit: contain;
+  }
+
   &.load {
     background: #0f59d182;
     color: #fff;
