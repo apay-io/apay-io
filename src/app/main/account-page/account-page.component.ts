@@ -37,12 +37,13 @@ export class AccountPageComponent implements OnInit {
   isLoading = false;
   buttonText;
   percent: number;
-  sumValue:number = 0;
-  sumChange:number = 0;
+  sumValue: number = 0;
+  sumChange: number = 0;
   hideLowBalanceFlag: boolean;
   searchValue: string;
   arraySearchValue = [];
   address: string;
+  txId: string;
   currentToken: Token = {
     code: '',
     name: '',
@@ -174,8 +175,6 @@ export class AccountPageComponent implements OnInit {
               this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken,1));
               const findToken = this.dataWallet.find(x => x.code === item.code);
               findToken.balance = item.balance;
-
-              //todo: all trustline are hard-coded
               findToken.trustline = true;
               if (this.rates[item.code]) {
                 findToken.value = +(+item.balance / this.rates[item.code] * this.rates['XDR']).toFixed(6);
@@ -195,28 +194,35 @@ export class AccountPageComponent implements OnInit {
                 'change': '0',
                 'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
                 'deposit': 'active',
-                'withdraw': 'disable',
+                'withdraw': 'active',
                 'color': '#a39ca0',
                 'address': 'native',
-                'trustline': false
+                'trustline': true
               }
 
               if (this.rates[item.code]) {
                 dataToken.value = +(+item.balance / this.rates[item.code] * this.rates['XDR']).toFixed(6);
               }
-              this.dataWallet.unshift(dataToken)
+              this.dataWallet.unshift(dataToken);
             }
           });
           this.percent = 100 / this.sumValue;
           this.drawingChart('AED', 30, 'days');
-          this.dataWallet.map((item) => {
-            if (item.balance && item.value) {
-              item.percent = (this.percent * item.value).toFixed(2);
-              this.doughnutChartData.push(item.percent);
-              this.doughnutChartLabels.push(item.code);
-              this.sumChange += +item.change;
-            }
-          });
+            console.warn(this.dataWallet);
+
+            setTimeout(() => {
+
+                this.dataWallet.map((item) => {
+                    if (item.balance && item.value) {
+                        item.percent = (this.percent * item.value).toFixed(2);
+                        this.doughnutChartData.push(item.percent);
+                        this.doughnutChartLabels.push(item.code);
+                        this.sumChange += +item.change;
+                    }
+                });
+                console.warn(this.doughnutChartData);
+                console.warn(this.doughnutChartLabels);
+            }, 1000);
         });
     }
   }
@@ -260,8 +266,14 @@ export class AccountPageComponent implements OnInit {
       this.currentToken.withdraw === 'disable' && modalName === 'withdraw') {
       return false
     }
-    this.modalService.open(modalName);
     if (modalName === 'deposit') {
+      if (!this.currentToken.trustline) {
+        this.txId = 'AAAAAOUBi3uFavXM6Sz9MRMbdDFqfvetJDhsdGO5DdNpB3gvAAAAZAAEnRcAAAABAAAAAAAAAAAA' +
+          'AAABAAAAAAAAAAYAAAABQlRDAAAAAADlAYt7hWr1zOks/TETG3Qxan73rSQ4bHRjuQ3TaQd4L3//////////AAAAAAAAAAA=';
+        this.modalService.open('prepare-transaction');
+        return false;
+      }
+      this.modalService.open(modalName);
       if (item.address === 'native') {
         this.address = this.account;
         return false;
@@ -269,6 +281,7 @@ export class AccountPageComponent implements OnInit {
       this.getToken(item.code, item.baseUrl);
     }
     if (modalName === 'withdraw') {
+      this.modalService.open(modalName);
       this.withdrawForm.reset();
       if (this.currentToken.trustline) {
         this.buttonText = 'Submit';
@@ -304,16 +317,22 @@ export class AccountPageComponent implements OnInit {
   }
 
   sendWithdrawForm() {
-    //test submit form deposit
-    this.isLoading = true;
-    this.withdrawForm.disable();
-    this.buttonText = 'Processing';
-    setTimeout(() => {
-      this.withdrawForm.enable()
-      this.isLoading = false;
+    this.txId = 'AAAAAOUBi3uFavXM6Sz9MRMbdDFqfvetJDhsdGO5DdNpB3gvAAAAZAAEnRcAAAABAAAAAAAAAAAA' +
+      'AAABAAAAAAAAAAYAAAABQlRDAAAAAADlAYt7hWr1zOks/TETG3Qxan73rSQ4bHRjuQ3TaQd4L3//////////AAAAAAAAAAA=';
+    if (this.currentToken.trustline) {
+      this.isLoading = true;
+      this.withdrawForm.disable();
+      this.buttonText = 'Processing';
+      setTimeout(() => {
+        this.withdrawForm.enable();
+        this.isLoading = false;
+        this.modalService.close('withdraw');
+        this.notify.update('Transaction completed successfully!', 'success');
+      }, 3000);
+    } else {
       this.modalService.close('withdraw');
-      this.notify.update('Transaction completed successfully!', 'success');
-    }, 3000)
+      this.modalService.open('prepare-transaction');
+    }
   }
 
   isHideLowBalanceCheckbox(event) {
