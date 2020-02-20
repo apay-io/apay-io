@@ -163,25 +163,28 @@ export class ConverterComponent implements OnInit, OnDestroy {
     this.stateButton = 'disabled';
     sessionStorage.setItem('amountOut', this.buyElement.nativeElement.value);
     sessionStorage.removeItem('amountIn');
-    clearTimeout(this.timerOut)
+    clearTimeout(this.timerOut);
     this.timerOut = setTimeout(async () => {
-      await this.recalculateAmounts()
-    }, 600)
+      await this.recalculateAmounts();
+    }, 600);
   }
 
   async calculateBuy() {
     this.stateButton = 'disabled';
     sessionStorage.setItem('amountIn', this.sellElement.nativeElement.value);
     sessionStorage.removeItem('amountOut');
-    clearTimeout(this.timerIn)
+    clearTimeout(this.timerIn);
     this.timerIn = setTimeout(async () => {
-      if (this.sellElement.nativeElement.value < this.currencyIn.minDeposit) {
-        this.buyElement.nativeElement.value = '';
-        this.notify.update('Minimum value for ' + this.currencyIn.code + ' - ' + this.currencyIn.minDeposit, 'error');
-        return false
+      console.log(this.sellElement.nativeElement.value);
+      if (this.sellElement.nativeElement.value > 0) {
+        if (this.sellElement.nativeElement.value < this.currencyIn.minDeposit) {
+          this.buyElement.nativeElement.value = '';
+          this.notify.update('Minimum value for ' + this.currencyIn.code + ' - ' + this.currencyIn.minDeposit, 'error');
+          return false;
+        }
+        await this.recalculateAmounts();
       }
-      await this.recalculateAmounts()
-    }, 600)
+    }, 600);
   }
 
   private async recalculateAmounts() {
