@@ -59,9 +59,11 @@ export class ConverterComponent implements OnInit, OnDestroy {
       }
     })
     this.currencyOut = currencies
-      .find(v => v.code === (sessionStorage.getItem('currencyOut') || 'XDR'));
+      .find(v => v.code === (sessionStorage.getItem('currencyOut') || 'XLM'))
+      || currencies.find(v => v.code === 'XLM');
     this.currencyIn = currencies
-      .find(v => v.code === (sessionStorage.getItem('currencyIn') || 'BTC'));
+      .find(v => v.code === (sessionStorage.getItem('currencyIn') || 'BTC'))
+      || currencies.find(v => v.code === 'BTC');
 
     if (this.isProcessingConverter) {
       this.amountFormConverter.controls['currencyIn'].setValue(this.currencyIn);
@@ -218,14 +220,14 @@ export class ConverterComponent implements OnInit, OnDestroy {
       const outDifferentPercent = outConvertToDollars / 100 * 5;
 
       if (Math.abs(inConvertToDollars - outConvertToDollars) >= outDifferentPercent) {
-        this.notify.update('Selling the current amount of currency at this price is not profitable', 'error');
+        this.notify.update('Current exchange rate is not favourable due to the low liquidity on the DEX. Try again later or smaller amount', 'error');
         this.stateButton = 'disabled';
       }
     } catch (err) {
       console.log(err);
       this.stateButton = 'disabled';
       this.buyElement.nativeElement.value = '';
-      this.notify.update('Unable to find a path on the network. Please try later or different amount', 'error');
+      this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
     }
   }
 }
