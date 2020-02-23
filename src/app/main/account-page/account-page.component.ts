@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AppComponent} from '../../app.component';
-import {accountData} from '../../../assets/accountData';
 import {Color} from 'ng2-charts';
 import * as moment from 'moment';
-import {ModalService} from "../../services/modal/modal.service";
+import {ModalService} from '../../services/modal/modal.service';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {StellarService} from '../../services/stellar/stellar.service';
-import {NotifyService} from "../../core/notify.service";
+import {NotifyService} from '../../core/notify.service';
+import {currencies} from '../../../assets/currencies-list';
 
 export interface Data {
   date: string;
@@ -32,13 +32,13 @@ interface Token {
 })
 
 export class AccountPageComponent implements OnInit {
-  dataWallet = accountData;
+  dataWallet = Object.assign([], currencies);
   rates = {};
   isLoading = false;
   buttonText;
   percent: number;
-  sumValue: number = 0;
-  sumChange: number = 0;
+  sumValue = 0;
+  sumChange = 0;
   hideLowBalanceFlag: boolean;
   searchValue: string;
   arraySearchValue = [];

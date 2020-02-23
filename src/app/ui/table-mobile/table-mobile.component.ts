@@ -2,8 +2,8 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {sparkline} from '@fnando/sparkline';
-import {CurrencySelectionService} from "../../core/currency-selection.service";
-import {GetCurrenciesServices} from "../../core/get-currencies.services";
+import {CurrencySelectionService} from '../../core/currency-selection.service';
+import {GetCurrenciesServices} from '../../core/get-currencies.services';
 
 export interface UserData {
     icon: string;
