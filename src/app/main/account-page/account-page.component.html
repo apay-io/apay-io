@@ -91,7 +91,7 @@
                         <div class="buttons-group">
                             <div class="button-convert" [ngClass]="{'disabled' : item.deposit === 'disable'}" (click)="openModal($event, item, 'deposit');">
                                 <div class="text">
-                                    {{item.trustline ? 'Deposit': 'Prepare'}}
+                                    {{item.trustline ? 'Deposit': 'Accept'}}
                                 </div>
                             </div>
                             <div class="button-convert" [ngClass]="{'disabled' : item.balance === '0' || item.withdraw === 'disable'}" (click)="openModal($event, item, 'withdraw');">

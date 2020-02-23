@@ -3,7 +3,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {sparkline} from '@fnando/sparkline';
 import {CurrencySelectionService} from '../../core/currency-selection.service';
-import {GetCurrenciesServices} from "../../core/get-currencies.services";
+import {GetCurrenciesServices} from '../../core/get-currencies.services';
 
 export interface UserData {
     icon: string;
@@ -41,7 +41,7 @@ export class TableComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.getCurrenciesSub = this.getCurrencies.state$.subscribe((data: any) => {
             if (data.length) {
-                this.currencies = data
+                this.currencies = data;
                 this.dataSource = new MatTableDataSource(this.currencies);
                 this.dataSource.sort = this.sort;
                 this.dataSource.connect().subscribe((data: any) => {
