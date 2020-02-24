@@ -159,8 +159,8 @@ export class AccountPageComponent implements OnInit {
     },
   };
 
-  ngOnInit() {
-    this.http.get(`https://rates.apay.io`).subscribe((data) => {
+  async ngOnInit() {
+    await this.http.get(`https://rates.apay.io`).subscribe((data) => {
       this.rates = data;
     });
 
@@ -208,21 +208,14 @@ export class AccountPageComponent implements OnInit {
           });
           this.percent = 100 / this.sumValue;
           this.drawingChart('AED', 30, 'days');
-            console.warn(this.dataWallet);
-
-            setTimeout(() => {
-
-                this.dataWallet.map((item) => {
-                    if (item.balance && item.value) {
-                        item.percent = (this.percent * item.value).toFixed(2);
-                        this.doughnutChartData.push(item.percent);
-                        this.doughnutChartLabels.push(item.code);
-                        this.sumChange += +item.change;
-                    }
-                });
-                console.warn(this.doughnutChartData);
-                console.warn(this.doughnutChartLabels);
-            }, 1000);
+            this.dataWallet.map((item) => {
+                if (item.balance && item.value) {
+                    item.percent = (this.percent * item.value).toFixed(2);
+                    this.doughnutChartData.push(item.percent);
+                    this.doughnutChartLabels.push(item.code);
+                    this.sumChange += +item.change;
+                }
+            });
         });
     }
   }
