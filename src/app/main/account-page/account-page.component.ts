@@ -167,7 +167,7 @@ export class AccountPageComponent implements OnInit {
     this.arraySearchValue = this.dataWallet;
     this.account = localStorage.getItem('account');
     if (this.account) {
-      this.stellarService.balances(this.account)
+      await this.stellarService.balances(this.account)
         .then((result) => {
           result.map(item => {
             const findIndexToken = this.dataWallet.findIndex(x => x.code === item.code);
