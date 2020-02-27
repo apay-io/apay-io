@@ -24,6 +24,7 @@ export const currencies = [
   //   'color': '#211265',
   //   'address': 'native',
   //   'trustline': false
+  //   'currentUnit': 'USD'
   //
   // },
   {
@@ -50,6 +51,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'BTC',
@@ -76,6 +78,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'BCH',
@@ -102,6 +105,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'ETH',
@@ -128,6 +132,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'LTC',
@@ -154,6 +159,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'BAT',
@@ -180,6 +186,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'KIN',
@@ -206,6 +213,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'LINK',
@@ -232,6 +240,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'MTL',
@@ -258,6 +267,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'OMG',
@@ -284,6 +294,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'REP',
@@ -310,6 +321,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'SALT',
@@ -336,6 +348,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   },
   {
     'code': 'ZRX',
@@ -362,6 +375,7 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    'currentUnit': 'USD'
   }
 ];
 
