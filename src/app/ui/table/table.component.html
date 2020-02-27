@@ -11,7 +11,7 @@
 
 <div class="select-currency">
     <mat-form-field>
-        <mat-select [(value)]="selected">
+         <mat-select (selectionChange)="selectUnit()" [(value)]="selected">
             <span></span>
             <mat-select-trigger>
                 {{selected}}
@@ -19,6 +19,8 @@
             <mat-option value="USD">USD
             </mat-option>
             <mat-option value="EUR">EUR
+            </mat-option>
+            <mat-option value="XDR">XDR
             </mat-option>
         </mat-select>
     </mat-form-field>
@@ -57,17 +59,17 @@
 
         <ng-container matColumnDef="usd">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> PRICE USD</th>
-            <td mat-cell *matCellDef="let row"><span class="price">{{row.price.toPrecision(4) | currency:'USD':'symbol':'1.0-8'}} </span></td>
+            <td mat-cell *matCellDef="let row"><span class="price">{{row.price.toPrecision(4) | currency:this.selected}} </span></td>
         </ng-container>
 
         <ng-container matColumnDef="volume">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> 24H VOLUME</th>
-            <td mat-cell *matCellDef="let row"> {{row.volume | currency}}</td>
+            <td mat-cell *matCellDef="let row"> {{row.volume | currency:this.selected}}</td>
         </ng-container>
 
         <ng-container matColumnDef="depth">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> LIQUIDITY DEPTH</th>
-            <td mat-cell *matCellDef="let row"> {{row.depthUsd | currency}}</td>
+            <td mat-cell *matCellDef="let row"> {{row.depthUsd | currency:this.selected}}</td>
         </ng-container>
 
         <ng-container matColumnDef="graph">
