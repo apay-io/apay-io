@@ -4,25 +4,23 @@ import {AppComponent} from '../../app.component';
 import {Color} from 'ng2-charts';
 import * as moment from 'moment';
 import {ModalService} from '../../services/modal/modal.service';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {StellarService} from '../../services/stellar/stellar.service';
 import {NotifyService} from '../../core/notify.service';
 import {currencies} from '../../../assets/currencies-list';
+import {Currency} from '../../core/currency.interface';
 
 export interface Data {
   date: string;
   val: string;
 }
 
-interface Token {
-  code: string,
-  name: string,
-  icon: string,
-  balance: string,
-  deposit: string,
-  withdraw: string,
-  baseUrl: string,
-  trustline: boolean,
+interface Token extends Currency {
+  name: string;
+  balance: string;
+  deposit: string;
+  baseUrl: string;
+  trustline: boolean;
 }
 
 @Component({
@@ -50,7 +48,12 @@ export class AccountPageComponent implements OnInit {
     icon: '',
     balance: '',
     deposit: 'active',
-    withdraw: 'active',
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0,
+      fee_percent: 0,
+      min_amount: 0,
+    },
     baseUrl: '',
     trustline: false
   };
@@ -172,7 +175,7 @@ export class AccountPageComponent implements OnInit {
           result.map(item => {
             const findIndexToken = this.dataWallet.findIndex(x => x.code === item.code);
             if (findIndexToken !== -1) {
-              this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken,1));
+              this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken, 1));
               const findToken = this.dataWallet.find(x => x.code === item.code);
               findToken.balance = item.balance;
               findToken.trustline = true;
@@ -198,7 +201,7 @@ export class AccountPageComponent implements OnInit {
                 'color': '#a39ca0',
                 'address': 'native',
                 'trustline': true
-              }
+              };
 
               if (this.rates[item.code]) {
                 dataToken.value = +(+item.balance / this.rates[item.code] * this.rates['XDR']).toFixed(6);
@@ -236,7 +239,8 @@ export class AccountPageComponent implements OnInit {
     setTimeout(() => {
       this.debounceFlag = false;
     }, 1000);
-    return this.http.get(`https://back.paysxdr.com/ratesHistory?start=${time}&finish=${nowtime}&base=${select_val}&currency=XDR`).subscribe((data: [Data]) => {
+    return this.http.get(`https://back.paysxdr.com/ratesHistory?start=${time}&finish=${nowtime}&base=${select_val}&currency=XDR`)
+      .subscribe((data: [Data]) => {
       data.map(item => {
         this.ChartLabels.push(item.date);
         let reductionValue;
@@ -256,8 +260,8 @@ export class AccountPageComponent implements OnInit {
     this.currentToken = item;
     if (item.balance === '0' && modalName === 'withdraw' ||
       this.currentToken.deposit === 'disable' && modalName === 'deposit' ||
-      this.currentToken.withdraw === 'disable' && modalName === 'withdraw') {
-      return false
+      !this.currentToken.withdraw.enabled && modalName === 'withdraw') {
+      return false;
     }
     if (modalName === 'deposit') {
       if (!this.currentToken.trustline) {
@@ -287,17 +291,27 @@ export class AccountPageComponent implements OnInit {
           'fee_fixed': 0,
           'min_amount': 0
         };
-        this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.currentToken.balance), Validators.min(+this.withdrawToken.min_amount), Validators.pattern(this.regexpAmount)]);
-        return false
+        this.withdrawForm.controls['amount'].setValidators([
+          Validators.required,
+          Validators.max(+this.currentToken.balance),
+          Validators.min(+this.withdrawToken.min_amount),
+          Validators.pattern(this.regexpAmount)
+        ]);
+        return false;
       }
 
       this.http.get(`https://api.apay.io/api/info`).subscribe((data) => {
         this.withdrawToken = {
-          'fee_percent': data['withdraw'][item.code]['fee_percent'],
-          'fee_fixed': data['withdraw'][item.code]['fee_fixed'],
-          'min_amount': data['withdraw'][item.code]['min_amount']
+          fee_percent: data['withdraw'][item.code]['fee_percent'],
+          fee_fixed: data['withdraw'][item.code]['fee_fixed'],
+          min_amount: data['withdraw'][item.code]['min_amount']
         };
-        this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.currentToken.balance), Validators.min(+this.withdrawToken.min_amount), Validators.pattern(this.regexpAmount)]);
+        this.withdrawForm.controls['amount'].setValidators([
+          Validators.required,
+          Validators.max(+this.currentToken.balance),
+          Validators.min(+this.withdrawToken.min_amount),
+          Validators.pattern(this.regexpAmount)
+        ]);
       });
     }
   }
@@ -306,7 +320,7 @@ export class AccountPageComponent implements OnInit {
     if (!this.withdrawForm.get('amount')) {
       return 0;
     }
-    return this.withdrawForm.get('amount')
+    return this.withdrawForm.get('amount');
   }
 
   sendWithdrawForm() {
@@ -354,7 +368,8 @@ export class AccountPageComponent implements OnInit {
 
   getToken (code, baseUrl) {
     this.address = '';
-    return this.http.get(baseUrl+ `/deposit?account=` + this.account + `&asset_code=` + code).subscribe((data) => {
+    return this.http.get(`${baseUrl}/deposit?account=${this.account}&asset_code=${code}`)
+      .subscribe((data) => {
       this.address = data['how'];
       if (this.address.indexOf('address') !== -1) {
         this.address = this.address.split('address: ')[1];

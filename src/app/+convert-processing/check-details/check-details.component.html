@@ -16,7 +16,7 @@
                 You send
             </div>
             <div class="description-details">
-                {{orderParams.amountIn}} {{orderParams.currencyIn.code}}
+                {{exchange.amountIn}} {{exchange.currencyIn.code}}
             </div>
         </div>
         <div class="details-info">
@@ -24,7 +24,7 @@
                 You get
             </div>
             <div class="description-details">
-                {{orderParams.amountOut}} {{orderParams.currencyOut.code}}
+                {{exchange.amountOut}} {{exchange.currencyOut.code}}
             </div>
         </div>
         <div class="details-info">
@@ -32,16 +32,16 @@
                 Recipient address
             </div>
             <div class="description-details">
-                {{orderParams.addressOut}}
+                {{exchange.addressOut}}
             </div>
         </div>
-        <div class="details-info" *ngIf="orderParams.rate">
+        <div class="details-info" *ngIf="rate">
             <div class="title-details">
                 Exchange rate
             </div>
             <div class="description-details">
-              1 {{ orderParams.currencyIn.code }} = {{ orderParams.rate.toPrecision(6)|number:'1.0-8' }} {{ orderParams.currencyOut.code }}<br/>
-              1 {{ orderParams.currencyOut.code }} = {{ (1/orderParams.rate).toPrecision(6)|number:'1.0-8' }} {{ orderParams.currencyIn.code }}
+              1 {{ exchange.currencyIn.code }} = {{ rate.toPrecision(6)|number:'1.0-8' }} {{ exchange.currencyOut.code }}<br/>
+              1 {{ exchange.currencyOut.code }} = {{ (1/rate).toPrecision(6)|number:'1.0-8' }} {{ exchange.currencyIn.code }}
             </div>
         </div>
         <div class="details-info">
@@ -49,7 +49,7 @@
                 Exchange fee
             </div>
             <div class="description-details">
-                0%
+                0.5%
             </div>
         </div>
         <div class="details-info">
@@ -57,7 +57,7 @@
                 Network fee (will be excluded from the final amount)
             </div>
             <div class="description-details">
-
+              {{ exchange.amountFee }} {{ exchange.currencyOut.code }}
             </div>
         </div>
         <div class="details-info">
