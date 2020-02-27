@@ -10,11 +10,11 @@
             Back
         </button>
     </div>
-    <form (ngSubmit)="changeStep()">
+    <form (ngSubmit)="changeStep(3)">
         <div class="recipient-address">
             <mat-form-field class="recipient-address" appearance="legacy">
                 <mat-label>Recipient address</mat-label>
-                <input matInput placeholder="Enter your {{exchange.currencyOut.code}} address">
+                <input matInput [value]="exchange.addressOut" (keyup)="onKeyUp($event)" placeholder="Enter your {{exchange.currencyOut.code}} address">
             </mat-form-field>
         </div>
         <button

@@ -2,6 +2,10 @@ import {currencies} from '../../../assets/currencies-list';
 import {Currency} from '../../core/currency.interface';
 
 export interface ExchangeState {
+  id?: string;
+  addressIn?: string;
+  memoIn?: string;
+  memoInType?: string;
   addressOut: string;
   amountIn: string;
   amountOut: string;

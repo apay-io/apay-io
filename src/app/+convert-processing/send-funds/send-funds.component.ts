@@ -2,6 +2,11 @@ import {Component, ElementRef, Input, OnInit, Output, ViewChild, ViewChildren} f
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {EventEmitter} from '@angular/core';
 import * as QRCode from 'qrcode';
+import {SetExchangeStep} from '../../store/actions/exchange.actions';
+import {AppState} from '../../store/states/app.state';
+import {select, Store} from '@ngrx/store';
+import {ExchangeState} from '../../store/states/exchange.state';
+import {selectExchange} from '../../store/selectors/exchange.selectors';
 
 @Component({
   selector: 'app-send-funds',
@@ -10,15 +15,15 @@ import * as QRCode from 'qrcode';
 })
 export class SendFundsComponent implements OnInit {
   addressForm: FormGroup;
-
-  @Input()
-  orderParams;
-  @Output() currentStep: EventEmitter<number> = new EventEmitter<number>();
+  exchange: ExchangeState;
 
   @ViewChildren('canvas')
   canvas;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private readonly store: Store<AppState>,
+  ) {
   }
 
   ngOnInit() {
@@ -27,9 +32,13 @@ export class SendFundsComponent implements OnInit {
         Validators.required
       ]],
     });
+    this.store.pipe(select(selectExchange))
+      .subscribe((exchange) => {
+        this.exchange = exchange;
+      });
   }
 
-  changeStep(event) {
-    this.currentStep.emit(event);
+  changeStep(step) {
+    this.store.dispatch(new SetExchangeStep(step));
   }
 }

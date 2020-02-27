@@ -1,4 +1,4 @@
-import {Asset, Server, AssetType, Horizon} from 'stellar-sdk';
+import {Asset, Server, AssetType, Horizon, StrKey} from 'stellar-sdk';
 import {reduce, filter} from 'lodash';
 import BalanceLine = Horizon.BalanceLine;
 
@@ -57,5 +57,9 @@ export class StellarService {
       console.error(err);
       return [];
     }
+  }
+
+  validateAddress(address: string) {
+    return StrKey.isValidEd25519PublicKey(address);
   }
 }

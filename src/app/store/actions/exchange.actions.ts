@@ -8,6 +8,7 @@ export enum EExchangeActions {
   SetCurrencyIn = '[Exchange] Set currencyIn',
   SetCurrencyOut = '[Exchange] Set currencyOut',
   SetExchangeStep = '[Exchange] Set step',
+  SetAddressOut = '[Exchange] Set addressOut',
 }
 
 export class SetAmountIn implements Action {
@@ -46,5 +47,11 @@ export class SetExchangeStep implements Action {
   constructor(public payload: number) {}
 }
 
+export class SetAddressOut implements Action {
+  public readonly type = EExchangeActions.SetAddressOut;
+
+  constructor(public payload: string) {}
+}
+
 export type ExchangeActions = SetAmountIn | SetAmountInternal | SetAmountOut
-  | SetCurrencyIn | SetCurrencyOut | SetExchangeStep;
+  | SetCurrencyIn | SetCurrencyOut | SetExchangeStep | SetAddressOut;

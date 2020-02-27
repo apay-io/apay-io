@@ -38,6 +38,14 @@ export function exchangeReducers(
       };
       return state;
     }
+    case EExchangeActions.SetAddressOut: {
+      state = {
+        ...state,
+        addressOut: action.payload
+      };
+      localStorage.setItem('account', action.payload);
+      return state;
+    }
     default:
       return state;
   }

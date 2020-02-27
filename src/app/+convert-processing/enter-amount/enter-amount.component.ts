@@ -37,7 +37,7 @@ export class EnterAmountComponent implements OnInit {
     return this.exchange.amountIn && this.exchange.amountOut;
   }
 
-  changeStep() {
-    this.store.dispatch(new SetExchangeStep(2));
+  changeStep(step) {
+    this.store.dispatch(new SetExchangeStep(step));
   }
 }

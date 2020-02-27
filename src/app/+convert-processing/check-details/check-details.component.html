@@ -10,7 +10,7 @@
             Back
         </button>
     </div>
-    <form [formGroup]="verifyForm" (ngSubmit)="changeStep(4)">
+    <form (ngSubmit)="changeStep(4)">
         <div class="details-info">
             <div class="title-details">
                 You send
@@ -75,7 +75,7 @@
 <!--            </mat-checkbox>-->
 <!--        </div>-->
         <button
-                [disabled]="!verifyForm.valid"
+                [disabled]="!canContinue"
                 mat-raised-button
                 class="button-next">
             Confirm and make payment
