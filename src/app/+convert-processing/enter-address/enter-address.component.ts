@@ -26,10 +26,16 @@ export class EnterAddressComponent implements OnInit {
     this.addressForm.valueChanges.subscribe((form) => {
       this.orderParams.addressOut = form.address;
     });
-    //todo: validate address
   }
 
   changeStep(event) {
     this.currentStep.emit(event);
+  }
+
+  get _address() {
+    if (!this.addressForm.get('address')) {
+      return 0;
+    }
+    return this.addressForm.get('address');
   }
 }

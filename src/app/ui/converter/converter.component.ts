@@ -15,6 +15,7 @@ import {GetCurrenciesServices} from "../../core/get-currencies.services";
   styleUrls: ['./converter.component.scss']
 })
 export class ConverterComponent implements OnInit, OnDestroy {
+  isLoading;
   tokens;
   currencyOut;
   currencyIn;
@@ -154,7 +155,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
 
   continue() {
     if (this.stateButton === 'disabled') {
-      return false
+      return false;
     }
     sessionStorage.setItem('currencyIn', this.currencyIn.code);
     sessionStorage.setItem('currencyOut', this.currencyOut.code);
@@ -176,6 +177,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
     sessionStorage.setItem('amountIn', this.sellElement.nativeElement.value);
     sessionStorage.removeItem('amountOut');
     clearTimeout(this.timerIn);
+    this.isLoading = true;
     this.timerIn = setTimeout(async () => {
       console.log(this.sellElement.nativeElement.value);
       if (this.sellElement.nativeElement.value > 0) {
@@ -185,6 +187,8 @@ export class ConverterComponent implements OnInit, OnDestroy {
           return false;
         }
         await this.recalculateAmounts();
+      } else {
+        this.isLoading = false;
       }
     }, 600);
   }
@@ -229,5 +233,6 @@ export class ConverterComponent implements OnInit, OnDestroy {
       this.buyElement.nativeElement.value = '';
       this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
     }
+    this.isLoading = false;
   }
 }

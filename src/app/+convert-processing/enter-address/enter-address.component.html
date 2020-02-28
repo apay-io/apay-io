@@ -16,6 +16,11 @@
                 <mat-label>Recipient address</mat-label>
                 <input matInput formControlName="address" placeholder="Enter your {{orderParams.currencyOut.code}} address">
             </mat-form-field>
+            <div *ngIf="_address.invalid && (_address.touched || _address.dirty)">
+                <span class="error" *ngIf="_address.errors?.required">
+                    Invalid address
+                </span>
+            </div>
         </div>
         <button
                 [disabled]="!addressForm.valid"
