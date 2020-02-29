@@ -3,10 +3,10 @@
 
 .wrapper {
   display: flex;
+  flex-wrap: wrap;
 
   .steps-block {
-    margin-top: 5px;
-    margin-left: 2px;
+    margin: 5px 25px 20px 2px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
@@ -108,7 +108,6 @@
 
   .info-block {
     margin-top: 5px;
-    margin-left: 25px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
@@ -195,7 +194,7 @@
 
     .steps-block {
       flex-wrap: wrap;
-      margin: 0;
+      margin: 0 0 15px;
       width: 100vw;
       padding: 0 0 21px;
 
