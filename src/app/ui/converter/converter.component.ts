@@ -71,16 +71,17 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.store.pipe(select(selectExchange))
       .subscribe((exchange: ExchangeState) => {
+        if (!this.exchange && !exchange.amountOut) {
+          this.store.dispatch(new SetAmountIn(exchange.amountIn));
+        }
+        if (!this.exchange && !exchange.amountIn) {
+          this.store.dispatch(new SetAmountOut(exchange.amountOut));
+        }
+
         console.log(exchange);
         this.exchange = exchange;
         this.currencyIn = exchange.currencyIn;
         this.currencyOut = exchange.currencyOut;
-        if (!exchange.amountOut) {
-          this.store.dispatch(new SetAmountIn(exchange.amountIn));
-        }
-        if (!exchange.amountIn) {
-          this.store.dispatch(new SetAmountOut(exchange.amountOut));
-        }
         this.recalculateAmounts(exchange.amountIn, exchange.amountOut);
       });
   }
@@ -147,14 +148,14 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   continue() {
-    if (this.stateButton === 'disabled') {
+    if (this.stateButton !== 'active') {
       return false;
     }
     this.router.navigate(['/processing']);
   }
 
   async calculateSell(event) {
-    this.stateButton = 'disabled';
+    this.stateButton = 'loading';
     if (event.target.value > 0) {
       if (event.target.value < this.currencyOut.minWithdraw) {
         this.notify.update('Minimum value for ' + this.currencyOut.code + ' - ' + this.currencyOut.minWithdraw, 'error');
@@ -162,14 +163,11 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.store.dispatch(new SetAmountOut(event.target.value));
     }
-    clearTimeout(this.timer);
-    this.timer = setTimeout(async () => {
-      await this.recalculateAmounts(null, event.target.value);
-    }, 600);
   }
 
   async calculateBuy(event) {
-    this.stateButton = 'disabled';
+    console.log(event.target.value);
+    this.stateButton = 'loading';
     if (event.target.value > 0) {
       if (event.target.value < this.currencyIn.minDeposit) {
         this.notify.update('Minimum value for ' + this.currencyIn.code + ' - ' + this.currencyIn.minDeposit, 'error');
@@ -177,14 +175,14 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.store.dispatch(new SetAmountIn(event.target.value));
     }
-    clearTimeout(this.timer);
-    this.timer = setTimeout(async () => {
-      await this.recalculateAmounts(event.target.value, null);
-    }, 600);
-
   }
 
   private async recalculateAmounts(amountIn, amountOut) {
+    if (!amountIn || !amountOut) {
+      this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
+      this.stateButton = 'disabled';
+      return;
+    }
     try {
       this.stateButton = 'active';
       this.notify.clear();

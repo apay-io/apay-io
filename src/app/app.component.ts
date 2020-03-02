@@ -25,6 +25,10 @@ export class AppComponent implements OnInit{
       return false
     }
     this.loginFlag = false;
+
+    this.router.events.subscribe(() => {
+      window.scrollTo(0, 0);
+    });
   }
 
   receiveLoginFlag(event) {
@@ -45,12 +49,10 @@ export class AppComponent implements OnInit{
   }
 
   routeAccount() {
-    if (this.loginFlag) {
-      this.router.navigate(['/account']);
+    if (!this.loginFlag) {
+      this.loginServices.open();
       return false;
     }
-
-    this.loginServices.open()
   }
 
 }

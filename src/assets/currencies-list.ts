@@ -24,8 +24,6 @@ export const currencies = [
   //   'color': '#211265',
   //   'address': 'native',
   //   'trustline': false
-  //   'currentUnit': 'USD'
-  //
   // },
   {
     'code': 'XLM',
@@ -56,7 +54,6 @@ export const currencies = [
       fee_percent: 0,
       min_amount: 1,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'BTC',
@@ -82,6 +79,12 @@ export const currencies = [
     'color': '#000000',
     'address': 'native',
     'trustline': false,
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.00001,
+      fee_percent: 0,
+      min_amount: 1,
+    },
   },
   {
     'code': 'BCH',
@@ -113,7 +116,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 0.0002,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'ETH',
@@ -145,7 +147,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 0.01,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'LTC',
@@ -177,7 +178,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 0.02,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'BAT',
@@ -209,7 +209,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 10,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'KIN',
@@ -241,7 +240,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 0,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'LINK',
@@ -273,7 +271,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 2,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'MTL',
@@ -305,7 +302,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 1,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'OMG',
@@ -337,7 +333,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 0.4,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'REP',
@@ -369,7 +364,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 0.1,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'SALT',
@@ -401,7 +395,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 2,
     },
-    'currentUnit': 'USD'
   },
   {
     'code': 'ZRX',
@@ -433,7 +426,6 @@ export const currencies = [
       fee_percent: 0.1,
       min_amount: 2,
     },
-    'currentUnit': 'USD'
   }
 ];
 

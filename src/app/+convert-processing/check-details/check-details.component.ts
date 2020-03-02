@@ -4,7 +4,7 @@ import {select, Store} from '@ngrx/store';
 import {selectExchange} from '../../store/selectors/exchange.selectors';
 import {AppState} from '../../store/states/app.state';
 import {ExchangeState} from '../../store/states/exchange.state';
-import {SetExchangeStep} from '../../store/actions/exchange.actions';
+import {SetExchangeStep, SetSwapParams} from '../../store/actions/exchange.actions';
 
 @Component({
   selector: 'app-check-details',
@@ -32,6 +32,10 @@ export class CheckDetailsComponent implements OnInit {
   }
 
   async changeStep(step) {
+    this.store.dispatch(new SetExchangeStep(step));
+  }
+
+  async process() {
     this.http.post('https://apay.io/api/swap', {
       currencyIn: this.exchange.currencyIn.code,
       currencyOut: this.exchange.currencyOut.code,
@@ -41,9 +45,7 @@ export class CheckDetailsComponent implements OnInit {
       this.exchange.memoIn = result.memo_in;
       this.exchange.memoInType = 'TEXT';
       this.exchange.id = result.memo_in;
-      sessionStorage.setItem('addressIn', result.address_in);
-      sessionStorage.setItem('id', result.memo_in);
-      this.store.dispatch(new SetExchangeStep(step));
+      this.store.dispatch(new SetSwapParams(result));
     });
   }
 

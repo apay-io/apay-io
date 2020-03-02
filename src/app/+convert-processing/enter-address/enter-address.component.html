@@ -16,6 +16,9 @@
                 <mat-label>Recipient address</mat-label>
                 <input matInput [value]="exchange.addressOut" (keyup)="onKeyUp($event)" placeholder="Enter your {{exchange.currencyOut.code}} address">
             </mat-form-field>
+            <div *ngIf="this.addressOut && !isAddressValid">
+                <span class="error">Invalid address</span>
+            </div>
         </div>
         <button
                 [disabled]="!canContinue"

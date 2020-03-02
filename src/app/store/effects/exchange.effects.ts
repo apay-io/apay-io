@@ -3,7 +3,7 @@ import {AppState} from '../states/app.state';
 import {select, Store} from '@ngrx/store';
 import {StellarService} from '../../services/stellar/stellar.service';
 import {Actions, Effect, ofType} from '@ngrx/effects';
-import {map, switchMap, withLatestFrom} from 'rxjs/operators';
+import {catchError, map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {currencies} from '../../../assets/currencies-list';
 import {
@@ -29,11 +29,17 @@ export class ExchangeEffects {
       sessionStorage.setItem('amountOut', action.payload);
       sessionStorage.removeItem('amountIn');
 
-      return await this.stellarService.calculateSell(
-        currencies.find((item) => item.code === localStorage.getItem('currencyIn')),
-        currencies.find((item) => item.code === localStorage.getItem('currencyOut')),
-        (parseFloat(action.payload) * 0.995).toFixed(7),
-      );
+      try {
+        return await this.stellarService.calculateSell(
+          currencies.find((item) => item.code === localStorage.getItem('currencyIn')),
+          currencies.find((item) => item.code === localStorage.getItem('currencyOut')),
+          (parseFloat(action.payload) * 0.995).toFixed(7),
+        );
+      } catch (err) {
+        return {
+          source_amount: null,
+        };
+      }
     }),
     switchMap((item) => {
       const amountOut = parseFloat(sessionStorage.getItem('amountOut'));
@@ -54,11 +60,17 @@ export class ExchangeEffects {
       sessionStorage.setItem('amountIn', action.payload);
       sessionStorage.removeItem('amountOut');
 
-      return await this.stellarService.calculateBuy(
-        currencies.find((item) => item.code === localStorage.getItem('currencyIn')),
-        action.payload,
-        currencies.find((item) => item.code === localStorage.getItem('currencyOut')),
-      );
+      try {
+        return await this.stellarService.calculateBuy(
+          currencies.find((item) => item.code === localStorage.getItem('currencyIn')),
+          action.payload,
+          currencies.find((item) => item.code === localStorage.getItem('currencyOut')),
+        );
+      } catch (err) {
+        return {
+          source_amount: null,
+        };
+      }
     }),
     switchMap((item) => {
       const currencyOut = currencies.find((currency) => currency.code === localStorage.getItem('currencyOut'));

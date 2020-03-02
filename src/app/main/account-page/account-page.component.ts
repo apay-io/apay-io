@@ -162,74 +162,80 @@ export class AccountPageComponent implements OnInit {
     },
   };
 
-  async ngOnInit() {
-    await this.http.get(`https://rates.apay.io`).subscribe((data) => {
-      this.rates = data;
-    });
+  ngOnInit() {
+    new Promise((res) => {
+      this.http.get(`https://rates.apay.io`).subscribe((data) => {
+        res(data);
+      });
+    })
+      .then(rates => {
+        this.arraySearchValue = this.dataWallet;
+        this.account = localStorage.getItem('account');
+        if (this.account) {
+          this.stellarService.balances(this.account)
+            .then((result) => {
+              result.map(item => {
+                const findIndexToken = this.dataWallet.findIndex(x => x.code === item.code);
+                if (findIndexToken !== -1) {
+                  this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken, 1));
+                  const findToken = this.dataWallet.find(x => x.code === item.code);
+                  findToken.balance = item.balance;
+                  findToken.trustline = true;
+                  if (rates[item.code]) {
+                    findToken.value = +(+item.balance / rates[item.code] * rates['XDR']).toFixed(6);
+                    this.sumValue = +(this.sumValue + findToken.value).toFixed(6);
+                  }
 
-    this.arraySearchValue = this.dataWallet;
-    this.account = localStorage.getItem('account');
-    if (this.account) {
-      await this.stellarService.balances(this.account)
-        .then((result) => {
-          result.map(item => {
-            const findIndexToken = this.dataWallet.findIndex(x => x.code === item.code);
-            if (findIndexToken !== -1) {
-              this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken, 1));
-              const findToken = this.dataWallet.find(x => x.code === item.code);
-              findToken.balance = item.balance;
-              findToken.trustline = true;
-              if (this.rates[item.code]) {
-                findToken.value = +(+item.balance / this.rates[item.code] * this.rates['XDR']).toFixed(6);
-                this.sumValue = +(this.sumValue + findToken.value).toFixed(6);
-              }
+                  this.datasets[0].backgroundColor.unshift(findToken.color);
+                } else {
+                  const dataToken = {
+                    'code': item.code,
+                    'name': item.code,
+                    'baseUrl': 'https://api.apay.io/api',
+                    'icon': '',
+                    'balance': item.balance,
+                    'percent': '-',
+                    'value': 0,
+                    'change': '0',
+                    'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+                    'deposit': 'active',
+                    'withdraw': 'active',
+                    'color': '#a39ca0',
+                    'address': 'native',
+                    'trustline': true
+                  };
 
-              this.datasets[0].backgroundColor.unshift(findToken.color);
-            } else {
-              const dataToken = {
-                'code': item.code,
-                'name': item.code,
-                'baseUrl': 'https://api.apay.io/api',
-                'icon': '',
-                'balance': item.balance,
-                'percent': '-',
-                'value': 0,
-                'change': '0',
-                'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-                'deposit': 'active',
-                'withdraw': 'active',
-                'color': '#a39ca0',
-                'address': 'native',
-                'trustline': true
-              };
-
-              if (this.rates[item.code]) {
-                dataToken.value = +(+item.balance / this.rates[item.code] * this.rates['XDR']).toFixed(6);
-              }
-              this.dataWallet.unshift(dataToken);
-            }
-          });
-          this.percent = 100 / this.sumValue;
-          this.drawingChart('AED', 30, 'days');
-            this.dataWallet.map((item) => {
-                if (item.balance && item.value) {
-                    item.percent = (this.percent * item.value).toFixed(2);
-                    this.doughnutChartData.push(item.percent);
-                    this.doughnutChartLabels.push(item.code);
-                    this.sumChange += +item.change;
+                  if (rates[item.code]) {
+                    dataToken.value = +(+item.balance / rates[item.code] * rates['XDR']).toFixed(6);
+                  }
+                  this.dataWallet.unshift(dataToken);
                 }
+              });
+              this.percent = 100 / this.sumValue;
+              this.drawingChart('AED', 30, 'days');
+              this.dataWallet.map((item) => {
+                if (item.balance && item.value) {
+                  item.percent = (this.percent * item.value).toFixed(2);
+                  this.doughnutChartData.push(item.percent);
+                  this.doughnutChartLabels.push(item.code);
+                  this.sumChange += +item.change;
+                }
+              });
             });
-        });
-    }
+        }
+      })
+      .catch(error => {
+        console.log('ERROR:', error.message);
+      });
   }
 
-  async drawingChart(select_val, time_amount, time_type) {
+  drawingChart(select_val, time_amount, time_type) {
     const nowtime = moment().format('YYYY-MM-DD');
     const time = moment().subtract(time_amount, time_type).format('YYYY-MM-DD');
-    await this.updateChart(select_val, time, nowtime);
+    this.updateChart(select_val, time, nowtime);
   }
 
-  async updateChart(select_val, time, nowtime) {
+  updateChart(select_val, time, nowtime) {
     if (this.debounceFlag) {
       return false;
     }
@@ -239,8 +245,7 @@ export class AccountPageComponent implements OnInit {
     setTimeout(() => {
       this.debounceFlag = false;
     }, 1000);
-    return this.http.get(`https://back.paysxdr.com/ratesHistory?start=${time}&finish=${nowtime}&base=${select_val}&currency=XDR`)
-      .subscribe((data: [Data]) => {
+    return this.http.get(`https://back.paysxdr.com/ratesHistory?start=${time}&finish=${nowtime}&base=${select_val}&currency=XDR`).subscribe((data: [Data]) => {
       data.map(item => {
         this.ChartLabels.push(item.date);
         let reductionValue;

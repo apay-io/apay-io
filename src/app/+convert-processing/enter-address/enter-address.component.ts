@@ -16,7 +16,7 @@ export class EnterAddressComponent implements OnInit {
   private timer;
 
   addressOut;
-  canContinue = false;
+  isAddressValid = false;
 
   constructor(
     private readonly store: Store<AppState>,
@@ -36,8 +36,8 @@ export class EnterAddressComponent implements OnInit {
   }
 
   validateAddress(address: string, update = false) {
-    this.canContinue = this.stellar.validateAddress(address);
-    if (this.canContinue && update) {
+    this.isAddressValid = this.stellar.validateAddress(address);
+    if (this.isAddressValid && update) {
       this.store.dispatch(new SetAddressOut(address));
     }
   }
@@ -45,11 +45,15 @@ export class EnterAddressComponent implements OnInit {
   onKeyUp(event) {
     this.addressOut = event.target.value;
     if (this.exchange.addressOut !== this.addressOut) {
-      this.canContinue = false;
+      this.isAddressValid = false;
     }
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
       this.validateAddress(event.target.value, true);
     }, 600);
+  }
+
+  get canContinue() {
+    return this.isAddressValid;
   }
 }

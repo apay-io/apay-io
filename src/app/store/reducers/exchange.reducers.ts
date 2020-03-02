@@ -9,9 +9,9 @@ export function exchangeReducers(
     case EExchangeActions.SetAmountInternal: {
       state = {
         ...state,
-        amountIn: action.payload.amountIn.toString(),
-        amountOut: action.payload.amountOut.toString(),
-        amountFee: action.payload.amountFee.toString(),
+        amountIn: action.payload.amountIn,
+        amountOut: action.payload.amountOut,
+        amountFee: action.payload.amountFee,
       };
       return state;
     }
@@ -44,6 +44,17 @@ export function exchangeReducers(
         addressOut: action.payload
       };
       localStorage.setItem('account', action.payload);
+      return state;
+    }
+    case EExchangeActions.SetSwapParams: {
+      state = {
+        ...state,
+        addressIn: action.payload.address_in,
+        id: action.payload.memo_in,
+        step: state.step + 1,
+      };
+      sessionStorage.setItem('addressIn', action.payload.address_in);
+      sessionStorage.setItem('id', action.payload.memo_in);
       return state;
     }
     default:
