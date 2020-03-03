@@ -88,6 +88,10 @@
     .recipient-address {
       width: 92%;
       margin: 30px 2.5% 0;
+
+      .error {
+        left: 10px;
+      }
     }
 
     .button-next {

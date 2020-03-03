@@ -208,6 +208,7 @@ export class AccountPageComponent implements OnInit {
 
                   if (rates[item.code]) {
                     dataToken.value = +(+item.balance / rates[item.code] * rates['XDR']).toFixed(6);
+                    this.sumValue = +(this.sumValue + dataToken.value).toFixed(6);
                   }
                   this.dataWallet.unshift(dataToken);
                 }

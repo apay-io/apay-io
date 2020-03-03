@@ -6,11 +6,13 @@
   width: 100%;
   max-width: 1220px;
   margin: 20px auto 0;
+  padding-bottom: 30px;
 
   .step {
     display: flex;
 
     .icon-wrapper {
+      min-width: 32px;
       margin: 20px;
       display: flex;
       justify-content: center;
