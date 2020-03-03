@@ -1,23 +1,23 @@
-<div class="converter-wrapper" *ngIf="!isProcessingConverter">
-    <div class="converter-bg"></div>
+<div class="converter-wrapper" [ngClass]="{ processing: isProcessingConverter }">
+    <div class="converter-bg" *ngIf="!isProcessingConverter"></div>
     <div class="converter">
         <div class="currency-from-amount-field">
             <div class="wrapper" (click)="openPopupSell()">
                 <div class="wrapper-icon">
-                    <img class="icon" [ngClass]="currencyIn.code" [src]="currencyIn.icon" alt="">
+                    <img class="icon" [ngClass]="exchange.currencyIn.code" [src]="exchange.currencyIn.icon" alt="">
                 </div>
                 <div class="info-currency">
                     <div class="text">
                         PAY WITH
                     </div>
                     <div class="currency">
-                        {{currencyIn.code}}
+                        {{exchange.currencyIn.code}}
                         <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 14" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M0 .093l12 13.472L24 0H0z"></path></svg>
                     </div>
                 </div>
 
             </div>
-            <input #sell class="input-field" placeholder="Enter Amount" type="text" (keyup)="calculateBuy()">
+            <input #sell class="input-field" placeholder="Enter Amount" type="text" [ngModel]="exchange.amountIn" (keyup)="calculateBuy($event)">
         </div>
         <div class="wrapper-icon-convert" (click)="revertCurrency()">
             <svg class="icon-convert" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
@@ -25,66 +25,36 @@
         <div class="currency-to-amount-field">
             <div class="wrapper" (click)="openPopupBuy()">
                 <div class="wrapper-icon">
-                    <img class="icon" [ngClass]="currencyOut.code" [src]="currencyOut.icon" alt="">
+                    <img class="icon" [ngClass]="exchange.currencyOut.code" [src]="exchange.currencyOut.icon" alt="">
                 </div>
                 <div class="info-currency">
                     <div class="text">
                         RECEIVE
                     </div>
                     <div class="currency">
-                        {{currencyOut.code}}
+                        {{exchange.currencyOut.code}}
                         <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 14" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M0 .093l12 13.472L24 0H0z"></path></svg>
                     </div>
                 </div>
             </div>
-            <input #buy class="input-field" placeholder="Enter Amount" type="text" (keyup)="calculateSell()">
+            <input #buy class="input-field" placeholder="Enter Amount" type="text" [ngModel]="exchange.amountOut" (keyup)="calculateSell($event)">
         </div>
-        <div class="button-blue" [class.disabled]="this.stateButton === 'disabled' ? true : null" (click)="continue()">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
+        <div class="button-blue" [ngClass]="{ disabled: this.stateButton === 'disabled'}" (click)="continue()" *ngIf="!isProcessingConverter">
+          <svg *ngIf="this.stateButton !== 'loading'" class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
+          <svg *ngIf="this.stateButton === 'loading'" class="icon" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+               width="16px" height="16px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+              <path fill="#fff" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+                <animateTransform attributeType="xml"
+                                  attributeName="transform"
+                                  type="rotate"
+                                  from="0 25 25"
+                                  to="360 25 25"
+                                  dur="0.6s"
+                                  repeatCount="indefinite"/>
+                </path>
+            </svg>
             <div class="text">
                 Convert
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="converter-wrapper processing" *ngIf="isProcessingConverter">
-    <div class="converter" [formGroup]="amountFormConverter" >
-        <div class="currency-from-amount-field">
-            <input #sell class="input-field" formControlName="amountIn" placeholder="Enter Amount" type="text" (keyup)="calculateBuy()">
-            <div class="wrapper" (click)="openPopupSell()">
-                <div class="wrapper-icon">
-                    <img class="icon" [ngClass]="currencyIn.code" [src]="currencyIn.icon" alt="">
-                </div>
-                <div class="info-currency">
-                    <div class="text">
-                        PAY WITH
-                    </div>
-                    <div class="currency">
-                        {{currencyIn.code}}
-                        <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 14" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M0 .093l12 13.472L24 0H0z"></path></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="wrapper-icon-convert" (click)="revertCurrency()">
-            <svg class="icon-convert" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
-        </div>
-        <div class="currency-to-amount-field">
-            <input #buy class="input-field" formControlName="amountOut" placeholder="Enter Amount" type="text" (keyup)="calculateSell()">
-            <div class="wrapper" (click)="openPopupBuy()">
-                <div class="wrapper-icon">
-                    <img class="icon" [ngClass]="currencyOut.code" [src]="currencyOut.icon" alt="">
-                </div>
-                <div class="info-currency">
-                    <div class="text">
-                        RECEIVE
-                    </div>
-                    <div class="currency">
-                        {{currencyOut.code}}
-                        <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 14" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M0 .093l12 13.472L24 0H0z"></path></svg>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

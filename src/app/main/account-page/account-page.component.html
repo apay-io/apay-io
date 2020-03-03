@@ -94,7 +94,7 @@
                                     {{item.trustline ? 'Deposit': 'Accept'}}
                                 </div>
                             </div>
-                            <div class="button-convert" [ngClass]="{'disabled' : item.balance === '0' || item.withdraw === 'disable'}" (click)="openModal($event, item, 'withdraw');">
+                            <div class="button-convert" [ngClass]="{'disabled' : item.balance === '0' || !item.withdraw.enabled}" (click)="openModal($event, item, 'withdraw');">
                                 <div class="text">
                                     Withdraw
                                 </div>

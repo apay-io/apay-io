@@ -34,16 +34,19 @@ export class TableComponent implements OnInit, OnDestroy {
   getCurrenciesSub;
   initSparklineTimeOut;
   rates;
-  selected = 'USD';
+  selectedCurrency = 'USD';
+  selectedCurrencyRate: number;
 
   constructor(private readonly http: HttpClient,
               public currencySelectionService: CurrencySelectionService,
-              private getCurrencies: GetCurrenciesServices,) {
+              private getCurrencies: GetCurrenciesServices,
+  ) {
   }
 
   ngOnInit() {
     this.http.get(`https://rates.apay.io`).subscribe((data) => {
       this.rates = data;
+      this.selectUnit();
     });
     this.getCurrenciesSub = this.getCurrencies.state$.subscribe((data: any) => {
       if (data.length) {
@@ -82,11 +85,15 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   selectUnit() {
-    this.currencies.map((item) => {
-      item.price = (item.price / this.rates[item.currentUnit]) * this.rates[this.selected];
-      item.volume = (item.volume / this.rates[item.currentUnit]) * this.rates[this.selected];
-      item.depthUsd = (item.depthUsd / this.rates[item.currentUnit]) * this.rates[this.selected];
-      item.currentUnit = this.selected;
-    });
+    this.selectedCurrencyRate = this.rates[this.selectedCurrency] / this.rates['USD'];
+  }
+
+  formatAmount(amount: number, type = 'precision') {
+    const symbol = this.selectedCurrency === 'USD' ? '$' : (this.selectedCurrency === 'EUR' ? '€' : '');
+    if (type === 'precision') {
+      return symbol + (amount * this.selectedCurrencyRate).toPrecision(4).replace(/\.?0+$/, '');
+    } else {
+      return (amount > 1 ? symbol : '') + (amount * this.selectedCurrencyRate).toLocaleString().replace(/\.?\d+$/, '');
+    }
   }
 }

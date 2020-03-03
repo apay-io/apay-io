@@ -8,9 +8,7 @@
             <span class="tx-id-title">
                 Transaction ID:
             </span>
-                <span class="tx-id">
-                vx2qos8ymukxx4xz
-            </span>
+                <span class="tx-id">{{ this.exchange.id }}</span>
             </div>
         </div>
         <div class="step-wait" [ngClass]="{'active': stepWaiting === 1, 'done': stepWaiting > 1}">
@@ -19,7 +17,7 @@
                     Getting confirmation
                 </div>
                 <div class="description">
-                    Once XLM is confirmed in the blockchain, we'll start exchanging it to BTC.
+                    Once {{ this.exchange.currencyIn.code }} deposit is confirmed, we'll start exchanging it to {{ this.exchange.currencyOut.code }}.
                 </div>
             </div>
             <div class="process">
@@ -44,7 +42,7 @@
         <div class="step-wait" [ngClass]="{'active': stepWaiting === 2, 'done': stepWaiting > 2}">
             <div class="info-step">
                 <div class="title">
-                    Exchanging XLM to BTC
+                    Exchanging {{ this.exchange.currencyIn.code }} to {{ this.exchange.currencyOut.code }}
                 </div>
                 <div class="description">
                     The process will take a few minutes. Please wait.
@@ -75,7 +73,7 @@
                     Sending to you wallet
                 </div>
                 <div class="description">
-                    Now we are sending BTC to you recipient address. Check the wallet, once the transaction is complete.
+                    Now we are sending {{ this.exchange.currencyOut.code }} to you recipient address. Check the wallet, once the transaction is complete.
                 </div>
             </div>
             <div class="process">
@@ -114,10 +112,10 @@
             <div class="row-details">
                 <div class="info-details">
                     <div class="title">
-                        Changelly address:
+                        Deposit address:
                     </div>
                     <div class="description">
-                        GDXFDHFJSD23JDSKDHPUU
+                        {{ this.exchange.addressIn }}
                     </div>
                 </div>
                 <div class="copy" [text-copy]="'GDXFDHFJSD23JDSKDHPUU'">
@@ -143,7 +141,7 @@
                         Recipient address:
                     </div>
                     <div class="description">
-                        32rw8uth665dloippuuLCikGF
+                        {{ this.exchange.addressOut }}
                     </div>
                 </div>
                 <div class="copy" [text-copy]="'32rw8uth665dloippuuLCikGF'">

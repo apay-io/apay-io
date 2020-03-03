@@ -4,13 +4,14 @@
             Enter amount
         </div>
         <div class="convert-processing">
-            <form [formGroup]="amountForm" (ngSubmit)="changeStep(2)">
-                <app-converter [isProcessingConverter]="true" [amountFormConverter]="amountForm.controls.converter"></app-converter>
+            <form (ngSubmit)="changeStep(2)">
+                <app-converter [isProcessingConverter]="true"></app-converter>
 <!--                <div class="agreement-checkbox">-->
 <!--                    <mat-checkbox formControlName="agreement" >I agree with Terms of Use, Privacy Policy and AML/KYC</mat-checkbox>-->
 <!--                </div>-->
                 <button
-                        [disabled]="!amountForm.valid"
+                        (click)="changeStep(2)"
+                        [disabled]="!canContinue"
                         mat-raised-button
                         class="button-next step-1">
                     Next step
@@ -22,24 +23,24 @@
         <div class="title">
             Details
         </div>
-        <div class="title-details" *ngIf="orderParams.rate">
+        <div class="title-details" *ngIf="rate">
             Expected exchange rate
         </div>
-        <div class="description-details" *ngIf="orderParams.rate">
-            1 {{ orderParams.currencyIn.code }} = {{ orderParams.rate.toPrecision(6)|number:'1.0-8' }} {{ orderParams.currencyOut.code }}<br/>
-            1 {{ orderParams.currencyOut.code }} = {{ (1/orderParams.rate).toPrecision(6)|number:'1.0-8' }} {{ orderParams.currencyIn.code }}
+        <div class="description-details" *ngIf="rate">
+            1 {{ exchange.currencyIn.code }} = {{ rate.toPrecision(6)|number:'1.0-8' }} {{ exchange.currencyOut.code }}<br/>
+            1 {{ exchange.currencyOut.code }} = {{ (1/rate).toPrecision(6)|number:'1.0-8' }} {{ exchange.currencyIn.code }}
         </div>
         <div class="title-details">
             Exchange fee
         </div>
         <div class="description-details">
-            0%
+            0.5%
         </div>
         <div class="title-details">
             Network / withdrawal fee
         </div>
         <div class="description-details">
-            {{ orderParams.networkFee }}
+            {{ exchange.amountFee }} {{ exchange.currencyOut.code }}
         </div>
     </div>
 </div>
