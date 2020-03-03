@@ -87,4 +87,13 @@ export class TableComponent implements OnInit, OnDestroy {
   selectUnit() {
     this.selectedCurrencyRate = this.rates[this.selectedCurrency] / this.rates['USD'];
   }
+
+  formatAmount(amount: number, type = 'precision') {
+    const symbol = this.selectedCurrency === 'USD' ? '$' : (this.selectedCurrency === 'EUR' ? '€' : '');
+    if (type === 'precision') {
+      return symbol + (amount * this.selectedCurrencyRate).toPrecision(4).replace(/\.?0+$/, '');
+    } else {
+      return (amount > 1 ? symbol : '') + (amount * this.selectedCurrencyRate).toLocaleString().replace(/\.?\d+$/, '');
+    }
+  }
 }

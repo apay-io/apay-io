@@ -13,8 +13,8 @@ import {SetExchangeStep, SetSwapParams} from '../../store/actions/exchange.actio
 })
 export class CheckDetailsComponent implements OnInit {
 
-  private exchange: ExchangeState;
-  private rate: number;
+  public exchange: ExchangeState;
+  public rate: number;
 
   constructor(
     private http: HttpClient,

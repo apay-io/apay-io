@@ -1,6 +1,7 @@
 import {Asset, Server, AssetType, Horizon, StrKey} from 'stellar-sdk';
 import {reduce, filter} from 'lodash';
 import BalanceLine = Horizon.BalanceLine;
+import {Currency} from '../../core/currency.interface';
 
 export class StellarService {
   private server = new Server('https://horizon.stellar.org');
@@ -49,6 +50,7 @@ export class StellarService {
         .map((item: BalanceLine) => {
         return {
           code: (item.asset_type === 'native' ? 'XLM' : item.asset_code),
+          issuer: (item.asset_type === 'native' ? null : item.asset_issuer),
           balance: item.balance,
           asset_type: item.asset_type
         };
@@ -57,6 +59,13 @@ export class StellarService {
       console.error(err);
       return [];
     }
+  }
+
+  async hasTrustline(account: string, currency: Currency) {
+    const balances = await this.balances(account);
+    return balances.find((balance) => {
+      return balance.code === currency.code && balance.issuer === currency.issuer;
+    });
   }
 
   validateAddress(address: string) {

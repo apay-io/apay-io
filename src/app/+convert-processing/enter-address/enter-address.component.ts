@@ -1,10 +1,11 @@
-import {Component, ElementRef, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../store/states/app.state';
 import {selectExchange} from '../../store/selectors/exchange.selectors';
 import {ExchangeState} from '../../store/states/exchange.state';
 import {SetAddressOut, SetExchangeStep} from '../../store/actions/exchange.actions';
 import {StellarService} from '../../services/stellar/stellar.service';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-enter-address',
@@ -12,22 +13,31 @@ import {StellarService} from '../../services/stellar/stellar.service';
   styleUrls: ['./enter-address.component.scss']
 })
 export class EnterAddressComponent implements OnInit {
-  private exchange: ExchangeState;
+  public exchange: ExchangeState;
   private timer;
 
   addressOut;
   isAddressValid = false;
 
+  @ViewChild('address', {static: false}) addressElement: ElementRef;
+  errorMessage = '';
+
   constructor(
     private readonly store: Store<AppState>,
     private readonly stellar: StellarService,
+    private readonly http: HttpClient,
   ) {
   }
 
   ngOnInit() {
     this.store.pipe(select(selectExchange)).subscribe((exchange) => {
       this.exchange = exchange;
-      this.validateAddress(exchange.addressOut);
+      if (exchange.step === 2) {
+        setTimeout(() => {
+          this.addressElement.nativeElement.focus();
+        }, 200);
+        this.validateAddress(exchange.addressOut);
+      }
     });
   }
 
@@ -35,10 +45,27 @@ export class EnterAddressComponent implements OnInit {
     this.store.dispatch(new SetExchangeStep(step));
   }
 
-  validateAddress(address: string, update = false) {
-    this.isAddressValid = this.stellar.validateAddress(address);
-    if (this.isAddressValid && update) {
-      this.store.dispatch(new SetAddressOut(address));
+  async validateAddress(address: string, update = false) {
+    // todo: validate stellar federated addresses
+    const validStellarAddress = this.stellar.validateAddress(address);
+    const hasTrustline = validStellarAddress ? await this.stellar.hasTrustline(address, this.exchange.currencyOut) : false;
+    if (validStellarAddress && !hasTrustline) {
+      this.isAddressValid = false;
+      this.errorMessage = `You need to add trustline for ${this.exchange.currencyOut.code} first`;
+      return;
+    }
+    this.isAddressValid = validStellarAddress && hasTrustline ||
+      (await this.http.post('https://test.apay.io/validateAddress', {
+        asset_code: this.exchange.currencyOut,
+        dest: address,
+      }).toPromise()) as any;
+    if (this.isAddressValid) {
+      this.errorMessage = '';
+      if (update) {
+        this.store.dispatch(new SetAddressOut(address));
+      }
+    } else {
+      this.errorMessage = 'Invalid address';
     }
   }
 
@@ -46,6 +73,7 @@ export class EnterAddressComponent implements OnInit {
     this.addressOut = event.target.value;
     if (this.exchange.addressOut !== this.addressOut) {
       this.isAddressValid = false;
+      this.errorMessage = '';
     }
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {

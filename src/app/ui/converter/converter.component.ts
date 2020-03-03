@@ -71,10 +71,10 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.store.pipe(select(selectExchange))
       .subscribe((exchange: ExchangeState) => {
-        if (!this.exchange && !exchange.amountOut) {
+        if (!this.exchange && !exchange.amountOut && exchange.amountIn) {
           this.store.dispatch(new SetAmountIn(exchange.amountIn));
         }
-        if (!this.exchange && !exchange.amountIn) {
+        if (!this.exchange && !exchange.amountIn && exchange.amountOut) {
           this.store.dispatch(new SetAmountOut(exchange.amountOut));
         }
 
@@ -157,8 +157,8 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
   async calculateSell(event) {
     this.stateButton = 'loading';
     if (event.target.value > 0) {
-      if (event.target.value < this.currencyOut.minWithdraw) {
-        this.notify.update('Minimum value for ' + this.currencyOut.code + ' - ' + this.currencyOut.minWithdraw, 'error');
+      if (event.target.value < this.currencyOut.withdraw.min_amount) {
+        this.notify.update('Minimum value for ' + this.currencyOut.code + ' - ' + this.currencyOut.withdraw.min_amount, 'error');
         return false;
       }
       this.store.dispatch(new SetAmountOut(event.target.value));

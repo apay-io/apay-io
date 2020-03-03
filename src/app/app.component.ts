@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
   publicKeyPart;
     constructor(
       public loginServices: LoginService,
-      private readonly router: Router
+      public readonly router: Router
     ) {}
 
   ngOnInit() {

@@ -53,6 +53,7 @@ export class AccountPageComponent implements OnInit {
       fee_fixed: 0,
       fee_percent: 0,
       min_amount: 0,
+      fee: ''
     },
     baseUrl: '',
     trustline: false
@@ -322,9 +323,6 @@ export class AccountPageComponent implements OnInit {
   }
 
   get _amount() {
-    if (!this.withdrawForm.get('amount')) {
-      return 0;
-    }
     return this.withdrawForm.get('amount');
   }
 

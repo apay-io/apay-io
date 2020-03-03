@@ -14,10 +14,10 @@
         <div class="recipient-address">
             <mat-form-field class="recipient-address" appearance="legacy">
                 <mat-label>Recipient address</mat-label>
-                <input matInput [value]="exchange.addressOut" (keyup)="onKeyUp($event)" placeholder="Enter your {{exchange.currencyOut.code}} address">
+                <input #address matInput [value]="exchange.addressOut" (keyup)="onKeyUp($event)" placeholder="Enter your {{exchange.currencyOut.code}} address">
             </mat-form-field>
             <div *ngIf="this.addressOut && !isAddressValid">
-                <span class="error">Invalid address</span>
+                <span class="error">{{ errorMessage }}</span>
             </div>
         </div>
         <button

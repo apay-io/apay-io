@@ -13,7 +13,7 @@ export class WaitExchangeComponent implements OnInit {
   showDetails = false;
   stepWaiting = 1;
 
-  exchange: ExchangeState;
+  public exchange: ExchangeState;
 
   constructor(
     private readonly store: Store<AppState>

@@ -15,7 +15,7 @@ import {selectExchange} from '../../store/selectors/exchange.selectors';
 })
 export class SendFundsComponent implements OnInit {
   addressForm: FormGroup;
-  exchange: ExchangeState;
+  public exchange: ExchangeState;
 
   @ViewChildren('canvas')
   canvas;

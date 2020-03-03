@@ -7,7 +7,6 @@ import {EventEmitter} from "@angular/core";
   styleUrls: ['./tx-complete.component.scss']
 })
 export class TxCompleteComponent implements OnInit {
-    @Output() currentStep: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() {
   }

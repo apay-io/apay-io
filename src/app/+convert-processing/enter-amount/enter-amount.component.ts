@@ -14,8 +14,8 @@ import {SetExchangeStep} from '../../store/actions/exchange.actions';
 })
 export class EnterAmountComponent implements OnInit {
   isProcessing;
-  private exchange: ExchangeState;
-  private rate: number;
+  public exchange: ExchangeState;
+  public rate: number;
 
   constructor(
     private fb: FormBuilder,
