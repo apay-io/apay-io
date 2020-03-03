@@ -96,9 +96,9 @@
                         How to Withdraw
                     </div>
 
-                    <div class="quote" *ngIf="selectedToken.minWithdraw !== ''">
-                        Attention! Minimum withdrawal is {{selectedToken.minWithdraw}} {{selectedToken.code}}. Any funds below that are ignored.<br>
-                        Withdrawal fee {{selectedToken.minWithdrawFee}} {{selectedToken.code}} applies to every transaction<br>
+                    <div class="quote" *ngIf="selectedToken.withdraw.min_amount">
+                        Attention! Minimum withdrawal is {{selectedToken.withdraw.min_amount}} {{selectedToken.code}}. Any funds below that are ignored.<br>
+                        Withdrawal fee {{selectedToken.withdraw.fee}} applies to every transaction<br>
                         We send outgoing transactions out every minute.
                     </div>
 

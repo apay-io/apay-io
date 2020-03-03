@@ -24,8 +24,6 @@ export const currencies = [
   //   'color': '#211265',
   //   'address': 'native',
   //   'trustline': false
-  //   'currentUnit': 'USD'
-  //
   // },
   {
     'code': 'XLM',
@@ -39,19 +37,22 @@ export const currencies = [
     'convert': '1',
     'favorites': '2',
     'minDeposit': '',
-    'minWithdraw': '',
-    'minWithdrawFee': '',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.00001,
+      fee_percent: 0,
+      min_amount: 1,
+      fee: '0.00001 XLM'
+    },
   },
   {
     'code': 'BTC',
@@ -66,19 +67,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GAUTUYY2THLF7SGITDFMXJVYH3LHDSMGEAKSBU267M2K7A3W543CKUEF',
     'minDeposit': '0.0002',
-    'minWithdraw': '0.001',
-    'minWithdrawFee': '0.0005',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.0001,
+      fee_percent: 0.1,
+      min_amount: 0.0002,
+      fee: '0.1% + 0.0001 BTC'
+    },
   },
   {
     'code': 'BCH',
@@ -93,19 +97,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GAEGOS7I6TYZSVHPSN76RSPIVL3SELATXZWLFO4DIAFYJF7MPAHFE7H4',
     'minDeposit': '0.001',
-    'minWithdraw': '0.004',
-    'minWithdrawFee': '0.002',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.0001,
+      fee_percent: 0.1,
+      min_amount: 0.0002,
+      fee: '0.1% + 0.0001 BCH'
+    },
   },
   {
     'code': 'ETH',
@@ -120,19 +127,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     'minDeposit': '0.001',
-    'minWithdraw': '0.01',
-    'minWithdrawFee': '0.005',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.001,
+      fee_percent: 0.1,
+      min_amount: 0.01,
+      fee: '0.1% + 0.001 ETH'
+    },
   },
   {
     'code': 'LTC',
@@ -147,19 +157,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP',
     'minDeposit': '0.01',
-    'minWithdraw': '0.05',
-    'minWithdrawFee': '0.025',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.01,
+      fee_percent: 0.1,
+      min_amount: 0.02,
+      fee: '0.1% + 0.01 LTC'
+    },
   },
   {
     'code': 'BAT',
@@ -174,19 +187,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     'minDeposit': '2',
-    'minWithdraw': '10',
-    'minWithdrawFee': '5',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 1,
+      fee_percent: 0.1,
+      min_amount: 10,
+      fee: '0.1% + 1 BAT'
+    },
   },
   {
     'code': 'KIN',
@@ -201,19 +217,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     'minDeposit': '',
-    'minWithdraw': '20000',
-    'minWithdrawFee': '10000',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0,
+      fee_percent: 0.1,
+      min_amount: 0,
+      fee: '0.1%'
+    },
   },
   {
     'code': 'LINK',
@@ -228,19 +247,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     'minDeposit': '2',
-    'minWithdraw': '10',
-    'minWithdrawFee': '5',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.1,
+      fee_percent: 0.1,
+      min_amount: 2,
+      fee: '0.1% + 0.1 LINK'
+    },
   },
   {
     'code': 'MTL',
@@ -255,19 +277,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     'minDeposit': '0.3',
-    'minWithdraw': '1',
-    'minWithdrawFee': '0.5',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.5,
+      fee_percent: 0.1,
+      min_amount: 1,
+      fee: '0.1% + 0.5 MTL'
+    },
   },
   {
     'code': 'OMG',
@@ -282,19 +307,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     'minDeposit': '0.1',
-    'minWithdraw': '0.4',
-    'minWithdrawFee': '0.2',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.2,
+      fee_percent: 0.1,
+      min_amount: 0.4,
+      fee: '0.1% + 0.2 OMG'
+    },
   },
   {
     'code': 'REP',
@@ -309,19 +337,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     'minDeposit': '0.02',
-    'minWithdraw': '0.1',
-    'minWithdrawFee': '0.05',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0.01,
+      fee_percent: 0.1,
+      min_amount: 0.1,
+      fee: '0.1% + 0.01 REP'
+    },
   },
   {
     'code': 'SALT',
@@ -336,19 +367,22 @@ export const currencies = [
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     'minDeposit': '0.5',
-    'minWithdraw': '2',
-    'minWithdrawFee': '1',
     'baseUrl': 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 1,
+      fee_percent: 0.1,
+      min_amount: 2,
+      fee: '0.1% + 1 SALT'
+    },
   },
   {
     'code': 'ZRX',
@@ -371,11 +405,16 @@ export const currencies = [
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'deposit': 'active',
-    'withdraw': 'active',
     'color': '#000000',
     'address': 'native',
     'trustline': false,
-    'currentUnit': 'USD'
+    withdraw: {
+      enabled: true,
+      fee_fixed: 1,
+      fee_percent: 0.1,
+      min_amount: 2,
+      fee: '0.1% + 1 ZRX'
+    },
   }
 ];
 

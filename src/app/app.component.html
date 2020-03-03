@@ -9,13 +9,12 @@
                 <div class="beta">Beta</div>
             </div>
             <div class="tabs-menu">
-                <div class="tab" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" routerLink="/convert">
+                <div class="tab" [ngClass]="{'active': router.url === '/convert'}" routerLink="/convert">
                     <div class="text">
                         Convert
                     </div>
                 </div>
-                <div class="tab" [routerLinkActive]="['active']"
-                     [routerLinkActiveOptions]="{exact:true}"
+                <div class="tab" [ngClass]="{'active': router.url === '/account'}"
                      [routerLink]="this.loginFlag ? '/account' : null"
                      (click)="routeAccount()">
                     <div class="text">
@@ -27,12 +26,12 @@
                         FAQ
                     </div>
                 </a>
-                <div class="tab" [routerLinkActive]="['active']" routerLink="/deposit">
+                <div class="tab" [ngClass]="{'active': router.url === '/deposit'}" routerLink="/deposit">
                     <div class="text">
                         Deposit
                     </div>
                 </div>
-                <div class="tab" [routerLinkActive]="['active']" routerLink="/withdraw">
+                <div class="tab" [ngClass]="{'active': router.url === '/withdraw'}" routerLink="/withdraw">
                     <div class="text">
                         Withdraw
                     </div>

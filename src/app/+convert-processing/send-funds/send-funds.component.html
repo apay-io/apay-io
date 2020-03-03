@@ -8,7 +8,7 @@
                 Transaction ID:
             </span>
             <span class="tx-id">
-                {{orderParams.id}}
+                {{exchange.id}}
             </span>
         </div>
     </div>
@@ -22,7 +22,7 @@
                     Send
                 </div>
                 <div class="description-details">
-                  {{orderParams.amountIn}} {{orderParams.currencyIn.code}}
+                  {{exchange.amountIn}} {{exchange.currencyIn.code}}
                 </div>
             </div>
             <div class="details-info">
@@ -30,7 +30,7 @@
                     To address
                 </div>
                 <div class="description-details">
-                    {{orderParams.addressIn}}
+                    {{exchange.addressIn}}
                     <span class="copy">
                         Copy
                     </span>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="qr-code" (click)="changeStep(5)">
-          <qr-code value="{{orderParams.addressIn}}" size="200" errorCorrectionLevel="M"></qr-code>
+          <qr-code value="{{exchange.addressIn}}" size="200" errorCorrectionLevel="M"></qr-code>
         </div>
     </div>
     <div class="info-line">

@@ -5,6 +5,7 @@ import {ReplaySubject, Subject} from 'rxjs/index';
 import {takeUntil} from 'rxjs/internal/operators';
 import {FormControl} from '@angular/forms';
 import {MatSelect} from '@angular/material/select';
+import {Currency} from '../../core/currency.interface';
 
 interface Token {
     code: string;
@@ -40,9 +41,7 @@ export interface selectedToken {
   styleUrls: ['./exchange-info.component.scss']
 })
 export class ExchangeInfoComponent implements OnInit, OnDestroy {
-    selectedToken: selectedToken[] = [
-        {code: null, name: null, icon: null, issuer: null}
-    ];
+    selectedToken: Currency;
 
     memoTypes: memoTypes[] = [
         {value: '0', viewValue: 'None'},

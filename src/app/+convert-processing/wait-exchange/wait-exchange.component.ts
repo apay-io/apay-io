@@ -1,5 +1,8 @@
 import {Component, OnInit, Output} from '@angular/core';
-import {EventEmitter} from "@angular/core";
+import {AppState} from '../../store/states/app.state';
+import {select, Store} from '@ngrx/store';
+import {ExchangeState} from '../../store/states/exchange.state';
+import {selectExchange} from '../../store/selectors/exchange.selectors';
 
 @Component({
   selector: 'app-wait-exchange',
@@ -7,20 +10,20 @@ import {EventEmitter} from "@angular/core";
   styleUrls: ['./wait-exchange.component.scss']
 })
 export class WaitExchangeComponent implements OnInit {
-    showDetails: boolean = false;
-    stepWaiting: number = 1;
-    @Output() currentStep: EventEmitter<number> = new EventEmitter<number>();
+  showDetails = false;
+  stepWaiting = 1;
 
-  constructor() {
+  public exchange: ExchangeState;
+
+  constructor(
+    private readonly store: Store<AppState>
+  ) {
   }
 
   ngOnInit() {
-      let interval = setInterval(() => {
-          this.stepWaiting += 1;
-          if (this.stepWaiting > 3) {
-              clearInterval(interval)
-              this.currentStep.emit(6);
-          }
-      }, 3500)
+    this.store.pipe(select(selectExchange))
+      .subscribe((exchange) => {
+        this.exchange = exchange;
+      });
   }
 }

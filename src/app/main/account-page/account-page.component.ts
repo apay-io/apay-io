@@ -4,25 +4,23 @@ import {AppComponent} from '../../app.component';
 import {Color} from 'ng2-charts';
 import * as moment from 'moment';
 import {ModalService} from '../../services/modal/modal.service';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {StellarService} from '../../services/stellar/stellar.service';
 import {NotifyService} from '../../core/notify.service';
 import {currencies} from '../../../assets/currencies-list';
+import {Currency} from '../../core/currency.interface';
 
 export interface Data {
   date: string;
   val: string;
 }
 
-interface Token {
-  code: string,
-  name: string,
-  icon: string,
-  balance: string,
-  deposit: string,
-  withdraw: string,
-  baseUrl: string,
-  trustline: boolean,
+interface Token extends Currency {
+  name: string;
+  balance: string;
+  deposit: string;
+  baseUrl: string;
+  trustline: boolean;
 }
 
 @Component({
@@ -50,7 +48,13 @@ export class AccountPageComponent implements OnInit {
     icon: '',
     balance: '',
     deposit: 'active',
-    withdraw: 'active',
+    withdraw: {
+      enabled: true,
+      fee_fixed: 0,
+      fee_percent: 0,
+      min_amount: 0,
+      fee: ''
+    },
     baseUrl: '',
     trustline: false
   };
@@ -159,74 +163,80 @@ export class AccountPageComponent implements OnInit {
     },
   };
 
-  async ngOnInit() {
-    await this.http.get(`https://rates.apay.io`).subscribe((data) => {
-      this.rates = data;
-    });
+  ngOnInit() {
+    new Promise((res) => {
+      this.http.get(`https://rates.apay.io`).subscribe((data) => {
+        res(data);
+      });
+    })
+      .then(rates => {
+        this.arraySearchValue = this.dataWallet;
+        this.account = localStorage.getItem('account');
+        if (this.account) {
+          this.stellarService.balances(this.account)
+            .then((result) => {
+              result.map(item => {
+                const findIndexToken = this.dataWallet.findIndex(x => x.code === item.code);
+                if (findIndexToken !== -1) {
+                  this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken, 1));
+                  const findToken = this.dataWallet.find(x => x.code === item.code);
+                  findToken.balance = item.balance;
+                  findToken.trustline = true;
+                  if (rates[item.code]) {
+                    findToken.value = +(+item.balance / rates[item.code] * rates['XDR']).toFixed(6);
+                    this.sumValue = +(this.sumValue + findToken.value).toFixed(6);
+                  }
 
-    this.arraySearchValue = this.dataWallet;
-    this.account = localStorage.getItem('account');
-    if (this.account) {
-      await this.stellarService.balances(this.account)
-        .then((result) => {
-          result.map(item => {
-            const findIndexToken = this.dataWallet.findIndex(x => x.code === item.code);
-            if (findIndexToken !== -1) {
-              this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken,1));
-              const findToken = this.dataWallet.find(x => x.code === item.code);
-              findToken.balance = item.balance;
-              findToken.trustline = true;
-              if (this.rates[item.code]) {
-                findToken.value = +(+item.balance / this.rates[item.code] * this.rates['XDR']).toFixed(6);
-                this.sumValue = +(this.sumValue + findToken.value).toFixed(6);
-              }
+                  this.datasets[0].backgroundColor.unshift(findToken.color);
+                } else {
+                  const dataToken = {
+                    'code': item.code,
+                    'name': item.code,
+                    'baseUrl': 'https://api.apay.io/api',
+                    'icon': '',
+                    'balance': item.balance,
+                    'percent': '-',
+                    'value': 0,
+                    'change': '0',
+                    'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
+                    'deposit': 'active',
+                    'withdraw': 'active',
+                    'color': '#a39ca0',
+                    'address': 'native',
+                    'trustline': true
+                  };
 
-              this.datasets[0].backgroundColor.unshift(findToken.color);
-            } else {
-              const dataToken = {
-                'code': item.code,
-                'name': item.code,
-                'baseUrl': 'https://api.apay.io/api',
-                'icon': '',
-                'balance': item.balance,
-                'percent': '-',
-                'value': 0,
-                'change': '0',
-                'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-                'deposit': 'active',
-                'withdraw': 'active',
-                'color': '#a39ca0',
-                'address': 'native',
-                'trustline': true
-              }
-
-              if (this.rates[item.code]) {
-                dataToken.value = +(+item.balance / this.rates[item.code] * this.rates['XDR']).toFixed(6);
-              }
-              this.dataWallet.unshift(dataToken);
-            }
-          });
-          this.percent = 100 / this.sumValue;
-          this.drawingChart('AED', 30, 'days');
-            this.dataWallet.map((item) => {
-                if (item.balance && item.value) {
-                    item.percent = (this.percent * item.value).toFixed(2);
-                    this.doughnutChartData.push(item.percent);
-                    this.doughnutChartLabels.push(item.code);
-                    this.sumChange += +item.change;
+                  if (rates[item.code]) {
+                    dataToken.value = +(+item.balance / rates[item.code] * rates['XDR']).toFixed(6);
+                  }
+                  this.dataWallet.unshift(dataToken);
                 }
+              });
+              this.percent = 100 / this.sumValue;
+              this.drawingChart('AED', 30, 'days');
+              this.dataWallet.map((item) => {
+                if (item.balance && item.value) {
+                  item.percent = (this.percent * item.value).toFixed(2);
+                  this.doughnutChartData.push(item.percent);
+                  this.doughnutChartLabels.push(item.code);
+                  this.sumChange += +item.change;
+                }
+              });
             });
-        });
-    }
+        }
+      })
+      .catch(error => {
+        console.log('ERROR:', error.message);
+      });
   }
 
-  async drawingChart(select_val, time_amount, time_type) {
+  drawingChart(select_val, time_amount, time_type) {
     const nowtime = moment().format('YYYY-MM-DD');
     const time = moment().subtract(time_amount, time_type).format('YYYY-MM-DD');
-    await this.updateChart(select_val, time, nowtime);
+    this.updateChart(select_val, time, nowtime);
   }
 
-  async updateChart(select_val, time, nowtime) {
+  updateChart(select_val, time, nowtime) {
     if (this.debounceFlag) {
       return false;
     }
@@ -256,8 +266,8 @@ export class AccountPageComponent implements OnInit {
     this.currentToken = item;
     if (item.balance === '0' && modalName === 'withdraw' ||
       this.currentToken.deposit === 'disable' && modalName === 'deposit' ||
-      this.currentToken.withdraw === 'disable' && modalName === 'withdraw') {
-      return false
+      !this.currentToken.withdraw.enabled && modalName === 'withdraw') {
+      return false;
     }
     if (modalName === 'deposit') {
       if (!this.currentToken.trustline) {
@@ -287,26 +297,33 @@ export class AccountPageComponent implements OnInit {
           'fee_fixed': 0,
           'min_amount': 0
         };
-        this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.currentToken.balance), Validators.min(+this.withdrawToken.min_amount), Validators.pattern(this.regexpAmount)]);
-        return false
+        this.withdrawForm.controls['amount'].setValidators([
+          Validators.required,
+          Validators.max(+this.currentToken.balance),
+          Validators.min(+this.withdrawToken.min_amount),
+          Validators.pattern(this.regexpAmount)
+        ]);
+        return false;
       }
 
       this.http.get(`https://api.apay.io/api/info`).subscribe((data) => {
         this.withdrawToken = {
-          'fee_percent': data['withdraw'][item.code]['fee_percent'],
-          'fee_fixed': data['withdraw'][item.code]['fee_fixed'],
-          'min_amount': data['withdraw'][item.code]['min_amount']
+          fee_percent: data['withdraw'][item.code]['fee_percent'],
+          fee_fixed: data['withdraw'][item.code]['fee_fixed'],
+          min_amount: data['withdraw'][item.code]['min_amount']
         };
-        this.withdrawForm.controls['amount'].setValidators([Validators.required, Validators.max(+this.currentToken.balance), Validators.min(+this.withdrawToken.min_amount), Validators.pattern(this.regexpAmount)]);
+        this.withdrawForm.controls['amount'].setValidators([
+          Validators.required,
+          Validators.max(+this.currentToken.balance),
+          Validators.min(+this.withdrawToken.min_amount),
+          Validators.pattern(this.regexpAmount)
+        ]);
       });
     }
   }
 
   get _amount() {
-    if (!this.withdrawForm.get('amount')) {
-      return 0;
-    }
-    return this.withdrawForm.get('amount')
+    return this.withdrawForm.get('amount');
   }
 
   sendWithdrawForm() {
@@ -354,7 +371,8 @@ export class AccountPageComponent implements OnInit {
 
   getToken (code, baseUrl) {
     this.address = '';
-    return this.http.get(baseUrl+ `/deposit?account=` + this.account + `&asset_code=` + code).subscribe((data) => {
+    return this.http.get(`${baseUrl}/deposit?account=${this.account}&asset_code=${code}`)
+      .subscribe((data) => {
       this.address = data['how'];
       if (this.address.indexOf('address') !== -1) {
         this.address = this.address.split('address: ')[1];
