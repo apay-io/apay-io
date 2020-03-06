@@ -350,16 +350,4 @@ export class AccountPageComponent implements OnInit {
     });
   }
 
-  getQR(code: string, addressIn: string) {
-    switch (code) {
-      case 'BCH':
-        return `bitcoincash:${addressIn}`;
-      case 'BTC':
-        return `bitcoin:${addressIn}`;
-      case 'LTC':
-        return `litecoin:${addressIn}`;
-      default:
-        return addressIn;
-    }
-  }
 }
