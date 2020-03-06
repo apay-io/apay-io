@@ -16,9 +16,7 @@ export interface Data {
 }
 
 interface Token extends Currency {
-  name: string;
   balance: string;
-  deposit: string;
   baseUrl: string;
   trustline: boolean;
 }
@@ -47,7 +45,13 @@ export class AccountPageComponent implements OnInit {
     name: '',
     icon: '',
     balance: '',
-    deposit: 'active',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0,
+      fee_percent: 0,
+      min_amount: 0,
+      fee: ''
+    },
     withdraw: {
       enabled: true,
       fee_fixed: 0,
@@ -55,6 +59,7 @@ export class AccountPageComponent implements OnInit {
       min_amount: 0,
       fee: ''
     },
+    stellarNative: false,
     baseUrl: '',
     trustline: false
   };
@@ -67,14 +72,10 @@ export class AccountPageComponent implements OnInit {
   public debounceFlag = false;
   public ChartType = 'line';
   private account: string;
-  public withdrawToken = {
-    'fee_percent': 0,
-    'fee_fixed': 0,
-    'min_amount': 0
-  };
 
   withdrawForm: FormGroup;
   regexpAmount = /^[0-9]*[.,]?[0-9]+$/;
+  public description: string;
 
   constructor(private readonly http: HttpClient,
               public readonly appComponent: AppComponent,
@@ -202,7 +203,6 @@ export class AccountPageComponent implements OnInit {
                     'deposit': 'active',
                     'withdraw': 'active',
                     'color': '#a39ca0',
-                    'address': 'native',
                     'trustline': true
                   };
 
@@ -262,23 +262,23 @@ export class AccountPageComponent implements OnInit {
     });
   }
 
-  openModal(event, item, modalName) {
+  async openModal(event, item, modalName) {
     event.stopPropagation();
     this.currentToken = item;
     if (item.balance === '0' && modalName === 'withdraw' ||
-      this.currentToken.deposit === 'disable' && modalName === 'deposit' ||
+      !this.currentToken.deposit.enabled && modalName === 'deposit' ||
       !this.currentToken.withdraw.enabled && modalName === 'withdraw') {
       return false;
     }
     if (modalName === 'deposit') {
       if (!this.currentToken.trustline) {
-        this.txId = 'AAAAAOUBi3uFavXM6Sz9MRMbdDFqfvetJDhsdGO5DdNpB3gvAAAAZAAEnRcAAAABAAAAAAAAAAAA' +
-          'AAABAAAAAAAAAAYAAAABQlRDAAAAAADlAYt7hWr1zOks/TETG3Qxan73rSQ4bHRjuQ3TaQd4L3//////////AAAAAAAAAAA=';
+        this.txId = await this.stellarService.buildTrustlineTx(this.account, this.currentToken.code, this.currentToken.issuer);
+        this.description = `You are going to establish a trustline for asset ${this.currentToken.code} issued by apay.io`;
         this.modalService.open('prepare-transaction');
         return false;
       }
       this.modalService.open(modalName);
-      if (item.address === 'native') {
+      if (item.stellarNative) {
         this.address = this.account;
         return false;
       }
@@ -287,39 +287,14 @@ export class AccountPageComponent implements OnInit {
     if (modalName === 'withdraw') {
       this.modalService.open(modalName);
       this.withdrawForm.reset();
-      if (this.currentToken.trustline) {
-        this.buttonText = 'Submit';
-      } else {
-        this.buttonText = 'Prepare transaction';
-      }
-      if (item.code === 'XLM') {
-        this.withdrawToken = {
-          'fee_percent': 0,
-          'fee_fixed': 0,
-          'min_amount': 0
-        };
-        this.withdrawForm.controls['amount'].setValidators([
-          Validators.required,
-          Validators.max(+this.currentToken.balance),
-          Validators.min(+this.withdrawToken.min_amount),
-          Validators.pattern(this.regexpAmount)
-        ]);
-        return false;
-      }
+      this.buttonText = 'Prepare transaction';
 
-      this.http.get(`https://api.apay.io/api/info`).subscribe((data) => {
-        this.withdrawToken = {
-          fee_percent: data['withdraw'][item.code]['fee_percent'],
-          fee_fixed: data['withdraw'][item.code]['fee_fixed'],
-          min_amount: data['withdraw'][item.code]['min_amount']
-        };
-        this.withdrawForm.controls['amount'].setValidators([
-          Validators.required,
-          Validators.max(+this.currentToken.balance),
-          Validators.min(+this.withdrawToken.min_amount),
-          Validators.pattern(this.regexpAmount)
-        ]);
-      });
+      this.withdrawForm.controls['amount'].setValidators([
+        Validators.required,
+        Validators.max(+this.currentToken.balance),
+        Validators.min(+this.currentToken.withdraw.min_amount),
+        Validators.pattern(this.regexpAmount)
+      ]);
     }
   }
 
@@ -327,23 +302,17 @@ export class AccountPageComponent implements OnInit {
     return this.withdrawForm.get('amount');
   }
 
-  sendWithdrawForm() {
-    this.txId = 'AAAAAOUBi3uFavXM6Sz9MRMbdDFqfvetJDhsdGO5DdNpB3gvAAAAZAAEnRcAAAABAAAAAAAAAAAA' +
-      'AAABAAAAAAAAAAYAAAABQlRDAAAAAADlAYt7hWr1zOks/TETG3Qxan73rSQ4bHRjuQ3TaQd4L3//////////AAAAAAAAAAA=';
-    if (this.currentToken.trustline) {
-      this.isLoading = true;
-      this.withdrawForm.disable();
-      this.buttonText = 'Processing';
-      setTimeout(() => {
-        this.withdrawForm.enable();
-        this.isLoading = false;
-        this.modalService.close('withdraw');
-        this.notify.update('Transaction completed successfully!', 'success');
-      }, 3000);
-    } else {
-      this.modalService.close('withdraw');
-      this.modalService.open('prepare-transaction');
-    }
+  async sendWithdrawForm() {
+    this.txId = await this.stellarService.buildWithdrawalTx(
+      this.account,
+      this.withdrawForm.controls.recipient.value,
+      this.withdrawForm.controls.amount.value,
+      this.currentToken.code,
+      this.currentToken.issuer,
+    );
+    this.modalService.close('withdraw');
+    this.description = `You are going to send ${this.withdrawForm.controls.amount.value} ${this.currentToken.code}`;
+    this.modalService.open('prepare-transaction');
   }
 
   isHideLowBalanceCheckbox(event) {
@@ -379,5 +348,18 @@ export class AccountPageComponent implements OnInit {
         this.address = this.address.split('address: ')[1];
       }
     });
+  }
+
+  getQR(code: string, addressIn: string) {
+    switch (code) {
+      case 'BCH':
+        return `bitcoincash:${addressIn}`;
+      case 'BTC':
+        return `bitcoin:${addressIn}`;
+      case 'LTC':
+        return `litecoin:${addressIn}`;
+      default:
+        return addressIn;
+    }
   }
 }

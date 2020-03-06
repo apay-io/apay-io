@@ -31,19 +31,30 @@
                 </div>
                 <div class="description-details">
                     {{exchange.addressIn}}
-                    <span class="copy" [text-copy]="orderParams.addressIn">
+                    <span class="copy" [text-copy]="exchange.addressIn">
+                        Copy
+                    </span>
+                </div>
+            </div>
+            <div class="details-info" *ngIf="['XLM','XDR'].includes(exchange.currencyIn.code)">
+                <div class="title-details">
+                    Memo ID
+                </div>
+                <div class="description-details">
+                    {{exchange.memoIn}}
+                    <span class="copy" [text-copy]="exchange.memoIn">
                         Copy
                     </span>
                 </div>
             </div>
         </div>
-        <div class="qr-code" (click)="changeStep(5)">
-          <qr-code value="{{exchange.addressIn}}" size="200" errorCorrectionLevel="M"></qr-code>
+        <div class="qr-code">
+          <qr-code value="{{ getQR(exchange) }}" size="200" errorCorrectionLevel="M"></qr-code>
         </div>
     </div>
     <div class="info-line">
         <div class="text">
-            You have 36 hours to send funds otherwise the transaction will be canceled automatically
+          contact <a style="color:gray;" href="mailto:support@apay.io">support@apay.io</a> if you experience any problems with your exchange
         </div>
     </div>
 </div>

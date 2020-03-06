@@ -48,17 +48,22 @@ export class EnterAddressComponent implements OnInit {
   async validateAddress(address: string, update = false) {
     // todo: validate stellar federated addresses
     const validStellarAddress = this.stellar.validateAddress(address);
-    const hasTrustline = validStellarAddress ? await this.stellar.hasTrustline(address, this.exchange.currencyOut) : false;
-    if (validStellarAddress && !hasTrustline) {
-      this.isAddressValid = false;
-      this.errorMessage = `You need to add trustline for ${this.exchange.currencyOut.code} first`;
-      return;
+    if (!this.exchange.currencyOut.stellarNative) {
+      const hasTrustline = validStellarAddress ? await this.stellar.hasTrustline(address, this.exchange.currencyOut) : false;
+      if (validStellarAddress && !hasTrustline) {
+        this.isAddressValid = false;
+        this.errorMessage = `You need to add trustline for ${this.exchange.currencyOut.code} first`;
+        return;
+      }
+      this.isAddressValid = validStellarAddress && hasTrustline ||
+        (await this.http.post('https://test.apay.io/validateAddress', {
+          asset_code: this.exchange.currencyOut,
+          dest: address,
+        }).toPromise()) as any;
+    } else {
+      this.isAddressValid = validStellarAddress;
     }
-    this.isAddressValid = validStellarAddress && hasTrustline ||
-      (await this.http.post('https://test.apay.io/validateAddress', {
-        asset_code: this.exchange.currencyOut,
-        dest: address,
-      }).toPromise()) as any;
+
     if (this.isAddressValid) {
       this.errorMessage = '';
       if (update) {

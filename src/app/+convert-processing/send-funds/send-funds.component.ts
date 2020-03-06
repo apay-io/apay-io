@@ -41,4 +41,17 @@ export class SendFundsComponent implements OnInit {
   changeStep(step) {
     this.store.dispatch(new SetExchangeStep(step));
   }
+
+  getQR(exchange: ExchangeState) {
+    switch (exchange.currencyIn.code) {
+      case 'BCH':
+        return `bitcoincash:${exchange.addressIn}`;
+      case 'BTC':
+        return `bitcoin:${exchange.addressIn}`;
+      case 'LTC':
+        return `litecoin:${exchange.addressIn}`;
+      default:
+        return exchange.addressIn;
+    }
+  }
 }
