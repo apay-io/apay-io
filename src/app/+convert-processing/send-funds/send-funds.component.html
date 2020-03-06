@@ -36,7 +36,7 @@
                     </span>
                 </div>
             </div>
-            <div class="details-info" *ngIf="['XLM','XDR'].includes(exchange.currencyIn.code)">
+            <div class="details-info" *ngIf="exchange.currencyIn.stellarNative">
                 <div class="title-details">
                     Memo ID
                 </div>
