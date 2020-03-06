@@ -248,9 +248,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="qr-code" *ngIf="address">
-                      <qr-code value="{{ getQR(currentToken.code, address) }}" size="200" errorCorrectionLevel="M"></qr-code>
-                    </div>
+                    <app-crypto-qr [code]="currentToken.code" [address]="address"></app-crypto-qr>
                 </div>
             </div>
         </div>

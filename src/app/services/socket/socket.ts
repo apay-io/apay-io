@@ -1,3 +1,5 @@
+import {environment} from '../../../environments/environment';
+
 export class SocketService {
   constructor(
 
@@ -5,7 +7,7 @@ export class SocketService {
   }
 
   connect(addressIn: string) {
-    const socket = new WebSocket('ws://192.168.10.10:8080');
+    const socket = new WebSocket(environment.anchorWebsocket);
     socket.onopen = () => {
       console.log('Connected');
       socket.send(

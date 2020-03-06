@@ -15,6 +15,8 @@ import {TextCopyDirective} from '../_directives/text-copy.directive';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
+import {QrCodeModule} from 'ng-qrcode';
+import {CryptoQrComponent} from './crypto-qr/crypto-qr.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,8 +28,10 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatSelectSearchModule,
     MaterialModule,
     MatNativeDateModule,
+    QrCodeModule,
   ],
   declarations: [
+    CryptoQrComponent,
     ModalComponent,
     TableComponent,
     TableMobileComponent,
@@ -38,6 +42,7 @@ import {MatNativeDateModule} from '@angular/material/core';
     TextCopyDirective
   ],
   exports: [
+    CryptoQrComponent,
     ModalComponent,
     TableComponent,
     TableMobileComponent,
