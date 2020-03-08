@@ -1,4 +1,4 @@
-import {Asset, Server, AssetType, Horizon, StrKey} from 'stellar-sdk';
+import {Asset, Server, AssetType, Horizon, StrKey, TransactionBuilder, Account, Networks, Operation} from 'stellar-sdk';
 import {reduce, filter} from 'lodash';
 import BalanceLine = Horizon.BalanceLine;
 import {Currency} from '../../core/currency.interface';
@@ -70,5 +70,45 @@ export class StellarService {
 
   validateAddress(address: string) {
     return StrKey.isValidEd25519PublicKey(address);
+  }
+
+  async buildTrustlineTx(account: string, code: string, issuer: string) {
+    const feeStats = await this.server.feeStats();
+    const sourceAccount = await this.server.loadAccount(account);
+    const builder = new TransactionBuilder(
+      sourceAccount,
+      {
+        fee: Math.min(parseInt(feeStats.fee_charged.mode, 10), 10000), // moderate fee, 10000 max
+        networkPassphrase: Networks.PUBLIC,
+      })
+      .setTimeout(600) // 10 min
+      .addOperation(Operation.changeTrust({
+        asset: new Asset(code, issuer),
+      }));
+
+    const tx = builder.build();
+
+    return tx.toEnvelope().toXDR('base64').toString();
+  }
+
+  async buildWithdrawalTx(account: string, destination: string, amount: string, code: string, issuer: string) {
+    const feeStats = await this.server.feeStats();
+    const sourceAccount = await this.server.loadAccount(account);
+    const builder = new TransactionBuilder(
+      sourceAccount,
+      {
+        fee: Math.min(parseInt(feeStats.fee_charged.mode, 10), 10000), // moderate fee, 10000 max
+        networkPassphrase: Networks.PUBLIC,
+      })
+      .setTimeout(600) // 10 min
+      .addOperation(Operation.payment({
+        amount: amount,
+        asset: new Asset(code, issuer),
+        destination,
+      }));
+
+    const tx = builder.build();
+
+    return tx.toEnvelope().toXDR('base64').toString();
   }
 }

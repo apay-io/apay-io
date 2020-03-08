@@ -22,7 +22,7 @@ export const currencies = [
   //   'deposit': 'active',
   //   'withdraw': 'active',
   //   'color': '#211265',
-  //   'address': 'native',
+  //   stellarNative: true,
   //   'trustline': false
   // },
   {
@@ -42,10 +42,16 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
     'color': '#000000',
-    'address': 'native',
+    stellarNative: true,
     'trustline': false,
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 1,
+      fee: ''
+    },
     withdraw: {
       enabled: true,
       fee_fixed: 0.00001,
@@ -72,14 +78,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    'color': '#f89f37',
+    stellarNative: false,
     'trustline': false,
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 0.0002,
+      fee: ''
+    },
     withdraw: {
       enabled: true,
       fee_fixed: 0.0001,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 0.0002,
       fee: '0.1% + 0.0001 BTC'
     },
@@ -102,14 +114,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 0.0002,
+      fee: ''
+    },
+    'color': '#548d1c',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 0.0001,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 0.0002,
       fee: '0.1% + 0.0001 BCH'
     },
@@ -132,14 +150,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 0.01,
+      fee: ''
+    },
+    'color': '#0faed3',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 0.001,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 0.01,
       fee: '0.1% + 0.001 ETH'
     },
@@ -162,14 +186,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 0.02,
+      fee: ''
+    },
+    'color': '#305c9f',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 0.01,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 0.02,
       fee: '0.1% + 0.01 LTC'
     },
@@ -192,14 +222,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 10,
+      fee: ''
+    },
+    'color': '#ff4f00',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 1,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 10,
       fee: '0.1% + 1 BAT'
     },
@@ -222,14 +258,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 1,
+      fee: ''
+    },
+    'color': '#003ec5',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 0,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 0,
       fee: '0.1%'
     },
@@ -252,14 +294,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 2,
+      fee: ''
+    },
+    'color': '#a5c1e0',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 0.1,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 2,
       fee: '0.1% + 0.1 LINK'
     },
@@ -282,14 +330,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 1,
+      fee: ''
+    },
+    'color': '#1d1e25',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 0.5,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 1,
       fee: '0.1% + 0.5 MTL'
     },
@@ -312,14 +366,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 0.4,
+      fee: ''
+    },
+    'color': '#1a53f0',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 0.2,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 0.4,
       fee: '0.1% + 0.2 OMG'
     },
@@ -342,14 +402,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 0.1,
+      fee: ''
+    },
+    'color': '#ad9dc0',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 0.01,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 0.1,
       fee: '0.1% + 0.01 REP'
     },
@@ -372,14 +438,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 2,
+      fee: ''
+    },
+    'color': '#17b9bd',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 1,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 2,
       fee: '0.1% + 1 SALT'
     },
@@ -404,14 +476,20 @@ export const currencies = [
     'percent': '-',
     'value': 0,
     'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-    'deposit': 'active',
-    'color': '#000000',
-    'address': 'native',
+    deposit: {
+      enabled: true,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 2,
+      fee: ''
+    },
+    'color': '#1c2127',
+    stellarNative: false,
     'trustline': false,
     withdraw: {
       enabled: true,
       fee_fixed: 1,
-      fee_percent: 0.1,
+      fee_percent: 0.001,
       min_amount: 2,
       fee: '0.1% + 1 ZRX'
     },

@@ -78,11 +78,12 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
           this.store.dispatch(new SetAmountOut(exchange.amountOut));
         }
 
-        console.log(exchange);
         this.exchange = exchange;
         this.currencyIn = exchange.currencyIn;
         this.currencyOut = exchange.currencyOut;
-        this.recalculateAmounts(exchange.amountIn, exchange.amountOut);
+        if (exchange.amountIn && exchange.amountOut) {
+          this.recalculateAmounts(exchange.amountIn, exchange.amountOut);
+        }
       });
   }
 

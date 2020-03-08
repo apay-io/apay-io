@@ -31,19 +31,28 @@
                 </div>
                 <div class="description-details">
                     {{exchange.addressIn}}
-                    <span class="copy" [text-copy]="orderParams.addressIn">
+                    <span class="copy" [text-copy]="exchange.addressIn">
+                        Copy
+                    </span>
+                </div>
+            </div>
+            <div class="details-info" *ngIf="exchange.currencyIn.stellarNative">
+                <div class="title-details">
+                    Memo ID
+                </div>
+                <div class="description-details">
+                    {{exchange.memoIn}}
+                    <span class="copy" [text-copy]="exchange.memoIn">
                         Copy
                     </span>
                 </div>
             </div>
         </div>
-        <div class="qr-code" (click)="changeStep(5)">
-          <qr-code value="{{exchange.addressIn}}" size="200" errorCorrectionLevel="M"></qr-code>
-        </div>
+        <app-crypto-qr [code]="exchange.currencyIn.code" [address]="exchange.addressIn"></app-crypto-qr>
     </div>
     <div class="info-line">
         <div class="text">
-            You have 36 hours to send funds otherwise the transaction will be canceled automatically
+          contact <a style="color:gray;" href="mailto:support@apay.io?subject=Transaction {{exchange.id}}">support@apay.io</a> if you experience any problems with your exchange
         </div>
     </div>
 </div>

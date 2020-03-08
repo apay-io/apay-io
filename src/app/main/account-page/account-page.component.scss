@@ -131,7 +131,7 @@
           }
 
           .cell {
-            min-width: 14%;
+            width: 14%;
             flex: 1 1 auto;
             display: flex;
             align-items: center;
@@ -472,16 +472,7 @@
     }
   }
 
-  .qr-code {
-    width: 100%;
-    display: flex;
-    justify-content: center;
 
-    img {
-      width: 60%;
-      object-fit: contain;
-    }
-  }
 }
 
 .button-next {

@@ -23,6 +23,8 @@ import {environment} from '../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
 import {ExchangeEffects} from './store/effects/exchange.effects';
+import {SocketService} from './services/socket/socket';
+import {QrCodeModule} from 'ng-qrcode';
 
 @NgModule({
   imports: [
@@ -39,6 +41,7 @@ import {ExchangeEffects} from './store/effects/exchange.effects';
     MaterialModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([ExchangeEffects]),
+    QrCodeModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   entryComponents: [AppComponent],
@@ -50,7 +53,7 @@ import {ExchangeEffects} from './store/effects/exchange.effects';
     AccountPageComponent
   ],
   bootstrap: [AppComponent],
-  providers: [ModalService, StellarService]
+  providers: [ModalService, StellarService, SocketService]
 })
 export class AppModule {
 }

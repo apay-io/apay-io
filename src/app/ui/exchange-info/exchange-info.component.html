@@ -27,7 +27,7 @@
                             </div>
                         </div>
                         <div *ngIf="arraySearchValue.length">
-                            <div class="token" *ngFor="let item of arraySearchValue" [ngClass]="{'active': selectedToken.code === item.code}" (click)="selectToken(item)">
+                            <div class="token" *ngFor="let item of arraySearchValue" [ngClass]="{'active': selectedToken && selectedToken.code === item.code}" (click)="selectToken(item)">
                                 <div class="wrapper-icon">
                                     <img class="icon" [src]="item.icon" [ngClass]="item.code" alt="">
                                 </div>
@@ -39,11 +39,11 @@
                     </div>
 
                 </div>
-                <div *ngIf="!selectedToken.code" class="right-empty-state">
+                <div *ngIf="!selectedToken" class="right-empty-state">
                     At the moment we support following assets, choose the one you're interested in
 
                 </div>
-                <div *ngIf="selectedToken.code && selectedToken.issuer && currentComponent === 'deposit'" class="right">
+                <div *ngIf="selectedToken && selectedToken.code && selectedToken.issuer && currentComponent === 'deposit'" class="right">
                     <div class="title">
                         Trust
                     </div>
@@ -91,7 +91,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="selectedToken.code && selectedToken.issuer && currentComponent === 'withdraw'" class="right">
+                <div *ngIf="selectedToken && selectedToken.code && selectedToken.issuer && currentComponent === 'withdraw'" class="right">
                     <div class="title">
                         How to Withdraw
                     </div>
@@ -112,9 +112,8 @@
                         Send assets to
                         <span class="bold">
                             <span *ngIf="!tokenWithdraw.value">
-                                ourAddress
-                            </span>
-                            {{tokenWithdraw.value}}*apay.io
+                                YourAddress
+                            </span>{{tokenWithdraw.value}}*apay.io
                         </span>
                         and we will automatically withdraw it to
                         <span class="bold">

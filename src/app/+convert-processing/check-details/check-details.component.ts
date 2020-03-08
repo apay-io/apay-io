@@ -5,6 +5,8 @@ import {selectExchange} from '../../store/selectors/exchange.selectors';
 import {AppState} from '../../store/states/app.state';
 import {ExchangeState} from '../../store/states/exchange.state';
 import {SetExchangeStep, SetSwapParams} from '../../store/actions/exchange.actions';
+import {environment} from '../../../environments/environment';
+import {SocketService} from '../../services/socket/socket';
 
 @Component({
   selector: 'app-check-details',
@@ -19,6 +21,7 @@ export class CheckDetailsComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private readonly store: Store<AppState>,
+    private readonly socketService: SocketService,
   ) {
   }
 
@@ -36,16 +39,20 @@ export class CheckDetailsComponent implements OnInit {
   }
 
   async process() {
-    this.http.post('https://apay.io/api/swap', {
+    this.http.post(environment.backend, {
       currencyIn: this.exchange.currencyIn.code,
       currencyOut: this.exchange.currencyOut.code,
       addressOut: this.exchange.addressOut,
     }).subscribe((result: any) => {
-      this.exchange.addressIn = result.address_in;
-      this.exchange.memoIn = result.memo_in;
-      this.exchange.memoInType = 'TEXT';
-      this.exchange.id = result.memo_in;
+      result.id = result.id.substr(0, 8);
+      this.exchange.addressIn = result.addressIn;
+      this.socketService.connect(result.addressIn);
+      this.exchange.memoIn = result.addressInExtra;
+      this.exchange.memoInType = 'ID';
+      this.exchange.id = result.id;
       this.store.dispatch(new SetSwapParams(result));
+    }, (err) => {
+      console.log(err);
     });
   }
 

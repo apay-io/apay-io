@@ -18,16 +18,16 @@
                         [chartType]="doughnutChartType"></canvas>
             </div>
         </div>
-        <div class="table-chart">
-            <div style="width: 100%">
-                <canvas baseChart
-                        [options]="barChartOptions"
-                        [colors]="barChartColors"
-                        [data]="ChartData"
-                        [labels]="ChartLabels"
-                        [chartType]="ChartType"></canvas>
-            </div>
-        </div>
+<!--        <div class="table-chart">-->
+<!--            <div style="width: 100%">-->
+<!--                <canvas baseChart-->
+<!--                        [options]="barChartOptions"-->
+<!--                        [colors]="barChartColors"-->
+<!--                        [data]="ChartData"-->
+<!--                        [labels]="ChartLabels"-->
+<!--                        [chartType]="ChartType"></canvas>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="controls-table">
             <div class="search">
                 <mat-form-field>
@@ -59,9 +59,9 @@
                     <div class="cell">
                         Value(XDR)
                     </div>
-                    <div class="cell">
-                        Change 30D
-                    </div>
+<!--                    <div class="cell">-->
+<!--                        Change 30D-->
+<!--                    </div>-->
                     <div class="cell">
 
                     </div>
@@ -84,12 +84,12 @@
                     <div class="cell">
                         {{item.value == '0' ? '-' : item.value}}
                     </div>
-                    <div class="cell">
-                        {{item.balance === '0' ? '-' : item.change + '%'}}
-                    </div>
+<!--                    <div class="cell">-->
+<!--                        {{item.balance === '0' ? '-' : item.change + '%'}}-->
+<!--                    </div>-->
                     <div class="cell">
                         <div class="buttons-group">
-                            <div class="button-convert" [ngClass]="{'disabled' : item.deposit === 'disable'}" (click)="openModal($event, item, 'deposit');">
+                            <div class="button-convert" [ngClass]="{'disabled' : !item.deposit.enabled}" (click)="openModal($event, item, 'deposit');">
                                 <div class="text">
                                     {{item.trustline ? 'Deposit': 'Accept'}}
                                 </div>
@@ -115,9 +115,9 @@
                     <div class="cell">
                         {{sumValue}}
                     </div>
-                    <div class="cell">
-                        {{sumChange}}%
-                    </div>
+<!--                    <div class="cell">-->
+<!--                        {{sumChange}}%-->
+<!--                    </div>-->
                     <div class="cell">
 
                     </div>
@@ -151,7 +151,7 @@
                             </div>
                         </div>
                         <div class="min">
-                            Minimum Withdrawal: {{this.withdrawToken.min_amount}} {{currentToken.code}}
+                            Minimum Withdrawal: {{this.currentToken.withdraw.min_amount}} {{currentToken.code}}
                         </div>
                         <mat-form-field class="full-width">
                             <input matInput placeholder="Amount" maxlength="18" formControlName="amount" autocomplete="off" value="">
@@ -173,18 +173,18 @@
                     </div>
                     <div class="info">
                         <div class="title">
-                            Transaction Fee:
+                          Transaction Fee:
                         </div>
                         <div class="text">
-                            {{_amount.value * ( 1 - (withdrawToken.fee_percent !== 0 ? withdrawToken.fee_percent : 0)) - withdrawToken.fee_fixed}} {{currentToken.code}}
+                          {{_amount.value * currentToken.withdraw.fee_percent + currentToken.withdraw.fee_fixed}} {{currentToken.code}}
                         </div>
                     </div>
                     <div class="info">
                         <div class="title">
-                            You Will Get:
+                            You will get:
                         </div>
                         <div class="text">
-                            {{_amount.value * (withdrawToken.fee_percent !== 0 ? withdrawToken.fee_percent : 1) + withdrawToken.fee_fixed}}  {{currentToken.code}}
+                            {{ _amount.value * ( 1 - currentToken.withdraw.fee_percent) - currentToken.withdraw.fee_fixed }} {{currentToken.code}}
                         </div>
                     </div>
                     <button
@@ -248,9 +248,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="qr-code">
-                        <img src="./../../../assets/img/qr-test.png" alt="">
-                    </div>
+                    <app-crypto-qr [code]="currentToken.code" [address]="address"></app-crypto-qr>
                 </div>
             </div>
         </div>
@@ -274,7 +272,7 @@
                         <!--Prepare transaction-->
                         <!--</div>-->
                         <div class="text">
-                            You are going to Establich trustline or pay {{currentToken.code}} to {{currentToken.code}}.
+                            {{ description }}
                         </div>
                     </div>
                     <div class="address-wrapper">

@@ -49,12 +49,12 @@ export function exchangeReducers(
     case EExchangeActions.SetSwapParams: {
       state = {
         ...state,
-        addressIn: action.payload.address_in,
-        id: action.payload.memo_in,
+        addressIn: action.payload.addressIn,
+        memoInType: 'ID',
+        memoIn: action.payload.addressInExtra,
+        id: action.payload.id,
         step: state.step + 1,
       };
-      sessionStorage.setItem('addressIn', action.payload.address_in);
-      sessionStorage.setItem('id', action.payload.memo_in);
       return state;
     }
     default:

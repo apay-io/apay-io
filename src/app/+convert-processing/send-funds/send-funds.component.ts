@@ -41,4 +41,5 @@ export class SendFundsComponent implements OnInit {
   changeStep(step) {
     this.store.dispatch(new SetExchangeStep(step));
   }
+
 }
