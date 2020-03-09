@@ -1,6 +1,8 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ModalService} from "../../services/modal/modal.service";
-import {LoginService} from "../../core/login-service";
+import {ModalService} from '../../services/modal/modal.service';
+import {LoginService} from '../../core/login-service';
+import {StellarService} from '../../services/stellar/stellar.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +11,8 @@ import {LoginService} from "../../core/login-service";
 })
 export class LoginComponent implements OnInit {
     step = 'choose';
+    loading = false;
+    isAddressValid = true;
 
     @Input() currentComponent: string;
     @Output() public outFlagLogin = new EventEmitter();
@@ -18,7 +22,9 @@ export class LoginComponent implements OnInit {
 
     constructor(
         public modalService: ModalService,
-        public loginServices: LoginService
+        public loginServices: LoginService,
+        private readonly stellarService: StellarService,
+        private readonly router: Router,
     ) {
     }
 
@@ -30,7 +36,7 @@ export class LoginComponent implements OnInit {
         this.step = 'login-nickname-address';
         setTimeout(() => {
             this.ElementAddress.nativeElement.focus();
-        }, 300)
+        }, 300);
     }
 
     stepLedger() {
@@ -45,10 +51,21 @@ export class LoginComponent implements OnInit {
     }
 
     login(account) {
-      localStorage.setItem('account', account);
-      this.outFlagLogin.emit(true);
-      this.loginServices.close();
-      this.clear();
+      this.loading = true;
+      this.isAddressValid = true;
+      this.stellarService.balances(account)
+        .then((result) => {
+          if (result.length) {
+            localStorage.setItem('account', account);
+            this.outFlagLogin.emit(true);
+            this.loginServices.close();
+            this.clear();
+            this.router.navigate(['/account']);
+          } else {
+            this.isAddressValid = false;
+          }
+          this.loading = false;
+        });
     }
 
     closeModal() {
@@ -57,6 +74,6 @@ export class LoginComponent implements OnInit {
     }
 
     clear() {
-        this.step = 'choose'
+        this.step = 'choose';
     }
 }

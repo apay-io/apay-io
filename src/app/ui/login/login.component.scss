@@ -77,6 +77,11 @@
     width: 60%;
     margin-bottom: 16px;
     background: #0f59d1;
+
+    &.load {
+      background: #0f59d182;
+      color: #fff;
+    }
   }
 
   .login-wrapper {
@@ -86,10 +91,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 
     .input {
       margin-top: 16px;
       width: 60%;
+    }
+
+    .error-msg {
+      width: 60%;
+      font-size: 16px;
+      color: red;
     }
 
     .info {
@@ -151,6 +163,10 @@
       .input {
         width: 90%;
         max-width: 540px;
+      }
+
+      .error-msg {
+        width: 90%;
       }
     }
   }

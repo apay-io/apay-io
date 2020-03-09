@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AppComponent} from '../../app.component';
 import {Color} from 'ng2-charts';
@@ -27,7 +27,7 @@ interface Token extends Currency {
   styleUrls: ['./account-page.component.scss']
 })
 
-export class AccountPageComponent implements OnInit {
+export class AccountPageComponent implements OnInit, OnDestroy {
   dataWallet = Object.assign([], currencies);
   rates = {};
   isLoading = false;
@@ -229,6 +229,10 @@ export class AccountPageComponent implements OnInit {
       .catch(error => {
         console.log('ERROR:', error.message);
       });
+  }
+
+  ngOnDestroy() {
+    this.dataWallet = Object.assign([], currencies);
   }
 
   drawingChart(select_val, time_amount, time_type) {
