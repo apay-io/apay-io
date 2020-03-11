@@ -1,4 +1,4 @@
-<div class="login" *ngIf="loginServices.login | async">
+<div class="login" *ngIf="modalInfo?.state && modalInfo?.name === 'login'">
     <div class="modal">
         <div class="modal-body">
             <div class="head-popup">

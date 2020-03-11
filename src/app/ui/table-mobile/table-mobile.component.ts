@@ -3,7 +3,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {sparkline} from '@fnando/sparkline';
 import {CurrencySelectionService} from '../../core/currency-selection.service';
-import {GetCurrenciesServices} from '../../core/get-currencies.services';
+import {ControlsCustomModalService} from '../../core/controls-custom-modal.service';
 
 export interface UserData {
     icon: string;
@@ -24,7 +24,8 @@ export interface UserData {
 export class TableMobileComponent implements OnInit {
     displayedColumns: string[] = ['icon', 'name', 'change', 'usd'];
     dataSource: MatTableDataSource<UserData>;
-    @Input() currencyInfo: object;
+    @Input() currencyTableInfo: object;
+    @Input() getInfoCurrencies;
 
     @ViewChild(MatSort, {static: true}) sort: MatSort;
     currencies;
@@ -32,17 +33,13 @@ export class TableMobileComponent implements OnInit {
 
     constructor(
         public currencySelectionService: CurrencySelectionService,
-        private getCurrencies: GetCurrenciesServices,
-    ) {}
+        public controlsCustomModalService: ControlsCustomModalService,
+    ) {
+    }
 
     ngOnInit() {
-        this.getCurrencies.state$.subscribe((data: any) => {
-            if (data.length) {
-                this.currencies = data
-                this.dataSource = new MatTableDataSource(this.currencies);
-                this.dataSource.sort = this.sort;
-            }
-        })
+      this.dataSource = new MatTableDataSource(this.getInfoCurrencies);
+      this.dataSource.sort = this.sort;
     }
 
     applyFilter(filterValue: string) {
@@ -52,6 +49,7 @@ export class TableMobileComponent implements OnInit {
     currencySelection(event, type: 'buy' | 'sell') {
         this.searchValue = '';
         this.applyFilter(this.searchValue);
-        this.currencySelectionService.changeCurrency(event, type)
+        this.currencySelectionService.changeCurrency(event, type);
+        this.controlsCustomModalService.close('choiceCurrency');
     }
 }

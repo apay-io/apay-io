@@ -1,0 +1,40 @@
+<div class="modal-choice-currency" *ngIf="modalInfo?.state && modalInfo?.name === 'choiceCurrency'">
+    <div class="modal">
+        <div class="modal-body">
+            <div class="head-popup">
+                Select Tokens
+                <div class="close" (click)="controlsCustomModalService.close('choiceCurrency')">
+                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill-rule="evenodd" d="M.458.404c.582-.565 1.54-.524 2.123.04l9.406 9.485L21.435.444c.583-.564 1.54-.605 2.123-.04.582.565.582 1.453.041 2.058l-9.531 9.526 9.531 9.565c.541.565.541 1.494-.041 2.059-.582.524-1.54.524-2.123-.04l-9.448-9.486-9.406 9.485c-.583.565-1.54.565-2.123.04-.582-.564-.624-1.493-.041-2.058l9.531-9.565L.417 2.462C-.166 1.857-.124.97.458.404z"></path></svg>
+                </div>
+            </div>
+            <div class="content-popup tokens">
+                <div class="search-currency">
+                    <div class="search-wrapper">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true"
+                             style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;">
+                            <path d="M9.572 0C4.28 0 0 4.182 0 9.352s4.28 9.353 9.572 9.353a9.67 9.67 0 0 0 5.12-1.461L21.607 24 24 21.662l-6.827-6.653c1.227-1.573 1.97-3.523 1.97-5.657 0-5.17-4.28-9.352-9.571-9.352zm0 2.2c4.053 0 7.32 3.192 7.32 7.152 0 3.961-3.267 7.152-7.32 7.152-4.054 0-7.32-3.191-7.32-7.152 0-3.96 3.266-7.151 7.32-7.151z"></path>
+                        </svg>
+                        <input type="text" placeholder="Search Token Name or Symbol" [(ngModel)]="searchValue" (ngModelChange)="search()">
+                    </div>
+                </div>
+                <div class="currency-wrapper">
+                    <div class="currency-list">
+                        <div class="currency-item" *ngFor="let item of arraySearchValue" (click)="selectCurrency(item, currencyInfoSave.type);controlsCustomModalService.close('choiceCurrency')" [ngClass]="{'active': currencyInfoSave.code == item.code}" >
+                            <img class="icon" [ngClass]="item.code" [src]="item.icon" alt="">
+                            <div class="title-currency">
+                                {{item.code}}
+                            </div>
+                            <div class="description-currency">
+                                {{item.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-mobile">
+                    <app-table-mobile [getInfoCurrencies]="getInfoCurrencies" [currencyTableInfo]="currencyInfoSave"></app-table-mobile>
+                </div>
+            </div>
+        </div>
+        <div class="modal-background" (click)="controlsCustomModalService.close('choiceCurrency')"></div>
+    </div>
+</div>

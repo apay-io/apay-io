@@ -1,0 +1,14 @@
+<div class="wrapper" (click)="openPopup(exchange)">
+    <div class="wrapper-icon">
+        <img class="icon" [ngClass]="exchange.value.code" [src]="exchange.value.icon" alt="">
+    </div>
+    <div class="info-currency">
+        <div class="text">
+            {{exchange.type === 'sell' ? 'PAY WITH' : 'RECEIVE'}}
+        </div>
+        <div class="currency">
+            {{exchange.value.code}}
+            <svg class="icon-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 14" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path d="M0 .093l12 13.472L24 0H0z"></path></svg>
+        </div>
+    </div>
+</div>

@@ -38,7 +38,6 @@
         color: #000;
         caret-color: #000;
         font-size: 16px;
-
       }
       .mat-form-field-label {
         color: #000;
@@ -51,6 +50,9 @@
       }
       .mat-form-field-required-marker {
         color: #fff;
+      }
+      .mat-form-field-flex {
+        border-bottom: 1px solid #eee;
       }
     }
 
