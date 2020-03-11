@@ -17,6 +17,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import {QrCodeModule} from 'ng-qrcode';
 import {CryptoQrComponent} from './crypto-qr/crypto-qr.component';
+import {ChoiceCurrencyModalComponent} from './choice-currency-modal/choice-currency-modal.component';
 import {ChoiceCurrencyComponent} from './choice-currency/choice-currency.component';
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import {ChoiceCurrencyComponent} from './choice-currency/choice-currency.compone
     LoginComponent,
     NotificationMessageComponent,
     TextCopyDirective,
+    ChoiceCurrencyModalComponent,
     ChoiceCurrencyComponent
   ],
   exports: [
@@ -53,6 +55,7 @@ import {ChoiceCurrencyComponent} from './choice-currency/choice-currency.compone
     LoginComponent,
     NotificationMessageComponent,
     TextCopyDirective,
+    ChoiceCurrencyModalComponent,
     ChoiceCurrencyComponent
   ]
 })

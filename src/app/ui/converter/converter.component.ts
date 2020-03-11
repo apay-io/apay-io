@@ -25,7 +25,6 @@ export class ConverterComponent implements OnInit, OnDestroy {
   getCurrenciesSub;
   getInfoCurrencies;
   currencyInfoSave = {type: '', code: ''};
-  @Output() popupChange: EventEmitter<string> = new EventEmitter();
   @Input() isProcessingConverter = false;
 
   @ViewChild('buy', {static: false}) buyElement: ElementRef;
@@ -80,19 +79,11 @@ export class ConverterComponent implements OnInit, OnDestroy {
     this.getCurrenciesSub.unsubscribe();
   }
 
-  openPopupSell() {
+  saveCurrentCurrency(currency) {
     this.controlsCustomModalService.open('choiceCurrency');
     this.currencyInfoSave = {
-      type: 'sell',
-      code: this.currencyIn.code
-    };
-  }
-
-  openPopupBuy() {
-    this.controlsCustomModalService.open('choiceCurrency');
-    this.currencyInfoSave = {
-      type: 'buy',
-      code: this.currencyOut.code
+      type: currency.type,
+      code: currency.code
     };
   }
 
@@ -127,7 +118,6 @@ export class ConverterComponent implements OnInit, OnDestroy {
   }
 
   async calculateBuy(event) {
-    console.log(event.target.value);
     this.stateButton = 'loading';
     if (event.target.value > 0) {
       if (event.target.value < this.currencyIn.minDeposit) {
