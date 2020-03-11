@@ -39,7 +39,7 @@
                 </mat-form-field>
             </div>
             <div class="hide-low-balance">
-                <mat-checkbox (change)="isHideLowBalanceCheckbox($event)">
+                <mat-checkbox [checked]="hideLowBalanceFlag" (change)="isHideLowBalanceCheckbox($event)">
                     <span style="word-break: break-all;" class="">Hide low balance assets</span>
                 </mat-checkbox>
             </div>

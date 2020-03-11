@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "./core/login-service";
-import {Router} from "@angular/router";
-import {GetCurrenciesServices} from "./core/get-currencies.services";
+import {Router} from '@angular/router';
+import {ControlsCustomModalService} from './core/controls-custom-modal.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +13,7 @@ export class AppComponent implements OnInit{
   publicKey;
   publicKeyPart;
     constructor(
-      public loginServices: LoginService,
+      public controlsCustomModalService: ControlsCustomModalService,
       public readonly router: Router
     ) {}
 
@@ -50,7 +49,7 @@ export class AppComponent implements OnInit{
 
   routeAccount() {
     if (!this.loginFlag) {
-      this.loginServices.open();
+      this.controlsCustomModalService.open('login');
       return false;
     }
   }

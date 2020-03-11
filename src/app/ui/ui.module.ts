@@ -17,6 +17,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import {QrCodeModule} from 'ng-qrcode';
 import {CryptoQrComponent} from './crypto-qr/crypto-qr.component';
+import {ChoiceCurrencyComponent} from './choice-currency/choice-currency.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -39,7 +40,8 @@ import {CryptoQrComponent} from './crypto-qr/crypto-qr.component';
     ExchangeInfoComponent,
     LoginComponent,
     NotificationMessageComponent,
-    TextCopyDirective
+    TextCopyDirective,
+    ChoiceCurrencyComponent
   ],
   exports: [
     CryptoQrComponent,
@@ -50,7 +52,8 @@ import {CryptoQrComponent} from './crypto-qr/crypto-qr.component';
     ExchangeInfoComponent,
     LoginComponent,
     NotificationMessageComponent,
-    TextCopyDirective
+    TextCopyDirective,
+    ChoiceCurrencyComponent
   ]
 })
 export class UiModule {}

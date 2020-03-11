@@ -82,6 +82,7 @@ export class AccountPageComponent implements OnInit, OnDestroy {
               private readonly stellarService: StellarService,
               public modalService: ModalService,
               private notify: NotifyService) {
+    this.hideLowBalanceFlag = localStorage.getItem('hideLowBalanceFlag') === 'true';
     this.withdrawForm = new FormGroup({
       recipient: new FormControl('', [
         Validators.required,
@@ -322,9 +323,11 @@ export class AccountPageComponent implements OnInit, OnDestroy {
   isHideLowBalanceCheckbox(event) {
     if (event.checked) {
       this.hideLowBalanceFlag = true;
+      localStorage.setItem('hideLowBalanceFlag', 'true');
       return false;
     }
     this.hideLowBalanceFlag = false;
+    localStorage.setItem('hideLowBalanceFlag', 'false');
   }
 
   search() {

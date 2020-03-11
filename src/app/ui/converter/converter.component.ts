@@ -1,7 +1,5 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalService} from '../../services/modal/modal.service';
-import {CurrencySelectionService} from '../../core/currency-selection.service';
-import {currencies} from '../../../assets/currencies-list';
 import {Router} from '@angular/router';
 import {StellarService} from '../../services/stellar/stellar.service';
 import {NotifyService} from '../../core/notify.service';
@@ -11,24 +9,22 @@ import {select, Store} from '@ngrx/store';
 import {selectExchange} from '../../store/selectors/exchange.selectors';
 import {SetAmountIn, SetAmountOut, SetCurrencyIn, SetCurrencyOut} from '../../store/actions/exchange.actions';
 import {ExchangeState} from '../../store/states/exchange.state';
+import {ControlsCustomModalService} from '../../core/controls-custom-modal.service';
+import {CurrencySelectionService} from '../../core/currency-selection.service';
 
 @Component({
   selector: 'app-converter',
   templateUrl: './converter.component.html',
   styleUrls: ['./converter.component.scss']
 })
-export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ConverterComponent implements OnInit, OnDestroy {
   currencyIn;
   currencyOut;
   exchange: ExchangeState;
-  timer;
   stateButton = 'disabled';
   getCurrenciesSub;
   getInfoCurrencies;
-  searchValue: string;
-  arraySearchValue = [];
   currencyInfoSave = {type: '', code: ''};
-  private tokensList = [];
   @Output() popupChange: EventEmitter<string> = new EventEmitter();
   @Input() isProcessingConverter = false;
 
@@ -40,16 +36,12 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
     public modalService: ModalService,
     public notify: NotifyService,
     public currencySelection: CurrencySelectionService,
+    public controlsCustomModalService: ControlsCustomModalService,
     private readonly router: Router,
     private readonly stellarService: StellarService,
     private getCurrencies: GetCurrenciesServices,
     private readonly store: Store<AppState>,
   ) {
-  }
-
-  ngAfterViewInit() {
-
-
   }
 
   ngOnInit() {
@@ -61,12 +53,9 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
 
-    this.arraySearchValue = this.tokensList = currencies;
-
     this.currencySelection.select
       .subscribe((currencyInfo) => {
-        this.modalService.close('currencies');
-        this.chooseCurrency(currencyInfo.data, currencyInfo.typeCurrency);
+        this.receiveCurrency({ selectedCurrency: currencyInfo.data, type: currencyInfo.typeCurrency});
       });
 
     this.store.pipe(select(selectExchange))
@@ -91,25 +80,8 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
     this.getCurrenciesSub.unsubscribe();
   }
 
-  async chooseCurrency(event, type) {
-    if (type === 'sell') {
-      this.store.dispatch(new SetCurrencyIn(event));
-      this.sellElement.nativeElement.focus();
-    } else {
-      this.store.dispatch(new SetCurrencyOut(event));
-      this.buyElement.nativeElement.focus();
-    }
-    await this.recalculateAmounts(this.exchange.amountIn, this.exchange.amountOut);
-    this.clearSearch();
-  }
-
-  clearSearch() {
-    this.searchValue = '';
-    this.arraySearchValue = this.tokensList;
-  }
-
   openPopupSell() {
-    this.modalService.open('currencies');
+    this.controlsCustomModalService.open('choiceCurrency');
     this.currencyInfoSave = {
       type: 'sell',
       code: this.currencyIn.code
@@ -117,23 +89,11 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openPopupBuy() {
-    this.modalService.open('currencies');
+    this.controlsCustomModalService.open('choiceCurrency');
     this.currencyInfoSave = {
       type: 'buy',
       code: this.currencyOut.code
     };
-  }
-
-  search() {
-    if (this.searchValue.length < 2) {
-      this.arraySearchValue = this.tokensList;
-      return false;
-    }
-
-    this.searchValue = this.searchValue[0].toUpperCase() + this.searchValue.slice(1);
-    this.arraySearchValue = this.tokensList.filter(
-      item => (item.name.indexOf(this.searchValue) > -1) || (item.code.indexOf(this.searchValue.toUpperCase()) > -1)
-    );
   }
 
   async revertCurrency() {
@@ -209,5 +169,17 @@ export class ConverterComponent implements OnInit, OnDestroy, AfterViewInit {
       this.buyElement.nativeElement.value = '';
       this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
     }
+  }
+
+  async receiveCurrency(currency) {
+    if (currency.type === 'sell') {
+      this.store.dispatch(new SetCurrencyIn(currency.selectedCurrency));
+      this.sellElement.nativeElement.focus();
+    } else {
+      this.store.dispatch(new SetCurrencyOut(currency.selectedCurrency));
+      this.buyElement.nativeElement.focus();
+    }
+
+    await this.recalculateAmounts(this.exchange.amountIn, this.exchange.amountOut);
   }
 }

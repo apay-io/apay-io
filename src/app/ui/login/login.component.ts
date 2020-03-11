@@ -1,8 +1,8 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalService} from '../../services/modal/modal.service';
-import {LoginService} from '../../core/login-service';
 import {StellarService} from '../../services/stellar/stellar.service';
 import {Router} from '@angular/router';
+import {ControlsCustomModalService} from '../../core/controls-custom-modal.service';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+    modalInfo;
     step = 'choose';
     loading = false;
     isAddressValid = true;
@@ -22,10 +23,15 @@ export class LoginComponent implements OnInit {
 
     constructor(
         public modalService: ModalService,
-        public loginServices: LoginService,
+        public controlsCustomModalService: ControlsCustomModalService,
         private readonly stellarService: StellarService,
         private readonly router: Router,
     ) {
+      this.controlsCustomModalService.modal.subscribe(
+        event => {
+          this.modalInfo = event;
+        }
+      );
     }
 
     ngOnInit() {
@@ -58,7 +64,7 @@ export class LoginComponent implements OnInit {
           if (result.length) {
             localStorage.setItem('account', account);
             this.outFlagLogin.emit(true);
-            this.loginServices.close();
+            this.controlsCustomModalService.close('login');
             this.clear();
             this.router.navigate(['/account']);
           } else {
@@ -69,7 +75,7 @@ export class LoginComponent implements OnInit {
     }
 
     closeModal() {
-      this.loginServices.close();
+      this.controlsCustomModalService.close('login');
       this.clear();
     }
 

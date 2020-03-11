@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div *ngIf="!loginFlag" class="profile-info">
-                <div class="button-sign-in" (click)="this.loginServices.open()">
+                <div class="button-sign-in" (click)="this.controlsCustomModalService.open('login')">
                     Sign in
                 </div>
             </div>

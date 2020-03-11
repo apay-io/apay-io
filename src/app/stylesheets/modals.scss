@@ -2,7 +2,7 @@
 @import "./../stylesheets/tools/media.scss";
 @import "./../stylesheets/button";
 
-modal, .login {
+modal, .login, .modal-choice-currency {
   display: none;
 
   .modal {
@@ -97,7 +97,7 @@ modal, .login {
   }
 }
 
-.login {
+.login, .modal-choice-currency {
   display: block;
   animation: none;
 
@@ -123,6 +123,14 @@ modal, .login {
         -webkit-animation: slide-in 0.3s ease-in-out;
         animation: slide-in 0.3s ease-in-out;
       }
+    }
+  }
+}
+
+.modal-choice-currency {
+  .modal {
+    .modal-body {
+      max-width: 410px;
     }
   }
 }

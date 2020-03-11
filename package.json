@@ -68,6 +68,6 @@
   },
   "browser": {
     "http": false,
-    "https":false
+    "https": false
   }
 }
