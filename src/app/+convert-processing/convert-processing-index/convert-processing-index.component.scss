@@ -12,6 +12,7 @@
     display: flex;
 
     .icon-wrapper {
+      position: relative;
       min-width: 32px;
       margin: 20px;
       display: flex;
@@ -31,6 +32,8 @@
       .check {
         display: none;
         position: absolute;
+        top: 8px;
+        left: 8px;
         background: #fff;
         transition: background 0.25s ease 0s, color 0.25s ease 0s;
       }
