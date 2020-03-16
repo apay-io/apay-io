@@ -56,16 +56,12 @@
 .button-next, .button-back {
   position: relative;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 60px;
   line-height: 38px;
   font-family: Montserrat, sans-serif;
   font-size: 20px;
   font-weight: 600;
   color: rgb(57, 66, 71);
-  text-align: center;
   cursor: pointer;
   padding: 0 1.2rem;
   background: rgba(179, 180, 180, 0.15);
@@ -103,6 +99,12 @@
     font-size: 16px;
     text-align: center;
     margin-left: -29px;
+  }
+
+  ::ng-deep .mat-button-wrapper {
+    text-align: center;
+    width: 100%;
+    display: block;
   }
 }
 
