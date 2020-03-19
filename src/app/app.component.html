@@ -47,10 +47,7 @@
                     <div class="public-key" >
                         {{this.publicKeyPart}}
                     </div>
-                    <svg class="icon"
-                         width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 5V4C15 2.89543 14.1046 2 13 2H4C2.89543 2 2 2.89543 2 4V13C2 14.1046 2.89543 15 4 15H5M11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                    <i class="far fa-clone icon"></i>
                 </div>
                 <div class="button-sign-out" (click)="logout()">
                     Logout
@@ -64,13 +61,13 @@
 
 <div class="footer">
     <div class="tab-footer" [ngClass]="{'active': router.url === '/convert'}" routerLink="/convert">
-        <svg class="icon-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 24" data-radium="true" style="pointer-events: none;"><path d="M20.657 5.92c0 .66-.53 1.199-1.205 1.199H4.005L6.681 9.81c.216.22.337.538.337.856 0 .319-.145.637-.362.857-.24.22-.53.342-.843.342-.314 0-.627-.147-.844-.367L.343 6.752a1.21 1.21 0 0 1 0-1.688L4.946.342c.241-.22.53-.342.843-.342.314 0 .603.097.844.342.457.49.457 1.248 0 1.713L4.055 4.722h15.422c.65 0 1.18.538 1.18 1.198zM15.187 24c-.313 0-.602-.122-.818-.342a1.196 1.196 0 0 1-.362-.856c0-.319.12-.637.337-.857l2.627-2.692H1.525c-.65 0-1.18-.538-1.18-1.198 0-.66.53-1.199 1.18-1.199h15.422l-2.603-2.642c-.458-.49-.458-1.248 0-1.713.482-.464 1.23-.464 1.687 0l4.626 4.698a1.21 1.21 0 0 1 0 1.688l-4.626 4.746c-.217.244-.53.367-.844.367z"></path></svg>
+        <i class="fas fa-exchange-alt icon-footer"></i>
         <div class="title-bar-footer">
             Convert
         </div>
     </div>
     <div class="tab-footer" [ngClass]="{'active': router.url === '/account'}" (click)="routeAccount()" [routerLink]="this.loginFlag ? '/account' : null">
-        <svg class="icon-footer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none;"><path d="M17.135 0c-.39 0-.893.112-1.563.28C13.898.725 4.074 3.46 3.907 3.515c-1.451.558-2.4 1.117-2.958 1.73a3.985 3.985 0 0 1 2.4-.78h15.628V2.622c0-.949 0-2.623-1.842-2.623zM3.349 5.581C1.284 5.581 0 7.535 0 8.931v11.943A3.12 3.12 0 0 0 3.126 24h17.19a3.12 3.12 0 0 0 3.126-3.126V8.82c0-1.73-1.619-3.238-3.349-3.238H3.349zm15.907 7.814c.781 0 1.395.614 1.395 1.396 0 .781-.614 1.395-1.395 1.395a1.382 1.382 0 0 1-1.396-1.395c0-.782.614-1.396 1.396-1.396z"></path></svg>
+        <i class="fas fa-wallet icon-footer"></i>
         <div class="title-bar-footer">
             My account
         </div>
@@ -82,13 +79,13 @@
         </div>
     </a>
     <div class="tab-footer" [ngClass]="{'active': router.url === '/deposit'}" routerLink="/deposit">
-        <svg class="icon-footer" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 21.825 21.825" style="enable-background:new 0 0 21.825 21.825;" xml:space="preserve"><path  d="M16.791,13.254c0.444-0.444,1.143-0.444,1.587,0c0.429,0.444,0.429,1.143,0,1.587l-6.65,6.651	c-0.206,0.206-0.492,0.333-0.809,0.333c-0.317,0-0.603-0.127-0.81-0.333l-6.65-6.651c-0.444-0.444-0.444-1.143,0-1.587	s1.143-0.444,1.587,0l4.746,4.762V1.111C9.791,0.492,10.299,0,10.918,0c0.619,0,1.111,0.492,1.111,1.111v16.904L16.791,13.254z"/><g></g></svg>
+        <i class="fas fa-arrow-down icon-footer"></i>
         <div class="title-bar-footer">
             Deposit
         </div>
     </div>
     <div class="tab-footer" [ngClass]="{'active': router.url === '/withdraw'}" routerLink="/withdraw" >
-        <svg class="icon-footer withdraw" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 21.825 21.825" style="enable-background:new 0 0 21.825 21.825;" xml:space="preserve"><path d="M16.791,13.254c0.444-0.444,1.143-0.444,1.587,0c0.429,0.444,0.429,1.143,0,1.587l-6.65,6.651	c-0.206,0.206-0.492,0.333-0.809,0.333c-0.317,0-0.603-0.127-0.81-0.333l-6.65-6.651c-0.444-0.444-0.444-1.143,0-1.587	s1.143-0.444,1.587,0l4.746,4.762V1.111C9.791,0.492,10.299,0,10.918,0c0.619,0,1.111,0.492,1.111,1.111v16.904L16.791,13.254z"/><g></g></svg>
+        <i class="fas fa-arrow-up icon-footer"></i>
         <div class="title-bar-footer">
             Withdraw
         </div>

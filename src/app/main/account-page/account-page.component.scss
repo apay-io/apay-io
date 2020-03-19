@@ -413,6 +413,7 @@
         padding-bottom: 20px;
         color: #efa344;
         font-size: 18px;
+        line-height: 22px;
         word-break: break-all;
 
         &.tx {
@@ -434,22 +435,15 @@
           object-fit: cover;
           transition: .3s;
           position: relative;
-          top: 5px;
           margin-left: 5px;
           cursor: pointer;
 
           &.copy {
-            fill: none;
-            stroke: #000;
+            color: #000;
           }
 
           &:hover {
-            fill: #efa344;
-
-            &.copy {
-              fill: none;
-              stroke: #efa344;
-            }
+            color: #efa344;
           }
         }
 
