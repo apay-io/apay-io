@@ -50,20 +50,19 @@ export class TableComponent implements OnInit, OnDestroy {
     });
     this.getCurrenciesSub = this.getCurrencies.state$.subscribe((data: any) => {
       if (data.length) {
-        console.log(data);
         this.currencies = data;
         this.dataSource = new MatTableDataSource(this.currencies);
         this.dataSource.sort = this.sort;
-        this.dataSource.connect().subscribe((data: any) => {
+        this.dataSource.connect().subscribe((row: any) => {
           clearTimeout(this.initSparklineTimeOut);
-          if (window.innerWidth >= 1024 && data.length > 0) {
+          if (window.innerWidth >= 800 && row.length > 0) {
             this.initSparklineTimeOut = setTimeout(() => {
-              data.forEach((item, id) => {
+              row.forEach((item, id) => {
                 const min = Math.min(...item.priceUsd);
                 const adjustedPrices = item.priceUsd.map((price) => price - min);
                 sparkline(document.getElementById(`sparkline-${item.code}`), adjustedPrices);
               });
-            }, 200);
+            }, 500);
           }
         });
       }
