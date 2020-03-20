@@ -76,7 +76,8 @@
   box-shadow: none;
 
   &.external-link {
-    width: auto;
+    line-height: 58px;
+    text-align: center;
   }
 
   .external-icon {
@@ -86,6 +87,7 @@
     top: -10px;
     right: -10px;
     object-fit: contain;
+    font-size: 14px;
   }
 
   &.load {
