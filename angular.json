@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "papaya"
+  "defaultProject": "papaya",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -122,6 +122,8 @@
             transition: .3s;
             fill: none;
             stroke: #fff;
+            color: #fff;
+            transform: rotate(90deg);
           }
         }
       }
@@ -163,7 +165,6 @@
   }
 }
 
-
 .footer {
   position: fixed;
   z-index: 102;
@@ -184,12 +185,15 @@
     flex-direction: column;
     filter: grayscale(100%);
     opacity: 0.7;
+    text-decoration: none;
 
     .icon-footer {
       width: 24px;
       height: 24px;
+      font-size: 22px;
       margin-bottom: 4px;
-      fill: rgb(15, 89, 209);
+      color: rgb(15, 89, 209);
+      text-align: center;
 
       &.withdraw {
         transform: rotate(180deg);
