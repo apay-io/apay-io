@@ -14,7 +14,7 @@
         </div>
         <div class="button-blue" [ngClass]="{ disabled: this.stateButton === 'disabled'}" (click)="continue()" *ngIf="!isProcessingConverter">
             <i *ngIf="this.stateButton !== 'loading'" class="fas fa-exchange-alt icon"></i>
-            <i *ngIf="this.stateButton === 'loading'" class="fas fa-circle-notch icon spinner"></i>
+            <div *ngIf="this.stateButton === 'loading'"  class="spinner small" ></div>
             <div class="text">
                 Convert
             </div>

@@ -122,7 +122,61 @@
 }
 
 .spinner {
-  animation: spinner 1s linear infinite;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #efa344;
+  border-radius: 50%;
+
+  &.small {
+    border: 1px solid #fff;
+    display: inline-block;
+    margin-right: 7px;
+    width: 15px;
+    height: 15px;
+
+    &:before,
+    &:after {
+      width: 1px;
+      border-radius: 2px;
+      background-color: #fff;
+    }
+
+    &:before {
+      height: 4.5px;
+      left: 6.7px;
+    }
+
+    &:after {
+      height: 6px;
+      left: 6.7px;
+    }
+  }
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 2px;
+    background-color: #efa344;
+    border-radius: 2px;
+    transform-origin: 50% 0;
+  }
+
+  &:before {
+    height: 9px;
+    left: 13px;
+    top: 50%;
+    animation: spinner 4000ms linear infinite;
+  }
+
+  &:after {
+    height: 12px;
+    left: 13px;
+    top: 50%;
+    animation: spinner 800ms linear infinite;
+  }
 }
 
 @keyframes spinner {

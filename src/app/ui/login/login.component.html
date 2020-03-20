@@ -76,7 +76,7 @@
                         class="button-next"
                         [ngClass]="{'load' : loading}"
                         (click)="login(address.value)">
-                    <i *ngIf="loading" class="fas fa-circle-notch icon spinner"></i>
+                    <div *ngIf="loading" class=" icon spinner small"></div>
                     login
                 </button>
             </div>
