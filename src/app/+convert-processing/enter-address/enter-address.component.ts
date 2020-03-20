@@ -57,7 +57,7 @@ export class EnterAddressComponent implements OnInit {
       }
       this.isAddressValid = validStellarAddress && hasTrustline ||
         (await this.http.post('https://test.apay.io/validateAddress', {
-          asset_code: this.exchange.currencyOut,
+          asset_code: this.exchange.currencyOut.code,
           dest: address,
         }).toPromise()) as any;
     } else {
