@@ -11,7 +11,8 @@
         </button>
     </div>
     <form (ngSubmit)="changeStep(3)">
-        <div class="recipient-address">
+        <div>
+            <p class="details">You can specify {{ exchange.currencyOut.code }} or Stellar address</p>
             <mat-form-field class="recipient-address" appearance="legacy">
                 <mat-label>Recipient address</mat-label>
                 <input #address matInput [value]="exchange.addressOut" (keyup)="onKeyUp($event)" placeholder="Enter your {{exchange.currencyOut.code}} address">

@@ -54,10 +54,10 @@ export const currencies = [
     },
     withdraw: {
       enabled: true,
-      fee_fixed: 0.00001,
+      fee_fixed: 0.0,
       fee_percent: 0,
       min_amount: 1,
-      fee: '0.00001 XLM'
+      fee: '0 XLM'
     },
   },
   {

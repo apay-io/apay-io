@@ -7,6 +7,7 @@ import {ExchangeState} from '../../store/states/exchange.state';
 import {SetExchangeStep, SetSwapParams} from '../../store/actions/exchange.actions';
 import {environment} from '../../../environments/environment';
 import {SocketService} from '../../services/socket/socket';
+import {StellarService} from '../../services/stellar/stellar.service';
 
 @Component({
   selector: 'app-check-details',
@@ -22,6 +23,7 @@ export class CheckDetailsComponent implements OnInit {
     private http: HttpClient,
     private readonly store: Store<AppState>,
     private readonly socketService: SocketService,
+    private readonly stellarService: StellarService,
   ) {
   }
 
@@ -54,6 +56,10 @@ export class CheckDetailsComponent implements OnInit {
     }, (err) => {
       console.log(err);
     });
+  }
+
+  getFee() {
+    return this.stellarService.validateAddress(this.exchange.addressOut) ? 0 : parseFloat(this.exchange.amountFee);
   }
 
   get canContinue() {
