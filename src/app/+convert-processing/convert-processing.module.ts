@@ -19,6 +19,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {WaitExchangeTmpComponent} from './wait-exchange-tmp/wait-exchange-tmp.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     CheckDetailsComponent,
     SendFundsComponent,
     WaitExchangeComponent,
+    WaitExchangeTmpComponent,
     TxCompleteComponent,
   ],
   imports: [

@@ -48,7 +48,7 @@ export class CheckDetailsComponent implements OnInit {
     }).subscribe((result: any) => {
       result.id = result.id.substr(0, 8);
       this.exchange.addressIn = result.addressIn;
-      this.socketService.connect(result.addressIn);
+      // this.socketService.connect(result.addressIn);
       this.exchange.memoIn = result.addressInExtra;
       this.exchange.memoInType = 'ID';
       this.exchange.id = result.id;
