@@ -15,6 +15,8 @@ import {
 
 @Injectable()
 export class ExchangeEffects {
+  private feeMultiplier = 0.995;
+
   constructor(
     private actions: Actions,
     private readonly store: Store<AppState>,
@@ -33,7 +35,7 @@ export class ExchangeEffects {
         return await this.stellarService.calculateSell(
           currencies.find((item) => item.code === (localStorage.getItem('currencyIn') || 'XLM')),
           currencies.find((item) => item.code === (localStorage.getItem('currencyOut') || 'BTC')),
-          (parseFloat(action.payload) * 0.995).toFixed(7),
+          action.payload,
         );
       } catch (err) {
         return {
@@ -46,9 +48,9 @@ export class ExchangeEffects {
       const currencyOut = currencies.find((currency) => currency.code === (localStorage.getItem('currencyOut') || 'BTC'));
 
       return of(new SetAmountInternal({
-        amountIn: item.source_amount,
+        amountIn: (parseFloat(item.source_amount) / this.feeMultiplier).toFixed(7),
         amountOut: sessionStorage.getItem('amountOut'),
-        amountFee: (amountOut * currencyOut.withdraw.fee_percent / 100 + currencyOut.withdraw.fee_fixed).toFixed(7),
+        amountFee: (amountOut * currencyOut.withdraw.fee_percent + currencyOut.withdraw.fee_fixed).toFixed(7),
       }));
     })
   );
@@ -63,7 +65,7 @@ export class ExchangeEffects {
       try {
         return await this.stellarService.calculateBuy(
           currencies.find((item) => item.code === localStorage.getItem('currencyIn')),
-          action.payload,
+          (parseFloat(action.payload) * this.feeMultiplier).toFixed(7).toString(),
           currencies.find((item) => item.code === localStorage.getItem('currencyOut')),
         );
       } catch (err) {
@@ -78,7 +80,7 @@ export class ExchangeEffects {
 
       return of(new SetAmountInternal({
         amountIn: sessionStorage.getItem('amountIn'),
-        amountOut: (parseFloat(item.destination_amount) * 0.995).toFixed(7).toString(),
+        amountOut: item.destination_amount,
         amountFee: amountFee.toFixed(7),
       }));
     })
