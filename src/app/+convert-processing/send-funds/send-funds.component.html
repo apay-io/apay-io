@@ -31,9 +31,7 @@
                 </div>
                 <div class="description-details">
                     {{exchange.addressIn}}
-                    <span class="copy" [text-copy]="exchange.addressIn">
-                        Copy
-                    </span>
+                    <i class="far fa-clone icon copy" [text-copy]="exchange.addressIn"></i>
                 </div>
             </div>
             <div class="details-info" *ngIf="exchange.currencyIn.stellarNative">
@@ -42,9 +40,7 @@
                 </div>
                 <div class="description-details">
                     {{exchange.memoIn}}
-                    <span class="copy" [text-copy]="exchange.memoIn">
-                        Copy
-                    </span>
+                    <i class="far fa-clone icon copy" [text-copy]="exchange.memoIn"></i>
                 </div>
             </div>
             <div class="details-info">

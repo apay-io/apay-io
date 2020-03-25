@@ -69,11 +69,13 @@
 
           .copy {
             cursor: pointer;
-            margin-left: 15px;
-            padding: 4px;
-            border-radius: 4px;
-            border: 1px solid #efa344;
-            color: #efa344;
+            margin-left: 5px;
+            color: #000;
+            transition: .3s;
+
+            &:hover {
+              color: #efa344;
+            }
           }
         }
       }
@@ -129,16 +131,11 @@
       .info {
         .details-info {
           .description-details {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
             word-break: break-all;
             flex-direction: column;
-            align-items: center;
 
             .copy {
-              display: block;
-              margin-left: 0;
+              margin-left: 5px;
             }
           }
         }
