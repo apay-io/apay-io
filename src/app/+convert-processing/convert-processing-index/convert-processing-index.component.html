@@ -49,18 +49,18 @@
             <app-send-funds></app-send-funds>
         </div>
     </div>
-<!--    <div class="step" [ngClass]="{'done': this.step > 5, 'active': this.step === 5}">-->
-<!--        <div class="icon-wrapper">-->
-<!--            5-->
-<!--        <i class="fas fa-check check"></i>
-<!--        </div>-->
-<!--        <div *ngIf="this.step !== 5" class="title">-->
-<!--            Wait for the exchange-->
-<!--        </div>-->
-<!--        <div *ngIf="this.step === 5">-->
-<!--            <app-wait-exchange></app-wait-exchange>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="step" [ngClass]="{'done': this.step > 5, 'active': this.step === 5}">
+        <div class="icon-wrapper">
+            5
+            <i class="fas fa-check check"></i>
+        </div>
+        <div *ngIf="this.step !== 5" class="title">
+            Wait for the exchange
+        </div>
+        <div *ngIf="this.step === 5">
+            <app-wait-exchange-tmp></app-wait-exchange-tmp>
+        </div>
+    </div>
 </div>
 
 <div *ngIf="this.step > 5">

@@ -46,6 +46,7 @@ export class EnterAddressComponent implements OnInit {
   }
 
   async validateAddress(address: string, update = false) {
+    this.errorMessage = '';
     // todo: validate stellar federated addresses
     const validStellarAddress = this.stellar.validateAddress(address);
     if (!this.exchange.currencyOut.stellarNative) {
@@ -57,7 +58,7 @@ export class EnterAddressComponent implements OnInit {
       }
       this.isAddressValid = validStellarAddress && hasTrustline ||
         (await this.http.post('https://test.apay.io/validateAddress', {
-          asset_code: this.exchange.currencyOut,
+          asset_code: this.exchange.currencyOut.code,
           dest: address,
         }).toPromise()) as any;
     } else {
@@ -65,7 +66,6 @@ export class EnterAddressComponent implements OnInit {
     }
 
     if (this.isAddressValid) {
-      this.errorMessage = '';
       if (update) {
         this.store.dispatch(new SetAddressOut(address));
       }
@@ -75,10 +75,10 @@ export class EnterAddressComponent implements OnInit {
   }
 
   onKeyUp(event) {
+    this.errorMessage = '';
     this.addressOut = event.target.value;
     if (this.exchange.addressOut !== this.addressOut) {
       this.isAddressValid = false;
-      this.errorMessage = '';
     }
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {

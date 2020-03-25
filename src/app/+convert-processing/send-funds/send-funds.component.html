@@ -47,6 +47,11 @@
                     </span>
                 </div>
             </div>
+            <div class="details-info">
+                <div class="description-details">
+                  <button mat-raised-button class="button-next" (click)="changeStep(5)">I have paid</button>
+                </div>
+            </div>
         </div>
         <app-crypto-qr [code]="exchange.currencyIn.code" [address]="exchange.addressIn"></app-crypto-qr>
     </div>

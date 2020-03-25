@@ -28,6 +28,10 @@
     }
   }
 
+  .details {
+    padding: 0 0 15px;
+  }
+
   .recipient-address {
     width: 100%;
     font-size: 19px;
@@ -87,9 +91,13 @@
       }
     }
 
+    .details {
+      padding: 0 17px 10px;
+    }
+
     .recipient-address {
       width: 92%;
-      margin: 30px 2.5% 0;
+      margin: 30px 4% 0;
 
       .error {
         left: 10px;

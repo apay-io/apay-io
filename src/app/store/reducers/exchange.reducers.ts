@@ -43,7 +43,7 @@ export function exchangeReducers(
         ...state,
         addressOut: action.payload
       };
-      localStorage.setItem('account', action.payload);
+      localStorage.setItem('addressOut', action.payload);
       return state;
     }
     case EExchangeActions.SetSwapParams: {
