@@ -130,7 +130,7 @@
             <div class="head-popup">
                 Withdraw
                 <div class="close" (click)="modalService.close('withdraw');">
-                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill-rule="evenodd" d="M.458.404c.582-.565 1.54-.524 2.123.04l9.406 9.485L21.435.444c.583-.564 1.54-.605 2.123-.04.582.565.582 1.453.041 2.058l-9.531 9.526 9.531 9.565c.541.565.541 1.494-.041 2.059-.582.524-1.54.524-2.123-.04l-9.448-9.486-9.406 9.485c-.583.565-1.54.565-2.123.04-.582-.564-.624-1.493-.041-2.058l9.531-9.565L.417 2.462C-.166 1.857-.124.97.458.404z"></path></svg>
+                    <i class="fas fa-times icon-close"></i>
                 </div>
             </div>
             <div class="content-popup">
@@ -173,7 +173,7 @@
                           Transaction Fee:
                         </div>
                         <div class="text">
-                          {{_amount.value * currentToken.withdraw.fee_percent + currentToken.withdraw.fee_fixed}} {{currentToken.code}}
+                            {{_amount.value * currentToken.withdraw.fee_percent + currentToken.withdraw.fee_fixed}} {{currentToken.code}}
                         </div>
                     </div>
                     <div class="info">
@@ -189,18 +189,7 @@
                             mat-raised-button
                             [ngClass]="{'load': isLoading}"
                             class="button-next">
-                            <svg *ngIf="isLoading" version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                             width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-                              <path fill="#fff" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-                                <animateTransform attributeType="xml"
-                                  attributeName="transform"
-                                  type="rotate"
-                                  from="0 25 25"
-                                  to="360 25 25"
-                                  dur="0.6s"
-                                  repeatCount="indefinite"/>
-                                </path>
-                            </svg>
+                        <div *ngIf="isLoading" class=" icon spinner small"></div>
                         <span>{{buttonText}}</span>
                     </button>
                 </form>
@@ -217,7 +206,7 @@
             <div class="head-popup">
                 Deposit
                 <div class="close" (click)="modalService.close('deposit');">
-                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill-rule="evenodd" d="M.458.404c.582-.565 1.54-.524 2.123.04l9.406 9.485L21.435.444c.583-.564 1.54-.605 2.123-.04.582.565.582 1.453.041 2.058l-9.531 9.526 9.531 9.565c.541.565.541 1.494-.041 2.059-.582.524-1.54.524-2.123-.04l-9.448-9.486-9.406 9.485c-.583.565-1.54.565-2.123.04-.582-.564-.624-1.493-.041-2.058l9.531-9.565L.417 2.462C-.166 1.857-.124.97.458.404z"></path></svg>
+                    <i class="fas fa-times icon-close"></i>
                 </div>
             </div>
             <div class="content-popup">
@@ -257,7 +246,7 @@
             <div class="head-popup">
                 Prepare transaction
                 <div class="close" (click)="modalService.close('prepare-transaction');">
-                    <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill-rule="evenodd" d="M.458.404c.582-.565 1.54-.524 2.123.04l9.406 9.485L21.435.444c.583-.564 1.54-.605 2.123-.04.582.565.582 1.453.041 2.058l-9.531 9.526 9.531 9.565c.541.565.541 1.494-.041 2.059-.582.524-1.54.524-2.123-.04l-9.448-9.486-9.406 9.485c-.583.565-1.54.565-2.123.04-.582-.564-.624-1.493-.041-2.058l9.531-9.565L.417 2.462C-.166 1.857-.124.97.458.404z"></path></svg>
+                    <i class="fas fa-times icon-close"></i>
                 </div>
             </div>
             <div class="content-popup">
@@ -278,9 +267,7 @@
                             <div class="address tx" [ngClass]="{'load': !txId}">
                                 <span class="tx-id">{{txId}}</span>
                                 <span [text-copy]="txId">
-                                    <svg class="icon copy" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M15 5V4C15 2.89543 14.1046 2 13 2H4C2.89543 2 2 2.89543 2 4V13C2 14.1046 2.89543 15 4 15H5M11 22H20C21.1046 22 22 21.1046 22 20V11C22 9.89543 21.1046 9 20 9H11C9.89543 9 9 9.89543 9 11V20C9 21.1046 9.89543 22 11 22Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
+                                    <i class="far fa-clone icon copy" aria-hidden="true"></i>
                                 </span>
                             </div>
                         </div>
@@ -288,7 +275,7 @@
                     <a target="_blank" [href]="'http://cosmic.link/?xdr=' + txId"
                        class="button-next external-link">
                         <span>Sign</span>
-                        <img class="external-icon" src="./../../../assets/img/external-link.svg" alt="">
+                        <i class="fas fa-external-link-alt external-icon"></i>
                     </a>
                 </div>
             </div>
