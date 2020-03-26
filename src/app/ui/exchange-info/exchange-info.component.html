@@ -67,12 +67,12 @@
 
                     <div class="stellar-block">
                         <mat-form-field class="stellar-address">
-                            <input matInput placeholder="Stellar address" value="">
+                            <input matInput [(ngModel)]="stellarAddress" placeholder="Stellar address" value="">
                         </mat-form-field>
 
                         <mat-form-field class="type">
                             <mat-label>Memo type</mat-label>
-                            <mat-select>
+                            <mat-select [(ngModel)]="selectedMemoType">
                                 <mat-option *ngFor="let type of memoTypes" [value]="type.value">
                                     {{type.viewValue}}
                                 </mat-option>
@@ -80,13 +80,18 @@
                         </mat-form-field>
 
                         <mat-form-field class="memo">
-                            <input matInput placeholder="Memo (optional)" value="">
+                            <input matInput [(ngModel)]="memoValue" [disabled]="selectedMemoType === 'none'" placeholder="Memo (optional)" value="">
                         </mat-form-field>
 
-                        <div class="button-blue" (click)="modalService.open('linked');">
+                        <div class="button-blue" (click)="getAddress()">
                             <div class="text">
+                                <div *ngIf="loading" class=" icon spinner small"></div>
                                 Get {{selectedToken.code}} address
                             </div>
+                        </div>
+
+                        <div class="error" *ngIf="errorMessage.length">
+                            {{errorMessage}}
                         </div>
                     </div>
                 </div>
@@ -142,14 +147,15 @@
 
                 <div class="text-info">
                     You can deposit to:
-                    <span class="bold">
-                        0x188BCfb66C82CbB90d0867f6aA010C792DEE357F
-                    </span>
+                    <div class="deposit-address">
+                        {{depositAddress}}
+                        <i class="far fa-clone icon copy" [text-copy]="depositAddress"></i>
+                    </div>
                 </div>
 
                 <div class="button-sign-in" (click)="modalService.close('linked');">
                     <div class="text">
-                        Copy to clipboard and close
+                        Close
                     </div>
                 </div>
             </div>
