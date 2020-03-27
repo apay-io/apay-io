@@ -18,18 +18,30 @@
                         [chartType]="doughnutChartType"></canvas>
             </div>
         </div>
-<!--        <div class="table-chart">-->
-<!--            <div style="width: 100%">-->
-<!--                <canvas baseChart-->
-<!--                        [options]="barChartOptions"-->
-<!--                        [colors]="barChartColors"-->
-<!--                        [data]="ChartData"-->
-<!--                        [labels]="ChartLabels"-->
-<!--                        [chartType]="ChartType"></canvas>-->
-<!--            </div>-->
-<!--        </div>-->
-        <div class="controls-table">
-            <div class="search">
+        <!--div class="table-chart">
+            <div style="width: 100%">
+                <canvas baseChart
+                        [options]="barChartOptions"
+                        [colors]="barChartColors"
+                        [data]="ChartData"
+                        [labels]="ChartLabels"
+                        [chartType]="ChartType">
+                </canvas>
+            </div>
+        </div>
+      <div class="table-chart">
+        <div style="width: 100%">
+          <canvas baseChart
+                  [options]="barChartOptions"
+                  [colors]="barChartColors"
+                  [data]="balanceChartData"
+                  [labels]="balanceChartLabels"
+                  [chartType]="ChartType">
+          </canvas>
+        </div>
+      </div-->
+      <div class="controls-table">
+        <div class="search">
                 <mat-form-field>
                     <i class="fas fa-search icon"></i>
                     <input placeholder="Search" type="text" matInput [(ngModel)]="searchValue" (ngModelChange)="search()">
@@ -64,7 +76,7 @@
                     </div>
                 </div>
 
-                <div class="row" *ngFor="let item of arraySearchValue" [ngClass]="{'hide': this.hideLowBalanceFlag && item.balance === '0'}" (click)="drawingChart('ALL', 30,'days')">
+                <div class="row" *ngFor="let item of arraySearchValue" [ngClass]="{'hide': this.hideLowBalanceFlag && item.balance === '0'}" (click)="drawingCharts(item.code, item.issuer, 30,'days')">
                     <div class="cell" [ngClass]="{'empty': !item.icon}">
                         <img class="icon" [ngClass]="item.code" [src]="item.icon" alt="">
                         <div class="empty-state"></div>
