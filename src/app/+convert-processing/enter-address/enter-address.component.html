@@ -22,9 +22,9 @@
             </div>
         </div>
         <button
-                [disabled]="!canContinue"
                 mat-raised-button
                 class="button-next">
+            <div *ngIf="loading"  class="spinner processing"></div>
             Next step
         </button>
     </form>

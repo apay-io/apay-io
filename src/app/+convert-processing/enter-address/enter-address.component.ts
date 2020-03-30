@@ -15,6 +15,7 @@ import {HttpClient} from '@angular/common/http';
 export class EnterAddressComponent implements OnInit {
   public exchange: ExchangeState;
   private timer;
+  private loading;
 
   addressOut;
   isAddressValid = false;
@@ -42,10 +43,16 @@ export class EnterAddressComponent implements OnInit {
   }
 
   changeStep(step) {
-    this.store.dispatch(new SetExchangeStep(step));
+    if (this.isAddressValid) {
+      this.store.dispatch(new SetExchangeStep(step));
+    }
+    if (step === 1) {
+      this.store.dispatch(new SetExchangeStep(step));
+    }
   }
 
   async validateAddress(address: string, update = false) {
+    this.loading = true;
     this.errorMessage = '';
     // todo: validate stellar federated addresses
     const validStellarAddress = this.stellar.validateAddress(address);
@@ -72,6 +79,7 @@ export class EnterAddressComponent implements OnInit {
     } else {
       this.errorMessage = 'Invalid address';
     }
+    this.loading = false;
   }
 
   onKeyUp(event) {
@@ -84,9 +92,5 @@ export class EnterAddressComponent implements OnInit {
     this.timer = setTimeout(() => {
       this.validateAddress(event.target.value, true);
     }, 600);
-  }
-
-  get canContinue() {
-    return this.isAddressValid;
   }
 }

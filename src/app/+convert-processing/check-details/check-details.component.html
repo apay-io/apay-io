@@ -78,6 +78,7 @@
                 [disabled]="!canContinue"
                 mat-raised-button
                 class="button-next">
+            <div *ngIf="loading"  class="spinner processing"></div>
             Confirm and make payment
         </button>
     </form>
