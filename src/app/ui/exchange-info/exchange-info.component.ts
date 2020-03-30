@@ -6,6 +6,7 @@ import {takeUntil} from 'rxjs/internal/operators';
 import {FormControl} from '@angular/forms';
 import {MatSelect} from '@angular/material/select';
 import {Currency} from '../../core/currency.interface';
+import {HttpClient} from '@angular/common/http';
 
 interface Token {
   code: string;
@@ -42,11 +43,17 @@ export interface selectedToken {
 })
 export class ExchangeInfoComponent implements OnInit, OnDestroy {
   selectedToken: Currency;
+  stellarAddress: string;
+  memoValue: string;
+  selectedMemoType: string;
+  depositAddress: string;
+  errorMessage = '';
+  loading = false;
 
   memoTypes: memoTypes[] = [
-    {value: '0', viewValue: 'None'},
-    {value: '1', viewValue: 'Text'},
-    {value: '2', viewValue: 'ID'}
+    {value: 'none', viewValue: 'None'},
+    {value: 'text', viewValue: 'Text'},
+    {value: 'id', viewValue: 'ID'}
   ];
   arraySearchValue = [];
 
@@ -62,14 +69,14 @@ export class ExchangeInfoComponent implements OnInit, OnDestroy {
   public filteredTokens: ReplaySubject<Token[]> = new ReplaySubject<Token[]>(1);
   private tokens: Token[] = Object.assign([], currencies);
 
-  constructor(
-    public modalService: ModalService
-  ) {
+  constructor(public modalService: ModalService,
+              private readonly http: HttpClient) {
     // remove XLM token
     this.tokens = this.tokens.filter(token => token.code !== 'XLM');
   }
 
   ngOnInit() {
+    this.selectedMemoType = 'none';
     this.arraySearchValue = this.tokens;
     console.log(this.arraySearchValue);
     this.filteredTokens.next(this.tokens.slice());
@@ -103,6 +110,10 @@ export class ExchangeInfoComponent implements OnInit, OnDestroy {
   }
 
   selectToken(event) {
+    this.errorMessage = '';
+    this.stellarAddress = '';
+    this.selectedMemoType = 'none';
+    this.memoValue = '';
     this.selectedToken = event;
   }
 
@@ -110,5 +121,22 @@ export class ExchangeInfoComponent implements OnInit, OnDestroy {
     this.tokenFilterCtr.setValue('');
     this.arraySearchValue = this.tokens;
     this.searchElementDesktop.nativeElement.focus();
+  }
+
+  getAddress() {
+    this.loading = true;
+    this.errorMessage = '';
+    this.http.get(`https://apay.io/api/deposit?account=` + this.stellarAddress +
+      `&asset_code=` + this.selectedToken.code +
+      (this.selectedMemoType !== 'none' ? `&memo_type=` + this.selectedMemoType + `&memo=` + this.memoValue : '')).subscribe(
+      (res) => {
+        this.depositAddress = res['how'];
+        this.modalService.open('linked');
+        this.loading = false;
+      },
+      err => {
+        this.errorMessage = err.error.error;
+        this.loading = false;
+      });
   }
 }

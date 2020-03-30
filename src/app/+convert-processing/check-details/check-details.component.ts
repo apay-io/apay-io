@@ -47,6 +47,11 @@ export class CheckDetailsComponent implements OnInit {
       currencyIn: this.exchange.currencyIn.code,
       currencyOut: this.exchange.currencyOut.code,
       addressOut: this.exchange.addressOut,
+      userInput: sessionStorage.getItem('amountOut') ? 'out' : 'in',
+      amountIn: this.exchange.amountIn,
+      amountOut: this.exchange.amountOut,
+      account: localStorage.getItem('account'),
+      ref: localStorage.getItem('ref'),
     }).subscribe((result: any) => {
       result.id = result.id.substr(0, 8);
       this.exchange.addressIn = result.addressIn;
