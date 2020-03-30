@@ -73,6 +73,7 @@
   }
 
   @include mobile {
+    margin-top: -10px;
     padding-bottom: 90px;
 
     .step {
