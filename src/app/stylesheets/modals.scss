@@ -169,8 +169,7 @@ body.modal-open {
     align-items: center;
 
     .icon-back {
-      width: 27px;
-      height: 27px;
+      font-size: 22px;
     }
   }
 
@@ -187,8 +186,7 @@ body.modal-open {
     align-items: center;
 
     .icon-close {
-      width: 36px;
-      height: 36px;
+      font-size: 25px;
     }
   }
 
@@ -272,6 +270,27 @@ body.modal-open {
     line-height: 1.5;
     color: #000;
     margin-bottom: 70px;
+    width: 100%;
+
+    .deposit-address {
+      font-weight: bold;
+      word-break: break-all;
+      padding: 0 20px;
+
+      .icon {
+        margin-left: 5px;
+        padding: 5px;
+        cursor: pointer;
+        color: #000;
+        transition: .3s;
+        transform: rotate(180deg);
+        font-size: 18px;
+
+        &:hover {
+          color: #0f59d1;
+        }
+      }
+    }
 
     .bold {
       font-weight: bold;

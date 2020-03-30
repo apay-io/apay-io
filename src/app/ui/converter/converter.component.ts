@@ -32,7 +32,6 @@ export class ConverterComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    public modalService: ModalService,
     public notify: NotifyService,
     public currencySelection: CurrencySelectionService,
     public controlsCustomModalService: ControlsCustomModalService,
@@ -142,11 +141,9 @@ export class ConverterComponent implements OnInit, OnDestroy {
         const inConvertToDollars = this.getInfoCurrencies
           .find(item => item.code === this.exchange.currencyIn.code).price * parseFloat(this.exchange.amountIn);
         const outConvertToDollars = this.getInfoCurrencies
-          .find(item => item.code === this.exchange.currencyOut.code).price *
-          (parseFloat(this.exchange.amountOut) + parseFloat(this.exchange.amountFee));
-        const outDifferentPercent = outConvertToDollars / 100 * 5;
+          .find(item => item.code === this.exchange.currencyOut.code).price * parseFloat(this.exchange.amountOut);
 
-        if (Math.abs(inConvertToDollars - outConvertToDollars) >= outDifferentPercent) {
+        if (Math.abs(inConvertToDollars / outConvertToDollars) >= 1.05) {
           this.notify.update('Current exchange rate is not favourable due to the low liquidity on the DEX. Try again later or smaller amount', 'error');
           this.stateButton = 'disabled';
         }

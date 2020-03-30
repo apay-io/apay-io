@@ -16,7 +16,7 @@ export interface ExchangeState {
 }
 
 export const initialExchangeState: ExchangeState = {
-  addressOut: localStorage.getItem('account'),
+  addressOut: localStorage.getItem('addressOut') || localStorage.getItem('account'),
   amountIn: sessionStorage.getItem('amountIn'),
   amountOut: sessionStorage.getItem('amountOut'),
   amountFee: '',

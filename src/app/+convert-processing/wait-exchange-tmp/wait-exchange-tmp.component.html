@@ -1,0 +1,29 @@
+<div class="wrapper">
+    <div class="steps-block">
+        <div class="title-row">
+            <div class="title">
+                Wait for the exchange
+            </div>
+            <div class="transaction">
+            <span class="tx-id-title">
+                Transaction ID:
+            </span>
+                <span class="tx-id">{{ this.exchange.id }}</span>
+            </div>
+        </div>
+        <div class="step-wait active">
+            <div class="info-step">
+                <div class="title">
+                    Great! All done
+                </div>
+                <div class="description">
+                    Now wait 5-30 min for the exchange. <br/>Contact <a style="color:gray;" href="mailto:support@apay.io?subject=Transaction {{exchange.id}}">support@apay.io</a> if you face any issues with your exchange
+                </div>
+            </div>
+            <div class="process">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+</div>
+

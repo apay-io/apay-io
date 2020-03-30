@@ -133,11 +133,7 @@
   @include mobile {
     .content {
       .menu-row {
-        .logo {
-          margin-left: 20px;
-          margin-bottom: 10px;
-          opacity: 1;
-        }
+
         .tabs-menu {
           display: none;
           .tab {

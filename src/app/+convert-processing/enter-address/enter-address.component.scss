@@ -28,6 +28,10 @@
     }
   }
 
+  .details {
+    padding: 0 0 15px;
+  }
+
   .recipient-address {
     width: 100%;
     font-size: 19px;
@@ -55,12 +59,10 @@
         border-bottom: 1px solid #eee;
       }
     }
+  }
 
-    .error {
-      position: absolute;
-      color: red;
-      bottom: -5px;
-    }
+  .error {
+    color: red;
   }
 
   .button-next {
@@ -87,13 +89,17 @@
       }
     }
 
+    .details {
+      padding: 0 17px 10px;
+    }
+
     .recipient-address {
       width: 92%;
-      margin: 30px 2.5% 0;
+      margin: 30px 4% 0;
+    }
 
-      .error {
-        left: 10px;
-      }
+    .error {
+      padding-left: 15px
     }
 
     .button-next {

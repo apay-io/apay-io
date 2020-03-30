@@ -54,10 +54,10 @@
         </div>
         <div class="details-info">
             <div class="title-details">
-                Network / withdrawal fee (will be excluded from the final amount)
+              Network / withdrawal fee <span *ngIf="getFee() > 0">(will be excluded from the final amount)</span>
             </div>
             <div class="description-details">
-              {{ exchange.amountFee }} {{ exchange.currencyOut.code }}
+              {{ getFee() }} {{ exchange.currencyOut.code }}
             </div>
         </div>
         <div class="details-info">

@@ -244,6 +244,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
+            align-items: center;
 
             .stellar-address {
               width: 100%;
@@ -259,6 +260,11 @@
 
             .memo {
               width: 74%;
+            }
+
+            .error {
+              font-size: 18px;
+              color: red;
             }
           }
         }
@@ -338,10 +344,29 @@
               .memo {
                 width: 100%;
               }
+
+              .error {
+                padding: 15px 0 0;
+              }
             }
           }
         }
       }
+    }
+  }
+}
+
+.button-blue {
+  .text {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: initial;
+
+    .icon {
+      position: absolute;
+      left: -25px;
     }
   }
 }
