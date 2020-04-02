@@ -41,7 +41,7 @@ export class CheckDetailsComponent implements OnInit {
   }
 
   async process() {
-    this.http.post(environment.backend, {
+    this.http.post(environment.backend + '/swap', {
       currencyIn: this.exchange.currencyIn.code,
       currencyOut: this.exchange.currencyOut.code,
       addressOut: this.exchange.addressOut,
