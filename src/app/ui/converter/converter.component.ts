@@ -24,6 +24,8 @@ export class ConverterComponent implements OnInit, OnDestroy {
   stateButton = 'disabled';
   getCurrenciesSub;
   getInfoCurrencies;
+  refreshClass = 'non-visible';
+  timeoutRefresh;
   currencyInfoSave = {type: '', code: ''};
   @Input() isProcessingConverter = false;
 
@@ -128,6 +130,11 @@ export class ConverterComponent implements OnInit, OnDestroy {
   }
 
   private async recalculateAmounts(amountIn, amountOut) {
+    this.refreshClass = 'non-visible';
+    clearTimeout(this.timeoutRefresh);
+    this.timeoutRefresh = setTimeout(() => {
+      this.refreshClass = 'visible';
+    }, 1000);
     if (!amountIn || !amountOut) {
       this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
       this.stateButton = 'disabled';
@@ -169,4 +176,9 @@ export class ConverterComponent implements OnInit, OnDestroy {
 
     await this.recalculateAmounts(this.exchange.amountIn, this.exchange.amountOut);
   }
+
+  async refresh() {
+    await this.recalculateAmounts(this.exchange.amountOut, this.exchange.amountIn);
+  }
 }
+
