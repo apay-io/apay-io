@@ -14,6 +14,7 @@ import {SetExchangeStep} from '../../store/actions/exchange.actions';
 })
 export class EnterAmountComponent implements OnInit {
   isProcessing;
+  loading;
   public exchange: ExchangeState;
   public rate: number;
 
@@ -39,5 +40,9 @@ export class EnterAmountComponent implements OnInit {
 
   changeStep(step) {
     this.store.dispatch(new SetExchangeStep(step));
+  }
+
+  isLoading (flag) {
+    this.loading = flag;
   }
 }
