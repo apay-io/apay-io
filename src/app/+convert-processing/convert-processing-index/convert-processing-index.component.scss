@@ -73,6 +73,7 @@
   }
 
   @include mobile {
+    margin-top: -10px;
     padding-bottom: 90px;
 
     .step {
@@ -83,6 +84,7 @@
       }
 
       .title {
+        margin-top: 20px;
         font-size: 24px;
         margin-left: 70px;
       }

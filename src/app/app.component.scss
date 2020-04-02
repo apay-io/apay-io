@@ -86,7 +86,7 @@
         display: flex;
         align-items: center;
 
-        .button-sign-in, .button-sign-out {
+        .button-sign-in {
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
@@ -96,6 +96,14 @@
           font-weight: 500;
           margin-right: 0;
           cursor: pointer;
+        }
+
+        .sign-out {
+          color: #fff;
+          padding: 7px;
+          cursor: pointer;
+          font-size: 18px;
+          margin-left: 8px;
         }
 
         .public-key-wrapper {
