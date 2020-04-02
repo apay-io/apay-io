@@ -5,8 +5,9 @@
             <app-choice-currency [exchange]="{value: exchange.currencyIn, type: 'sell'}" (outCurrentCurrency)='saveCurrentCurrency($event)'></app-choice-currency>
             <input #sell class="input-field" placeholder="Enter Amount" type="text" [ngModel]="exchange.amountIn" (keyup)="calculateBuy($event)">
         </div>
-        <div class="wrapper-icon-convert" (click)="revertCurrency()">
-            <i class="fas fa-exchange-alt icon-convert"></i>
+        <div class="wrapper-icon-convert">
+            <i class="fas fa-exchange-alt icon-convert" (click)="revertCurrency()"></i>
+            <i class="fas fa-redo refresh" [ngClass]="refreshClass" (click)="refresh()"></i>
         </div>
         <div class="currency-to-amount-field">
             <app-choice-currency [exchange]="{value: exchange.currencyOut, type: 'buy'}" (outCurrentCurrency)='saveCurrentCurrency($event)'></app-choice-currency>
