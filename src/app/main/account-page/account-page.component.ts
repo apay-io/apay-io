@@ -9,6 +9,7 @@ import {StellarService} from '../../services/stellar/stellar.service';
 import {NotifyService} from '../../core/notify.service';
 import {currencies} from '../../../assets/currencies-list';
 import {Currency} from '../../core/currency.interface';
+import {environment} from "../../../environments/environment";
 
 export interface Data {
   date: string;
@@ -72,6 +73,10 @@ export class AccountPageComponent implements OnInit {
   public debounceFlag = false;
   public ChartType = 'line';
   private account: string;
+
+  public balanceDebounceFlag = false;
+  public balanceChartLabels = [];
+  public balanceChartData = [];
 
   withdrawForm: FormGroup;
   regexpAmount = /^[0-9]*[.,]?[0-9]+$/;
@@ -167,36 +172,40 @@ export class AccountPageComponent implements OnInit {
 
   ngOnInit() {
     new Promise((res) => {
-      this.http.get(`https://rates.apay.io`).subscribe((data) => {
+      this.http.get(`${environment.backend}/rates?first=1&order[field]=at&order[order]=DESC`).subscribe((data) => {
         res(data);
       });
     })
-      .then(rates => {
+      .then((result: any) => {
+        const rates = result.edges[0].node.rates;
+        console.log('RATES');
+        console.log(rates);
         this.arraySearchValue = this.dataWallet;
         this.account = localStorage.getItem('account');
         if (this.account) {
           this.stellarService.balances(this.account)
             .then((result) => {
-              result.map(item => {
-                const findIndexToken = this.dataWallet.findIndex(x => x.code === item.code);
+              result.map(balanceLine => {
+                let dataToken;
+                const findIndexToken = this.dataWallet.findIndex(x => x.code === balanceLine.code);
                 if (findIndexToken !== -1) {
                   this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken, 1));
-                  const findToken = this.dataWallet.find(x => x.code === item.code);
-                  findToken.balance = item.balance;
-                  findToken.trustline = true;
-                  if (rates[item.code]) {
-                    findToken.value = +(+item.balance / rates[item.code] * rates['XDR']).toFixed(6);
-                    this.sumValue = +(this.sumValue + findToken.value).toFixed(6);
+                  dataToken = this.dataWallet.find(x => x.code === balanceLine.code);
+                  dataToken.balance = balanceLine.balance;
+                  dataToken.trustline = true;
+                  if (rates[balanceLine.code]) {
+                    dataToken.value = +(+balanceLine.balance / rates[balanceLine.code] * rates['XDR']).toFixed(6);
+                    this.sumValue = +(this.sumValue + dataToken.value).toFixed(6);
                   }
 
-                  this.datasets[0].backgroundColor.unshift(findToken.color);
+                  this.datasets[0].backgroundColor.unshift(dataToken.color);
                 } else {
-                  const dataToken = {
-                    'code': item.code,
-                    'name': item.code,
+                  dataToken = {
+                    'code': balanceLine.code,
+                    'name': balanceLine.code,
                     'baseUrl': 'https://api.apay.io/api',
                     'icon': '',
-                    'balance': item.balance,
+                    'balance': balanceLine.balance,
                     'percent': '-',
                     'value': 0,
                     'change': '0',
@@ -207,15 +216,16 @@ export class AccountPageComponent implements OnInit {
                     'trustline': true
                   };
 
-                  if (rates[item.code]) {
-                    dataToken.value = +(+item.balance / rates[item.code] * rates['XDR']).toFixed(6);
+                  if (rates[balanceLine.code]) {
+                    dataToken.value = +(+balanceLine.balance / rates[balanceLine.code] * rates['XDR']).toFixed(6);
                     this.sumValue = +(this.sumValue + dataToken.value).toFixed(6);
                   }
                   this.dataWallet.unshift(dataToken);
                 }
               });
               this.percent = 100 / this.sumValue;
-              this.drawingChart('AED', 30, 'days');
+              this.drawingCharts(this.dataWallet[0].code, this.dataWallet[0].issuer, 30, 'days');
+
               this.dataWallet.map((item) => {
                 if (item.balance && item.value) {
                   item.percent = (this.percent * item.value).toFixed(2);
@@ -230,6 +240,11 @@ export class AccountPageComponent implements OnInit {
       .catch(error => {
         console.log('ERROR:', error.message);
       });
+  }
+
+  drawingCharts(assetCode: string, assetIssuer: string, time_amount: number, time_type: string) {
+    this.drawingChart(assetCode, time_amount, time_type);
+    this.drawingBalanceChart(assetCode, assetIssuer);
   }
 
   drawingChart(select_val, time_amount, time_type) {
@@ -248,19 +263,51 @@ export class AccountPageComponent implements OnInit {
     setTimeout(() => {
       this.debounceFlag = false;
     }, 1000);
-    return this.http.get(`https://back.paysxdr.com/ratesHistory?start=${time}&finish=${nowtime}&base=${select_val}&currency=XDR`).subscribe((data: [Data]) => {
-      data.map(item => {
-        this.ChartLabels.push(item.date);
-        let reductionValue;
-        if (item.val.toString().length > 7) {
-          reductionValue = item.val;
-          reductionValue = reductionValue.toFixed(5);
-        } else {
-          reductionValue = item.val;
-        }
-        this.ChartData.push(reductionValue);
+    return this.http.get(`${environment.backend}/rateHistory?currency=${select_val}&order[field]=at&order[order]=ASC&fromAt=${time}&toAt=${nowtime}`)
+      .subscribe((result: any) => {
+        result.edges.map(edge => {
+          const item = edge.node;
+          this.ChartLabels.push(item.at);
+          let reductionValue;
+          if (item.rate.length > 7) {
+            reductionValue = +item.rate;
+            reductionValue = reductionValue.toFixed(5);
+          } else {
+            reductionValue = item.rate;
+          }
+          this.ChartData.push(reductionValue);
+        });
       });
-    });
+  }
+
+  drawingBalanceChart(assetCode: string, assetIssuer: string) {
+    console.log(`drawingBalanceChart(${assetCode}, ${assetIssuer}), account: ${this.account}`);
+    if (this.balanceDebounceFlag) {
+      return false;
+    }
+    this.balanceDebounceFlag = true;
+    this.balanceChartLabels = [];
+    this.balanceChartData = [];
+    setTimeout(() => {
+      this.balanceDebounceFlag = false;
+    }, 1000);
+    this.http.get(
+      `${environment.backend}/dailyBalances`,
+      {params: {
+          accountId: this.account,
+          'asset[code]': (assetCode === 'XLM' && !assetIssuer) ? 'native' : assetCode,
+          'asset[issuer]': assetIssuer,
+        }
+      }
+    ).subscribe(
+      (data: any) => {
+        data.edges.map(edge => {
+          this.balanceChartData.push(edge.node.amount);
+          this.balanceChartLabels.push(edge.node.date);
+        });
+      },
+      (error) => console.log(error),
+    );
   }
 
   async openModal(event, item, modalName) {

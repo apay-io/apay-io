@@ -5,7 +5,7 @@
         </div>
         <div class="convert-processing">
             <form (ngSubmit)="changeStep(2)">
-                <app-converter [isProcessingConverter]="true"></app-converter>
+                <app-converter [isProcessingConverter]="true" (outFlagLoader)="isLoading($event)"></app-converter>
 <!--                <div class="agreement-checkbox">-->
 <!--                    <mat-checkbox formControlName="agreement" >I agree with Terms of Use, Privacy Policy and AML/KYC</mat-checkbox>-->
 <!--                </div>-->
@@ -14,6 +14,7 @@
                         [disabled]="!canContinue"
                         mat-raised-button
                         class="button-next step-1">
+                    <div *ngIf="loading"  class="spinner processing"></div>
                     Next step
                 </button>
             </form>

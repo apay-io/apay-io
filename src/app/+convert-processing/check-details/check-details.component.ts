@@ -16,6 +16,7 @@ import {StellarService} from '../../services/stellar/stellar.service';
 })
 export class CheckDetailsComponent implements OnInit {
 
+  public loading;
   public exchange: ExchangeState;
   public rate: number;
 
@@ -41,7 +42,8 @@ export class CheckDetailsComponent implements OnInit {
   }
 
   async process() {
-    this.http.post(environment.backend, {
+    this.loading = true;
+    this.http.post(environment.backend + '/swap', {
       currencyIn: this.exchange.currencyIn.code,
       currencyOut: this.exchange.currencyOut.code,
       addressOut: this.exchange.addressOut,
@@ -58,8 +60,10 @@ export class CheckDetailsComponent implements OnInit {
       this.exchange.memoInType = 'ID';
       this.exchange.id = result.id;
       this.store.dispatch(new SetSwapParams(result));
+      this.loading = false;
     }, (err) => {
       console.log(err);
+      this.loading = false;
     });
   }
 

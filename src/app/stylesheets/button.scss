@@ -130,7 +130,7 @@
   border: 1px solid #efa344;
   border-radius: 50%;
 
-  &.small {
+  &.small, &.processing {
     border: 1px solid #fff;
     display: inline-block;
     margin-right: 7px;
@@ -153,6 +153,12 @@
       height: 6px;
       left: 6.7px;
     }
+  }
+
+  &.processing {
+    position: absolute;
+    margin-left: -25px;
+    margin-top: 10px;
   }
 
   &:before,

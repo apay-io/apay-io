@@ -28,6 +28,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
   timeoutRefresh;
   currencyInfoSave = {type: '', code: ''};
   @Input() isProcessingConverter = false;
+  @Output() public outFlagLoader = new EventEmitter();
 
   @ViewChild('buy', {static: false}) buyElement: ElementRef;
   @ViewChild('sell', {static: false}) sellElement: ElementRef;
@@ -60,6 +61,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
 
     this.store.pipe(select(selectExchange))
       .subscribe((exchange: ExchangeState) => {
+        this.outFlagLoader.emit(false);
         if (!this.exchange && !exchange.amountOut && exchange.amountIn) {
           this.store.dispatch(new SetAmountIn(exchange.amountIn));
         }
@@ -108,6 +110,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
   }
 
   async calculateSell(event) {
+    this.outFlagLoader.emit(true);
     this.stateButton = 'loading';
     if (event.target.value > 0) {
       if (event.target.value < this.currencyOut.withdraw.min_amount) {
@@ -119,6 +122,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
   }
 
   async calculateBuy(event) {
+    this.outFlagLoader.emit(true);
     this.stateButton = 'loading';
     if (event.target.value > 0) {
       if (event.target.value < this.currencyIn.minDeposit) {
@@ -138,6 +142,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
     if (!amountIn || !amountOut) {
       this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
       this.stateButton = 'disabled';
+      this.outFlagLoader.emit(false);
       return;
     }
     try {
@@ -163,6 +168,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
       this.buyElement.nativeElement.value = '';
       this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
     }
+    this.outFlagLoader.emit(false);
   }
 
   async receiveCurrency(currency) {
