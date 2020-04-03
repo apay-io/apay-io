@@ -138,7 +138,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
     clearTimeout(this.timeoutRefresh);
     this.timeoutRefresh = setTimeout(() => {
       this.refreshClass = 'visible';
-    }, 1000);
+    }, 10000);
     if (!amountIn || !amountOut) {
       this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
       this.stateButton = 'disabled';

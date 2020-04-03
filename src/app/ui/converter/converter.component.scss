@@ -41,6 +41,7 @@
         margin-right: 0;
         margin-bottom: 10px;
         margin-top: 10px;
+        position: unset;
 
         .icon-convert {
           color: #efa344;
@@ -49,6 +50,7 @@
         .refresh {
           position: absolute;
           right: 15px;
+          left: unset;
           color: #efa344;
           display: none;
           opacity: 1;
@@ -61,6 +63,22 @@
           &.visible {
             animation: fade-in 0.5s ease-in-out;
             display: block;
+          }
+        }
+
+        @media (max-width: 1140px) {
+          position: unset;
+
+          .refresh {
+            left: unset;
+          }
+        }
+
+        @include mobile {
+          position: unset;
+
+          .refresh {
+            left: unset
           }
         }
       }
@@ -112,6 +130,10 @@
         outline: none;
         font-weight: 600;
 
+        &.padding-right {
+          padding-right: 35px;
+        }
+
         &::placeholder {
           opacity: 0.3;
         }
@@ -119,6 +141,12 @@
         &:focus {
           border-radius: 8px;
           border-color: #0f59d1;
+        }
+
+        @include mobile {
+          &.padding-right {
+            padding-right: 16px;
+          }
         }
       }
     }
@@ -128,6 +156,7 @@
       display: flex;
       align-items: center;
       cursor: pointer;
+      position: relative;
 
       .icon-convert {
         display: flex;
@@ -139,6 +168,39 @@
         text-align: center;
         color: rgb(15, 89, 209);
         transition: .3s;
+      }
+
+
+      .refresh {
+        position: absolute;
+        left: -55px;
+        color: #efa344;
+        display: none;
+        opacity: 1;
+
+        &:hover {
+          transition: 0.8s ease-in-out;
+          transform: rotate(360deg);
+        }
+
+        &.visible {
+          animation: fade-in 0.5s ease-in-out;
+          display: block;
+        }
+      }
+
+      @media (max-width: 1140px) {
+        .refresh {
+          left: -37px;
+        }
+      }
+
+      @include mobile {
+        position: unset;
+
+        .refresh {
+          left: 70%;
+        }
       }
 
       &:hover {
