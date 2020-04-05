@@ -10,6 +10,7 @@ import {NotifyService} from '../../core/notify.service';
 import {currencies} from '../../../assets/currencies-list';
 import {Currency} from '../../core/currency.interface';
 import {environment} from "../../../environments/environment";
+import BigNumber from "bignumber.js";
 
 export interface Data {
   date: string;
@@ -178,8 +179,6 @@ export class AccountPageComponent implements OnInit {
     })
       .then((result: any) => {
         const rates = result.edges[0].node.rates;
-        console.log('RATES');
-        console.log(rates);
         this.arraySearchValue = this.dataWallet;
         this.account = localStorage.getItem('account');
         if (this.account) {
@@ -248,7 +247,7 @@ export class AccountPageComponent implements OnInit {
   }
 
   drawingChart(select_val, time_amount, time_type) {
-    const nowtime = moment().format('YYYY-MM-DD');
+    const nowtime = moment().add(1, 'day').format('YYYY-MM-DD');
     const time = moment().subtract(time_amount, time_type).format('YYYY-MM-DD');
     this.updateChart(select_val, time, nowtime);
   }
@@ -263,25 +262,21 @@ export class AccountPageComponent implements OnInit {
     setTimeout(() => {
       this.debounceFlag = false;
     }, 1000);
-    return this.http.get(`${environment.backend}/rateHistory?currency=${select_val}&order[field]=at&order[order]=ASC&fromAt=${time}&toAt=${nowtime}`)
+    return this.http.get(`${environment.backend}/rates?order[field]=at&order[order]=ASC&fromAt=${time}&toAt=${nowtime}`)
       .subscribe((result: any) => {
         result.edges.map(edge => {
           const item = edge.node;
-          this.ChartLabels.push(item.at);
-          let reductionValue;
-          if (item.rate.length > 7) {
-            reductionValue = +item.rate;
-            reductionValue = reductionValue.toFixed(5);
-          } else {
-            reductionValue = item.rate;
+          const rate = item.rates[select_val];
+          if (!rate) {
+            return;
           }
-          this.ChartData.push(reductionValue);
+          this.ChartLabels.push(item.at);
+          this.ChartData.push(new BigNumber(rate).toExponential(5));
         });
       });
   }
 
   drawingBalanceChart(assetCode: string, assetIssuer: string) {
-    console.log(`drawingBalanceChart(${assetCode}, ${assetIssuer}), account: ${this.account}`);
     if (this.balanceDebounceFlag) {
       return false;
     }
