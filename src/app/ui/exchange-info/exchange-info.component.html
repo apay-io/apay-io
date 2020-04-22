@@ -45,24 +45,15 @@
                 </div>
                 <div *ngIf="selectedToken && selectedToken.code && selectedToken.issuer && currentComponent === 'deposit'" class="right">
                     <div class="title">
-                        Trust
-                    </div>
-                    <div class="description">
-                        First you must set trustline for asset
-                        <span class="bold">{{selectedToken.code}}</span> to account:
-                        <span class="bold">{{selectedToken.issuer}}</span>
-                    </div>
-
-                    <div class="title">
-                        How to Deposit
+                      <h1>How to Deposit</h1>
                     </div>
 
                     <div class="description">
                         Submit Stellar account you want to link
                     </div>
 
-                    <div class="quote" *ngIf="selectedToken.minDeposit !== ''">
-                        Attention! Minimum deposit is {{selectedToken.minDeposit}} {{selectedToken.code}}. Any funds below that are ignored.
+                    <div class="quote" *ngIf="selectedToken.deposit.min_amount !== ''">
+                        Attention! Minimum deposit is {{selectedToken.deposit.min_amount}} {{selectedToken.code}}. Any funds below that are ignored.
                     </div>
 
                     <div class="stellar-block">
@@ -104,7 +95,6 @@
                     <div class="quote" *ngIf="selectedToken.withdraw.min_amount">
                         Attention! Minimum withdrawal is {{selectedToken.withdraw.min_amount}} {{selectedToken.code}}. Any funds below that are ignored.<br>
                         Withdrawal fee {{selectedToken.withdraw.fee}} applies to every transaction<br>
-                        We send outgoing transactions out every minute.
                     </div>
 
                     <div class="stellar-block">
@@ -134,33 +124,91 @@
     </div>
 </div>
 
-<modal id="linked">
-    <div class="modal">
-        <div class="modal-body">
-            <div class="head-popup">
-                Your Stellar account is linked!
-                <div class="close" (click)="modalService.close('linked');">
-                    <i class="fas fa-times icon-close"></i>
-                </div>
-            </div>
-            <div class="content-popup">
-
-                <div class="text-info">
-                    You can deposit to:
-                    <div class="deposit-address">
-                        {{depositAddress}}
-                        <i class="far fa-clone icon copy" [text-copy]="depositAddress"></i>
-                    </div>
-                </div>
-
-                <div class="button-sign-in" (click)="modalService.close('linked');">
-                    <div class="text">
-                        Close
-                    </div>
-                </div>
-            </div>
-
+<modal id="deposit">
+  <div class="modal" *ngIf="selectedToken">
+    <div class="modal-body">
+      <div class="head-popup">
+        Deposit
+        <div class="close" (click)="modalService.close('deposit');">
+          <i class="fas fa-times icon-close"></i>
         </div>
+      </div>
+      <div class="content-popup">
+        <div class="operations-modal">
+          <div class="info deposit">
+            <div class="title">
+              Send only {{selectedToken.code}} to this deposit address.
+            </div>
+            <div class="text">
+              Sending coin or token other than {{selectedToken.code}} to this address may result in the loss of your deposit.
+            </div>
+          </div>
+          <div class="info deposit" *ngIf="fundingFee">
+            <div class="title">
+              Your Stellar account doesn't exist yet
+            </div>
+            <div class="text">
+              Once you make a deposit we will automatically fund your account with 3.01 XLM, but after that you will have to come back here to establish a trustline before you can receive your funds.
+            </div>
+          </div>
+          <div class="address-wrapper">
+            <div class="info">
+              <div class="title">
+                {{selectedToken.code}} Address
+              </div>
+              <div class="address" [ngClass]="{'load': !depositAddress}">
+                {{depositAddress}}
+                <span [text-copy]="depositAddress">
+                    <i class="far fa-clone icon copy"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <app-crypto-qr [code]="selectedToken.code" [address]="depositAddress"></app-crypto-qr>
+        </div>
+      </div>
     </div>
-    <div class="modal-background"></div>
+  </div>
+  <div class="modal-background"></div>
+</modal>
+
+<modal id="trustline">
+  <div class="modal" *ngIf="selectedToken">
+    <div class="modal-body">
+      <div class="head-popup">
+        Establish trustline
+        <div class="close" (click)="modalService.close('trustline');">
+          <i class="fas fa-times icon-close"></i>
+        </div>
+      </div>
+      <div class="content-popup">
+        <div class="operations-modal">
+          <div class="info deposit">
+            <div class="text">
+              Add trustline for asset {{ selectedToken.code }} to {{ selectedToken.issuer }}
+            </div>
+          </div>
+          <div class="address-wrapper">
+            <div class="info">
+              <div class="title">
+                Transaction
+              </div>
+              <div class="address tx" [ngClass]="{'load': !xdr}">
+                <span class="tx-id">{{xdr}}</span>
+                <span [text-copy]="xdr">
+                    <i class="far fa-clone icon copy" aria-hidden="true"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <a target="_blank" [href]="'http://cosmic.link/?network=public&xdr=' + xdr"
+             class="button-next external-link" style="width: auto;">
+            <span>Sign</span>
+            <i class="fas fa-external-link-alt external-icon"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-background"></div>
 </modal>

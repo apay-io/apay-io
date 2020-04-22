@@ -40,7 +40,7 @@ export class AccountPageComponent implements OnInit {
   searchValue: string;
   arraySearchValue = [];
   address: string;
-  txId: string;
+  xdr: string;
   currentToken: Token = {
     code: '',
     name: '',
@@ -320,7 +320,7 @@ export class AccountPageComponent implements OnInit {
     }
     if (modalName === 'deposit') {
       if (!this.currentToken.trustline) {
-        this.txId = await this.stellarService.buildTrustlineTx(this.account, this.currentToken.code, this.currentToken.issuer);
+        this.xdr = await this.stellarService.buildTrustlineTx(this.account, this.currentToken.code, this.currentToken.issuer);
         this.description = `You are going to establish a trustline for asset ${this.currentToken.code} issued by apay.io`;
         this.modalService.open('prepare-transaction');
         return false;
@@ -351,7 +351,7 @@ export class AccountPageComponent implements OnInit {
   }
 
   async sendWithdrawForm() {
-    this.txId = await this.stellarService.buildWithdrawalTx(
+    this.xdr = await this.stellarService.buildWithdrawalTx(
       this.account,
       this.withdrawForm.controls.recipient.value,
       this.withdrawForm.controls.amount.value,

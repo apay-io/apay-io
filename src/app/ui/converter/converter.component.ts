@@ -124,9 +124,10 @@ export class ConverterComponent implements OnInit, OnDestroy {
   async calculateBuy(event) {
     this.outFlagLoader.emit(true);
     this.stateButton = 'loading';
+
     if (event.target.value > 0) {
-      if (event.target.value < this.currencyIn.minDeposit) {
-        this.notify.update('Minimum value for ' + this.currencyIn.code + ' - ' + this.currencyIn.minDeposit, 'error');
+      if (event.target.value < this.currencyIn.deposit.min_amount) {
+        this.notify.update('Minimum value for ' + this.currencyIn.code + ' - ' + this.currencyIn.deposit.min_amount, 'error');
         return false;
       }
       this.store.dispatch(new SetAmountIn(event.target.value));
@@ -134,11 +135,11 @@ export class ConverterComponent implements OnInit, OnDestroy {
   }
 
   private async recalculateAmounts(amountIn, amountOut) {
-    this.refreshClass = 'non-visible';
-    clearTimeout(this.timeoutRefresh);
-    this.timeoutRefresh = setTimeout(() => {
-      this.refreshClass = 'visible';
-    }, 1000);
+    // this.refreshClass = 'non-visible';
+    // clearTimeout(this.timeoutRefresh);
+    // this.timeoutRefresh = setTimeout(() => {
+    //   this.refreshClass = 'visible';
+    // }, 1000);
     if (!amountIn || !amountOut) {
       this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
       this.stateButton = 'disabled';

@@ -58,6 +58,9 @@ export class TableComponent implements OnInit, OnDestroy {
           if (window.innerWidth >= 800 && row.length > 0) {
             this.initSparklineTimeOut = setTimeout(() => {
               row.forEach((item, id) => {
+                if (item.code === 'USDT') {
+                  return;
+                }
                 const min = Math.min(...item.priceUsd);
                 const adjustedPrices = item.priceUsd.map((price) => price - min);
                 sparkline(document.getElementById(`sparkline-${item.code}`), adjustedPrices);
@@ -92,7 +95,7 @@ export class TableComponent implements OnInit, OnDestroy {
     if (type === 'precision') {
       return symbol + (amount * this.selectedCurrencyRate).toPrecision(4).replace(/\.?0+$/, '');
     } else {
-      return (amount > 1 ? symbol : '') + (amount * this.selectedCurrencyRate).toLocaleString().replace(/\.?\d+$/, '');
+      return symbol + (Math.round(amount * this.selectedCurrencyRate)).toLocaleString();
     }
   }
 }

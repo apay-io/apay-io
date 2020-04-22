@@ -3,7 +3,7 @@
     <div class="converter">
         <div class="currency-from-amount-field">
             <app-choice-currency [exchange]="{value: exchange.currencyIn, type: 'sell'}" (outCurrentCurrency)='saveCurrentCurrency($event)'></app-choice-currency>
-            <input #sell class="input-field" placeholder="Enter Amount" type="text" [ngModel]="exchange.amountIn" (keyup)="calculateBuy($event)">
+            <input #sell class="input-field" placeholder="Enter Amount" type="number" [ngModel]="exchange.amountIn" (keyup)="calculateBuy($event)">
         </div>
         <div class="wrapper-icon-convert">
             <i class="fas fa-exchange-alt icon-convert" (click)="revertCurrency()"></i>
@@ -11,7 +11,7 @@
         </div>
         <div class="currency-to-amount-field">
             <app-choice-currency [exchange]="{value: exchange.currencyOut, type: 'buy'}" (outCurrentCurrency)='saveCurrentCurrency($event)'></app-choice-currency>
-            <input #buy class="input-field" placeholder="Enter Amount" type="text" [ngModel]="exchange.amountOut" (keyup)="calculateSell($event)">
+            <input #buy class="input-field" placeholder="Enter Amount" type="number" [ngModel]="exchange.amountOut" (keyup)="calculateSell($event)">
         </div>
         <div class="button-blue" [ngClass]="{ disabled: this.stateButton === 'disabled'}" (click)="continue()" *ngIf="!isProcessingConverter">
             <i *ngIf="this.stateButton !== 'loading'" class="fas fa-exchange-alt icon"></i>

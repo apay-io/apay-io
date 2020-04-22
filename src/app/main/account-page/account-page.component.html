@@ -18,17 +18,6 @@
                         [chartType]="doughnutChartType"></canvas>
             </div>
         </div>
-        <!--div class="table-chart">
-            <div style="width: 100%">
-                <canvas baseChart
-                        [options]="barChartOptions"
-                        [colors]="barChartColors"
-                        [data]="ChartData"
-                        [labels]="ChartLabels"
-                        [chartType]="ChartType">
-                </canvas>
-            </div>
-        </div>
       <div class="table-chart">
         <div style="width: 100%">
           <canvas baseChart
@@ -39,7 +28,7 @@
                   [chartType]="ChartType">
           </canvas>
         </div>
-      </div-->
+      </div>
       <div class="controls-table">
         <div class="search">
                 <mat-form-field>
@@ -276,15 +265,15 @@
                             <div class="title">
                                 Transaction id
                             </div>
-                            <div class="address tx" [ngClass]="{'load': !txId}">
-                                <span class="tx-id">{{txId}}</span>
-                                <span [text-copy]="txId">
+                            <div class="address tx" [ngClass]="{'load': !xdr}">
+                                <span class="tx-id">{{xdr}}</span>
+                                <span [text-copy]="xdr">
                                     <i class="far fa-clone icon copy" aria-hidden="true"></i>
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <a target="_blank" [href]="'http://cosmic.link/?xdr=' + txId"
+                    <a target="_blank" [href]="'http://cosmic.link/?network=public&xdr=' + xdr"
                        class="button-next external-link">
                         <span>Sign</span>
                         <i class="fas fa-external-link-alt external-icon"></i>

@@ -45,24 +45,6 @@
         .icon-convert {
           color: #efa344;
         }
-
-        .refresh {
-          position: absolute;
-          right: 15px;
-          color: #efa344;
-          display: none;
-          opacity: 1;
-
-          &:hover {
-            transition: 0.8s ease-in-out;
-            transform: rotate(360deg);
-          }
-
-          &.visible {
-            animation: fade-in 0.5s ease-in-out;
-            display: block;
-          }
-        }
       }
     }
   }
@@ -144,6 +126,24 @@
       &:hover {
         .icon-convert {
           color: rgba(15, 89, 209, 0.5);
+        }
+      }
+
+      .refresh {
+        position: absolute;
+        right: 15px;
+        color: #efa344;
+        display: none;
+        opacity: 1;
+
+        &:hover {
+          transition: 0.8s ease-in-out;
+          transform: rotate(360deg);
+        }
+
+        &.visible {
+          animation: fade-in 0.5s ease-in-out;
+          display: block;
         }
       }
     }

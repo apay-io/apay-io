@@ -7,6 +7,7 @@ import {FormControl} from '@angular/forms';
 import {MatSelect} from '@angular/material/select';
 import {Currency} from '../../core/currency.interface';
 import {HttpClient} from '@angular/common/http';
+import {StellarService} from '../../services/stellar/stellar.service';
 
 interface Token {
   code: string;
@@ -68,8 +69,11 @@ export class ExchangeInfoComponent implements OnInit, OnDestroy {
   public tokenWithdraw: FormControl = new FormControl();
   public filteredTokens: ReplaySubject<Token[]> = new ReplaySubject<Token[]>(1);
   private tokens: Token[] = Object.assign([], currencies);
+  public fundingFee = false;
+  public xdr: string;
 
   constructor(public modalService: ModalService,
+              private stellarService: StellarService,
               private readonly http: HttpClient) {
     // remove XLM token
     this.tokens = this.tokens.filter(token => token.code !== 'XLM');
@@ -105,7 +109,9 @@ export class ExchangeInfoComponent implements OnInit, OnDestroy {
     } else {
       search = search.toLowerCase();
     }
-    this.arraySearchValue = this.tokens.filter(token => token.name.toLowerCase().indexOf(search) > -1);
+    this.arraySearchValue = this.tokens.filter(token =>
+      token.code.toLowerCase().indexOf(search) > -1 || token.name.toLowerCase().indexOf(search) > -1
+    );
     this.filteredTokens.next(this.arraySearchValue);
   }
 
@@ -129,9 +135,17 @@ export class ExchangeInfoComponent implements OnInit, OnDestroy {
     this.http.get(`https://apay.io/api/deposit?account=` + this.stellarAddress +
       `&asset_code=` + this.selectedToken.code +
       (this.selectedMemoType !== 'none' ? `&memo_type=` + this.selectedMemoType + `&memo=` + this.memoValue : '')).subscribe(
-      (res) => {
+      async (res) => {
         this.depositAddress = res['how'];
-        this.modalService.open('linked');
+        if (res['extra_info'] && res['extra_info']['message'] && res['extra_info']['message'].indexOf('will be funded') > -1) {
+          this.fundingFee = true;
+          this.modalService.open('deposit');
+        } else if (res['extra_info'] && res['extra_info']['message'] && res['extra_info']['message'].indexOf('Trustline') > -1) {
+          this.xdr = await this.stellarService.buildTrustlineTx(this.stellarAddress, this.selectedToken.code, this.selectedToken.issuer);
+          this.modalService.open('trustline');
+        } else {
+          this.modalService.open('deposit');
+        }
         this.loading = false;
       },
       err => {

@@ -64,9 +64,9 @@ export class ExchangeEffects {
 
       try {
         return await this.stellarService.calculateBuy(
-          currencies.find((item) => item.code === localStorage.getItem('currencyIn')),
+          currencies.find((item) => item.code === (localStorage.getItem('currencyIn') || 'XLM')),
           (parseFloat(action.payload) * this.feeMultiplier).toFixed(7).toString(),
-          currencies.find((item) => item.code === localStorage.getItem('currencyOut')),
+          currencies.find((item) => item.code === (localStorage.getItem('currencyOut') || 'BTC')),
         );
       } catch (err) {
         return {
@@ -75,7 +75,7 @@ export class ExchangeEffects {
       }
     }),
     switchMap((item) => {
-      const currencyOut = currencies.find((currency) => currency.code === localStorage.getItem('currencyOut'));
+      const currencyOut = currencies.find((currency) => currency.code === (localStorage.getItem('currencyOut') || 'BTC'));
       const amountFee = parseFloat(item.destination_amount) * currencyOut.withdraw.fee_percent / 100 + currencyOut.withdraw.fee_fixed;
 
       return of(new SetAmountInternal({
