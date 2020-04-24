@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {take} from 'rxjs/operators';
 import {currencies} from '../../assets/currencies-list';
 import {Subject} from 'rxjs/index';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class GetCurrenciesServices {
@@ -12,7 +13,7 @@ export class GetCurrenciesServices {
   }
 
   currenciesList;
-  data = this.http.get('https://apay.io/api/stats');
+  data = this.http.get(`${environment.api}/api/stats`);
 
   public state$ = new Subject<object>();
 

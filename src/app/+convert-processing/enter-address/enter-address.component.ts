@@ -15,7 +15,7 @@ import {HttpClient} from '@angular/common/http';
 export class EnterAddressComponent implements OnInit {
   public exchange: ExchangeState;
   private timer;
-  private loading;
+  public loading;
 
   addressOut;
   isAddressValid = false;

@@ -8,6 +8,7 @@ import {MatSelect} from '@angular/material/select';
 import {Currency} from '../../core/currency.interface';
 import {HttpClient} from '@angular/common/http';
 import {StellarService} from '../../services/stellar/stellar.service';
+import {environment} from '../../../environments/environment';
 
 interface Token {
   code: string;
@@ -132,7 +133,7 @@ export class ExchangeInfoComponent implements OnInit, OnDestroy {
   getAddress() {
     this.loading = true;
     this.errorMessage = '';
-    this.http.get(`https://apay.io/api/deposit?account=` + this.stellarAddress +
+    this.http.get(`${environment.api}/api/deposit?account=` + this.stellarAddress +
       `&asset_code=` + this.selectedToken.code +
       (this.selectedMemoType !== 'none' ? `&memo_type=` + this.selectedMemoType + `&memo=` + this.memoValue : '')).subscribe(
       async (res) => {

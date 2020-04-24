@@ -1,15 +1,10 @@
-import {Asset, Server, AssetType, Horizon, StrKey, TransactionBuilder, Account, Networks, Operation} from 'stellar-sdk';
+import {Asset, Server, AssetType, Horizon, StrKey, TransactionBuilder, Account, Networks, Operation, FederationServer} from 'stellar-sdk';
 import {reduce, filter} from 'lodash';
 import BalanceLine = Horizon.BalanceLine;
 import {Currency} from '../../core/currency.interface';
 
 export class StellarService {
   private server = new Server('https://horizon.stellar.org');
-  knownIssuers = [
-    'GAUTUYY2THLF7SGITDFMXJVYH3LHDSMGEAKSBU267M2K7A3W543CKUEF',
-    'GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP',
-    'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
-  ];
 
   async calculateSell(currencyIn, currencyOut, amountOut) {
     const result = await this.server.strictReceivePaths(
@@ -110,5 +105,9 @@ export class StellarService {
     const tx = builder.build();
 
     return tx.toEnvelope().toXDR('base64').toString();
+  }
+
+  async resolveFederatedAddress(account: string) {
+    return FederationServer.resolve(account);
   }
 }

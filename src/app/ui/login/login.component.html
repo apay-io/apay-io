@@ -89,14 +89,24 @@
                             </div>
                         </div>
                         <div class="description">
-                            Make sure your Ledger is Connected, the Stellar app open and that browser support is enabled. Then, click the 'Connect' button below.
+                            Make sure your Ledger is connected, the Stellar app open and that browser support is enabled. Then, click the 'Connect Ledger' button below.
                         </div>
                     </div>
+
+                    <mat-form-field class="input" appearance="legacy">
+                        <mat-label>Enter BIP32 path or leave as default</mat-label>
+                        <input matInput [ngModel]="bip32Path" (keyup)="updateLedgerAddress($event)">
+                    </mat-form-field>
+                    <span class="address">{{ ledgerAddress }}</span>
                 </div>
 
                 <button
                         mat-raised-button
-                        class="button-next">
+                        class="button-next"
+                        [disabled]="!ledgerAddress"
+                        [ngClass]="{'load' : loading, 'disabled': !ledgerAddress}"
+                        (click)="login(ledgerAddress)">
+                  <div *ngIf="loading" class=" icon spinner small"></div>
                     Connect Ledger
                 </button>
             </div>
@@ -111,7 +121,7 @@
                             </div>
                         </div>
                         <div class="description">
-                            Make sure your Trezor is Connected and enter a bip 32 path below. If you don't know what a bip 32 path is, just leave it set to the default value. When you are ready, click the check mark button below and your Stellar public address will be obtained from your trezor device. Then, click "Login". Note: Requires Trezor Bridge and Trezor One (with firmware 1.8.0+) or Trezor Model T (with firmware 2.1.0+).
+                            Make sure your Trezor is connected, click "Login" and allow Trezor to share the account address. Note: Requires Trezor Bridge and Trezor One (with firmware 1.8.0+) or Trezor Model T (with firmware 2.1.0+).
                         </div>
                     </div>
 
@@ -121,8 +131,11 @@
                     </mat-form-field>
                     <button
                             mat-raised-button
-                            class="button-next">
-                        login
+                            class="button-next"
+                            [ngClass]="{'load' : loading}"
+                            (click)="loginTrezor(trezor.value)">
+                      <div *ngIf="loading" class=" icon spinner small"></div>
+                        Login
                     </button>
                 </div>
             </div>

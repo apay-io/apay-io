@@ -9,7 +9,7 @@ import {StellarService} from '../../services/stellar/stellar.service';
 import {NotifyService} from '../../core/notify.service';
 import {currencies} from '../../../assets/currencies-list';
 import {Currency} from '../../core/currency.interface';
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
 
 export interface Data {
   date: string;
@@ -171,13 +171,8 @@ export class AccountPageComponent implements OnInit {
   };
 
   ngOnInit() {
-    new Promise((res) => {
-      this.http.get(`${environment.backend}/rates?first=1&order[field]=at&order[order]=DESC`).subscribe((data) => {
-        res(data);
-      });
-    })
-      .then((result: any) => {
-        const rates = result.edges[0].node.rates;
+    this.http.get(`https://rates.apay.io`).toPromise()
+      .then((rates: any) => {
         console.log('RATES');
         console.log(rates);
         this.arraySearchValue = this.dataWallet;
@@ -194,7 +189,7 @@ export class AccountPageComponent implements OnInit {
                   dataToken.balance = balanceLine.balance;
                   dataToken.trustline = true;
                   if (rates[balanceLine.code]) {
-                    dataToken.value = +(+balanceLine.balance / rates[balanceLine.code] * rates['XDR']).toFixed(6);
+                    dataToken.value = +(+balanceLine.balance / rates[balanceLine.code]).toFixed(6);
                     this.sumValue = +(this.sumValue + dataToken.value).toFixed(6);
                   }
 
@@ -217,7 +212,7 @@ export class AccountPageComponent implements OnInit {
                   };
 
                   if (rates[balanceLine.code]) {
-                    dataToken.value = +(+balanceLine.balance / rates[balanceLine.code] * rates['XDR']).toFixed(6);
+                    dataToken.value = +(+balanceLine.balance / rates[balanceLine.code]).toFixed(6);
                     this.sumValue = +(this.sumValue + dataToken.value).toFixed(6);
                   }
                   this.dataWallet.unshift(dataToken);

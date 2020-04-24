@@ -16,6 +16,8 @@
     "@angular/platform-server": "^9.0.2",
     "@angular/router": "^9.0.2",
     "@fnando/sparkline": "^0.3.10",
+    "@ledgerhq/hw-app-str": "^5.13.1",
+    "@ledgerhq/hw-transport-u2f": "^5.13.1",
     "@ngrx/effects": "^8.6.0",
     "@ngrx/store": "^8.6.0",
     "chart.js": "^2.9.3",
@@ -27,6 +29,7 @@
     "ng2-charts": "^2.3.0",
     "rxjs": "^6.5.4",
     "stellar-sdk": "latest",
+    "trezor-connect": "^8.1.1",
     "web-animations-js": "2.3.2",
     "zone.js": "^0.10.3"
   },

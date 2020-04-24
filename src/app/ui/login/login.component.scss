@@ -83,6 +83,9 @@
       color: #fff;
     }
   }
+  .button-next[disabled] {
+    background-color: rgba(0,0,0,.12)
+  }
 
   .login-wrapper {
     min-height: 150px;
@@ -102,6 +105,12 @@
       width: 60%;
       font-size: 16px;
       color: red;
+    }
+
+    .address {
+      font-size: 90%;
+      margin-bottom: 10px;
+      color: green;
     }
 
     .info {

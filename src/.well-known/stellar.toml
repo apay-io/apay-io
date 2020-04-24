@@ -1,0 +1,243 @@
+FEDERATION_SERVER="https://api.apay.io/api/federation"
+DEPOSIT_SERVER="https://api.apay.io/api"
+TRANSFER_SERVER="https://api.apay.io/api"
+SIGNING_REQUEST_ACCOUNT="GD3CS2AR4YZ25LN6NARSSRJMUY7XQBJNGJJTQU2URRDPTPJZBYU2O3DD"
+
+[[VALIDATORS]]
+ALIAS="apay-io"
+DISPLAY_NAME="Apay.io"
+HOST="stellar.apay.io:11625"
+PUBLIC_KEY="GCMFD4YHSKQMXZLXUAQTVN6KT57ISA7ZHPCUTETXHEILHWAZJ7R5EYBU"
+HISTORY="https://apay-stellar-history.fra1.digitaloceanspaces.com"
+
+[DOCUMENTATION]
+ORG_NAME="COMING SOON"enter-address.component.html
+ORG_DESCRIPTION="COMING SOON"
+ORG_PHYSICAL_ADDRESS="COMING SOON"
+ORG_PHYSICAL_ADDRESS_ATTESTATION="COMING SOON"
+ORG_PHONE_NUMBER="COMING SOON"
+ORG_PHONE_NUMBER_ATTESTATION="COMING SOON"
+ORG_DBA="Apay"
+ORG_URL="https://apay.io"
+ORG_LOGO="https://apay.io/public/logo.png"
+ORG_GITHUB="apay-io"
+ORG_KEYBASE="apay.public"
+ORG_OFFICIAL_EMAIL="support@apay.io"
+
+[[PRINCIPALS]]
+name="Sergey Yusupov"
+email="s@apay.io"
+telegram="umbre1"
+twitter="uniqbiun"
+keybase="umbrel"
+github="s-a-y"
+id_photo_hash=""
+verification_photo_hash=""
+
+[[CURRENCIES]]
+code="BCH"
+issuer="GAEGOS7I6TYZSVHPSN76RSPIVL3SELATXZWLFO4DIAFYJF7MPAHFE7H4"
+display_decimals=7
+name="Bitcoin Cash"
+desc="BCH has been delisted"
+conditions="Email support@apay.io to redeem if you still have tokens left"
+image="https://apay.io/public/logo/dead.svg"
+status="dead"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="BCH"
+
+
+
+[[CURRENCIES]]
+code="BTC"
+issuer="GAUTUYY2THLF7SGITDFMXJVYH3LHDSMGEAKSBU267M2K7A3W543CKUEF"
+display_decimals=7
+name="Bitcoin"
+desc="1 BTC token entitles you to receive 1 Bitcoin (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent"
+image="https://apay.io/public/logo/btc.svg"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="BTC"
+
+
+
+[[CURRENCIES]]
+code="DASH"
+issuer="GDFGEXEBIMLP5UFC36TFENBHRJSW7AQZUPXNTTM2WO532KBXCVPUKFGB"
+display_decimals=7
+name="Dash"
+desc="1 DASH token entitles you to receive 1 Dash (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent"
+image="https://apay.io/public/logo/dash.svg"
+status="test"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="DASH"
+
+
+
+[[CURRENCIES]]
+code="LTC"
+issuer="GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP"
+display_decimals=7
+name="Litecoin"
+desc="1 LTC token entitles you to receive 1 Litecoin (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent"
+image="https://apay.io/public/logo/ltc.png"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="LTC"
+
+
+
+[[CURRENCIES]]
+code="ETH"
+issuer="GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"
+display_decimals=7
+name="Ethereum"
+desc="1 ETH token entitles you to receive 1 ETH (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent."
+image="https://apay.io/public/logo/eth.png"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="ETH"
+
+
+
+[[CURRENCIES]]
+code="BAT"
+issuer="GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"
+display_decimals=7
+name="Basic Attention Token"
+desc="1 BAT token entitles you to receive 1 BAT token on Ethereum (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent. BAT contract 0x0D8775F648430679A709E98d2b0Cb6250d2887EF"
+image="https://apay.io/public/logo/bat.svg"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="BAT"
+
+
+
+[[CURRENCIES]]
+code="KIN"
+issuer="GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"
+display_decimals=7
+name="Kin"
+desc="1 KIN token entitles you to receive 1 KIN to your address on KIN network &#x27;Kin Mainnet ; December 2018&#x27;"
+conditions="Outgoing transaction fee deducted from the amount sent"
+image="https://apay.io/public/logo/kin.svg"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="KIN"
+
+
+
+[[CURRENCIES]]
+code="LINK"
+issuer="GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"
+display_decimals=7
+name="ChainLink"
+desc="1 LINK token entitles you to receive 1 LINK token on Ethereum (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent. LINK contract 0x514910771AF9Ca656af840dff83E8264EcF986CA"
+image="https://apay.io/public/logo/link.svg"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="LINK"
+
+
+
+[[CURRENCIES]]
+code="MTL"
+issuer="GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"
+display_decimals=7
+name="Metal"
+desc="MTL has been delisted"
+conditions="Email support@apay.io to redeem if you still have tokens left"
+image="https://apay.io/public/logo/dead.svg"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="MTL"
+
+
+
+[[CURRENCIES]]
+code="OMG"
+issuer="GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"
+display_decimals=7
+name="OmiseGO"
+desc="1 OMG token entitles you to receive 1 OMG token on Ethereum (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent. OMG contract 0xd26114cd6EE289AccF82350c8d8487fedB8A0C07"
+image="https://apay.io/public/logo/omg.svg"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="OMG"
+
+
+
+[[CURRENCIES]]
+code="REP"
+issuer="GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"
+display_decimals=7
+name="Augur"
+desc="1 REP token entitles you to receive 1 REP token on Ethereum (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent. REP contract 0x1985365e9f78359a9B6AD760e32412f4a445E862"
+image="https://apay.io/public/logo/rep.png"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="REP"
+
+
+
+[[CURRENCIES]]
+code="SALT"
+issuer="GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"
+display_decimals=7
+name="SALT"
+desc="SALT has been delisted"
+conditions="Email support@apay.io to redeem if you still have tokens left"
+image="https://apay.io/public/logo/dead.svg"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="SALT"
+
+
+
+[[CURRENCIES]]
+code="ZRX"
+issuer="GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"
+display_decimals=7
+name="0xProject"
+desc="1 ZRX token entitles you to receive 1 ZRX token on Ethereum (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent. ZRX contract 0xE41d2489571d322189246DaFA5ebDe1F4699F498"
+image="https://apay.io/public/logo/zrx.svg"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="ZRX"
+
+
+
+[[CURRENCIES]]
+code="USDT"
+issuer="GCQTGZQQ5G4PTM2GL7CDIFKUBIPEC52BROAQIAPW53XBRJVN6ZJVTG6V"
+display_decimals=7
+name="Tether USD"
+desc="1 USDT token entitles you to receive 1 USDT token on Ethereum (minus outgoing transaction fee) to an address of your choice using our anchor."
+conditions="Outgoing transaction fee deducted from the amount sent. USDT contract 0xdAC17F958D2ee523a2206206994597C13D831ec7"
+image="https://apay.io/public/logo/usdt.svg"
+status="live"
+is_asset_anchored=true
+anchor_asset_type="crypto"
+anchor_asset="USD"

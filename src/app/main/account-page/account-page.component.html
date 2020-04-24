@@ -1,12 +1,12 @@
 <div class="content">
     <div class="wrapper">
-        <div class="general-chart">
-            <div *ngIf="sumValue" class="title-wrapper">
+        <div class="general-chart" *ngIf="sumValue">
+            <div class="title-wrapper">
                 <div class="title">
                     Total Balance
                 </div>
                 <div class="description">
-                    {{this.sumValue}} XDR
+                    {{this.sumValue}} USD
                 </div>
             </div>
             <div class="chart">
@@ -18,17 +18,17 @@
                         [chartType]="doughnutChartType"></canvas>
             </div>
         </div>
-      <div class="table-chart">
-        <div style="width: 100%">
-          <canvas baseChart
-                  [options]="barChartOptions"
-                  [colors]="barChartColors"
-                  [data]="balanceChartData"
-                  [labels]="balanceChartLabels"
-                  [chartType]="ChartType">
-          </canvas>
-        </div>
-      </div>
+<!--      <div class="table-chart">-->
+<!--        <div style="width: 100%">-->
+<!--          <canvas baseChart-->
+<!--                  [options]="barChartOptions"-->
+<!--                  [colors]="barChartColors"-->
+<!--                  [data]="balanceChartData"-->
+<!--                  [labels]="balanceChartLabels"-->
+<!--                  [chartType]="ChartType">-->
+<!--          </canvas>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="controls-table">
         <div class="search">
                 <mat-form-field>
@@ -55,7 +55,7 @@
                         %
                     </div>
                     <div class="cell">
-                        Value(XDR)
+                        Value (USD)
                     </div>
 <!--                    <div class="cell">-->
 <!--                        Change 30D-->
