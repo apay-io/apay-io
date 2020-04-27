@@ -12,10 +12,9 @@
             <div class="chart">
                 <canvas baseChart
                         [options]="doughnutChartOptions"
-                        [data]="doughnutChartData"
                         [labels]="doughnutChartLabels"
                         [datasets]="datasets"
-                        [chartType]="doughnutChartType"></canvas>
+                        [chartType]="'doughnut'"></canvas>
             </div>
         </div>
 <!--      <div class="table-chart">-->
@@ -31,10 +30,10 @@
 <!--      </div>-->
       <div class="controls-table">
         <div class="search">
-                <mat-form-field>
-                    <i class="fas fa-search icon"></i>
-                    <input placeholder="Search" type="text" matInput [(ngModel)]="searchValue" (ngModelChange)="search()">
-                </mat-form-field>
+            <mat-form-field>
+                <i class="fas fa-search icon"></i>
+                <input placeholder="Search" type="text" matInput [(ngModel)]="searchValue" (ngModelChange)="search()">
+            </mat-form-field>
             </div>
             <div class="hide-low-balance">
                 <mat-checkbox [checked]="hideLowBalanceFlag" (change)="isHideLowBalanceCheckbox($event)">
@@ -43,85 +42,72 @@
             </div>
         </div>
         <div class="table-wrapper">
-            <div class="table">
-                <div class="row title">
-                    <div class="cell">
+          <table mat-table [dataSource]="dataSource" matSort matSortActive="value" matSortDirection="desc">
 
-                    </div>
-                    <div class="cell">
-                        Balance
-                    </div>
-                    <div class="cell">
-                        %
-                    </div>
-                    <div class="cell">
-                        Value (USD)
-                    </div>
-<!--                    <div class="cell">-->
-<!--                        Change 30D-->
-<!--                    </div>-->
-                    <div class="cell">
+            <ng-container matColumnDef="icon">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row">
+                <img class="icon" [ngClass]="row.code" src="{{row.icon}}" alt="">
+              </td>
+              <td *matFooterCellDef> </td>
+            </ng-container>
 
-                    </div>
+            <ng-container matColumnDef="code">
+              <th mat-header-cell *matHeaderCellDef> NAME</th>
+              <td mat-cell *matCellDef="let row">
+                <div class="name">
+                  <div class="title">
+                    {{row.code}}
+                  </div>
+                  <div class="description">
+                    {{row.name}}
+                  </div>
                 </div>
+              </td>
+              <td *matFooterCellDef> </td>
+            </ng-container>
 
-                <div class="row" *ngFor="let item of arraySearchValue" [ngClass]="{'hide': this.hideLowBalanceFlag && item.balance === '0'}" (click)="drawingCharts(item.code, item.issuer, 30,'days')">
-                    <div class="cell" [ngClass]="{'empty': !item.icon}">
-                        <img class="icon" [ngClass]="item.code" [src]="item.icon" alt="">
-                        <div class="empty-state"></div>
-                        <div class="name-currency">
-                            {{item.code}}
-                        </div>
+            <ng-container matColumnDef="balance">
+              <th mat-header-cell *matHeaderCellDef> BALANCE</th>
+              <td mat-cell *matCellDef="let row"> {{ row.balance }}</td>
+              <td *matFooterCellDef> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="percent">
+              <th mat-header-cell *matHeaderCellDef> %</th>
+              <td mat-cell *matCellDef="let row"> {{ row.percent }}</td>
+              <td *matFooterCellDef> Total: </td>
+            </ng-container>
+
+            <ng-container matColumnDef="value">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> VALUE</th>
+              <td mat-cell *matCellDef="let row"> {{ row.value | currency }}</td>
+              <td *matFooterCellDef> {{ this.sumValue | currency }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let row">
+                <div class="buttons-group">
+                  <div class="button-convert" [ngClass]="{'disabled' : !row.deposit.enabled}" (click)="openModal($event, row, 'deposit');">
+                    <div class="text">
+                      {{row.trustline ? 'Deposit': 'Accept'}}
                     </div>
-                    <div class="cell">
-                        {{item.balance === '0' ? '-' : item.balance}}
+                  </div>
+                  <div class="button-convert" [ngClass]="{'disabled' : row.balance === '0' || !row.withdraw.enabled}" (click)="openModal($event, row, 'withdraw');">
+                    <div class="text">
+                      Withdraw
                     </div>
-                    <div class="cell">
-                        {{item.balance == '0' ? '-' : item.percent}}
-                    </div>
-                    <div class="cell">
-                        {{item.value == '0' ? '-' : item.value}}
-                    </div>
-<!--                    <div class="cell">-->
-<!--                        {{item.balance === '0' ? '-' : item.change + '%'}}-->
-<!--                    </div>-->
-                    <div class="cell">
-                        <div class="buttons-group">
-                            <div class="button-convert" [ngClass]="{'disabled' : !item.deposit.enabled}" (click)="openModal($event, item, 'deposit');">
-                                <div class="text">
-                                    {{item.trustline ? 'Deposit': 'Accept'}}
-                                </div>
-                            </div>
-                            <div class="button-convert" [ngClass]="{'disabled' : item.balance === '0' || !item.withdraw.enabled}" (click)="openModal($event, item, 'withdraw');">
-                                <div class="text">
-                                    Withdraw
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
                 </div>
-                <div class="row title">
-                    <div class="cell">
-                        Total
-                    </div>
-                    <div class="cell">
+              </td>
+              <td *matFooterCellDef> </td>
+            </ng-container>
 
-                    </div>
-                    <div class="cell">
-
-                    </div>
-                    <div class="cell">
-                        {{sumValue}}
-                    </div>
-<!--                    <div class="cell">-->
-<!--                        {{sumChange}}%-->
-<!--                    </div>-->
-                    <div class="cell">
-
-                    </div>
-                </div>
-            </div>
-        </div>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+          </table>
     </div>
 </div>
 

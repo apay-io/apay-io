@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule} from '../../material-module';
+import {MaterialModule} from './material-module';
 import {UiModule} from './ui/ui.module';
 import {ModalService} from './services/modal/modal.service';
 import {CoreModule} from './core/core.module';

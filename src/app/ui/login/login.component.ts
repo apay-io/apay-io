@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
 
   stepAddress() {
     this.step = 'login-nickname-address';
+    clearTimeout(this.ledgerReconnect);
     setTimeout(() => {
       this.ElementAddress.nativeElement.focus();
     }, 300);
@@ -66,6 +67,7 @@ export class LoginComponent implements OnInit {
 
   connectLedger() {
     this.loading = true;
+    clearTimeout(this.ledgerReconnect);
     TransportU2F.create().then((transport) => {
       return new Str(transport).getPublicKey(this.bip32Path).then((result) => {
         this.loading = false;
@@ -83,6 +85,7 @@ export class LoginComponent implements OnInit {
   }
 
   stepTresor() {
+    clearTimeout(this.ledgerReconnect);
     this.step = 'login-trezor';
   }
 

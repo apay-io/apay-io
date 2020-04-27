@@ -13,7 +13,8 @@ import {ControlsCustomModalService} from '../../core/controls-custom-modal.servi
 import {CurrencySelectionService} from '../../core/currency-selection.service';
 
 @Component({
-  selector: 'app-converter',
+  // tslint:disable-next-line:component-selector
+  selector: 'div[app-converter]',
   templateUrl: './converter.component.html',
   styleUrls: ['./converter.component.scss']
 })

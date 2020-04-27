@@ -1,15 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AppComponent} from '../../app.component';
 import {Color} from 'ng2-charts';
 import * as moment from 'moment';
 import {ModalService} from '../../services/modal/modal.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {StellarService} from '../../services/stellar/stellar.service';
+import {StellarService, Balance} from '../../services/stellar/stellar.service';
 import {NotifyService} from '../../core/notify.service';
 import {currencies} from '../../../assets/currencies-list';
 import {Currency} from '../../core/currency.interface';
 import {environment} from '../../../environments/environment';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
+import {isEqual} from 'lodash';
 
 export interface Data {
   date: string;
@@ -30,12 +33,14 @@ interface Token extends Currency {
 
 export class AccountPageComponent implements OnInit {
   dataWallet= JSON.parse(JSON.stringify(currencies));
+  dataSource = new MatTableDataSource(this.dataWallet);
+  displayedColumns = ['icon', 'code', 'balance', 'percent', 'value', 'actions'];
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   rates = {};
   isLoading = false;
   buttonText;
   percent: number;
   sumValue = 0;
-  sumChange = 0;
   hideLowBalanceFlag: boolean;
   searchValue: string;
   arraySearchValue = [];
@@ -66,7 +71,6 @@ export class AccountPageComponent implements OnInit {
   };
   public doughnutChartLabels = [];
   public doughnutChartData = [];
-  public doughnutChartType = 'doughnut';
 
   public ChartLabels = [];
   public ChartData = [];
@@ -81,6 +85,7 @@ export class AccountPageComponent implements OnInit {
   withdrawForm: FormGroup;
   regexpAmount = /^[0-9]*[.,]?[0-9]+$/;
   public description: string;
+  private balances: Balance[];
 
   constructor(private readonly http: HttpClient,
               public readonly appComponent: AppComponent,
@@ -106,11 +111,7 @@ export class AccountPageComponent implements OnInit {
     },
   ];
 
-  datasets: any[] = [
-    {
-      backgroundColor: []
-    }
-  ];
+  datasets: any[] = [];
 
   public doughnutChartOptions: any = {
     legend: {
@@ -173,62 +174,13 @@ export class AccountPageComponent implements OnInit {
   ngOnInit() {
     this.http.get(`https://rates.apay.io`).toPromise()
       .then((rates: any) => {
-        console.log('RATES');
-        console.log(rates);
-        this.arraySearchValue = this.dataWallet;
+        this.rates = rates;
         this.account = localStorage.getItem('account');
         if (this.account) {
           this.stellarService.balances(this.account)
-            .then((result) => {
-              result.map(balanceLine => {
-                let dataToken;
-                const findIndexToken = this.dataWallet.findIndex(x => x.code === balanceLine.code);
-                if (findIndexToken !== -1) {
-                  this.dataWallet.unshift(...this.dataWallet.splice(findIndexToken, 1));
-                  dataToken = this.dataWallet.find(x => x.code === balanceLine.code);
-                  dataToken.balance = balanceLine.balance;
-                  dataToken.trustline = true;
-                  if (rates[balanceLine.code]) {
-                    dataToken.value = +(+balanceLine.balance / rates[balanceLine.code]).toFixed(6);
-                    this.sumValue = +(this.sumValue + dataToken.value).toFixed(6);
-                  }
-
-                  this.datasets[0].backgroundColor.unshift(dataToken.color);
-                } else {
-                  dataToken = {
-                    'code': balanceLine.code,
-                    'name': balanceLine.code,
-                    'baseUrl': 'https://api.apay.io/api',
-                    'icon': '',
-                    'balance': balanceLine.balance,
-                    'percent': '-',
-                    'value': 0,
-                    'change': '0',
-                    'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
-                    'deposit': 'active',
-                    'withdraw': 'active',
-                    'color': '#a39ca0',
-                    'trustline': true
-                  };
-
-                  if (rates[balanceLine.code]) {
-                    dataToken.value = +(+balanceLine.balance / rates[balanceLine.code]).toFixed(6);
-                    this.sumValue = +(this.sumValue + dataToken.value).toFixed(6);
-                  }
-                  this.dataWallet.unshift(dataToken);
-                }
-              });
-              this.percent = 100 / this.sumValue;
-              this.drawingCharts(this.dataWallet[0].code, this.dataWallet[0].issuer, 30, 'days');
-
-              this.dataWallet.map((item) => {
-                if (item.balance && item.value) {
-                  item.percent = (this.percent * item.value).toFixed(2);
-                  this.doughnutChartData.push(item.percent);
-                  this.doughnutChartLabels.push(item.code);
-                  this.sumChange += +item.change;
-                }
-              });
+            .subscribe((balances) => {
+              this.balances = balances;
+              this.refreshTable();
             });
         }
       })
@@ -238,8 +190,8 @@ export class AccountPageComponent implements OnInit {
   }
 
   drawingCharts(assetCode: string, assetIssuer: string, time_amount: number, time_type: string) {
-    this.drawingChart(assetCode, time_amount, time_type);
-    this.drawingBalanceChart(assetCode, assetIssuer);
+    // this.drawingChart(assetCode, time_amount, time_type);
+    // this.drawingBalanceChart(assetCode, assetIssuer);
   }
 
   drawingChart(select_val, time_amount, time_type) {
@@ -359,25 +311,13 @@ export class AccountPageComponent implements OnInit {
   }
 
   isHideLowBalanceCheckbox(event) {
-    if (event.checked) {
-      this.hideLowBalanceFlag = true;
-      localStorage.setItem('hideLowBalanceFlag', 'true');
-      return false;
-    }
-    this.hideLowBalanceFlag = false;
-    localStorage.setItem('hideLowBalanceFlag', 'false');
+    this.hideLowBalanceFlag = event.checked;
+    localStorage.setItem('hideLowBalanceFlag', event.checked);
+    this.refreshTable();
   }
 
   search() {
-    if (this.searchValue.length < 2) {
-      this.arraySearchValue = this.dataWallet;
-      return false;
-    }
-
-    this.searchValue = this.searchValue[0].toUpperCase() + this.searchValue.slice(1);
-    this.arraySearchValue = this.dataWallet.filter(
-      item => (item.name.indexOf(this.searchValue) > -1) || (item.code.indexOf(this.searchValue.toUpperCase()) > -1)
-    );
+    this.dataSource.filter = this.searchValue.toLowerCase().trim();
   }
 
   addFullBalance(balance) {
@@ -395,4 +335,53 @@ export class AccountPageComponent implements OnInit {
     });
   }
 
+  private refreshTable() {
+    this.sumValue = 0;
+    this.balances.map(balanceLine => {
+      let dataToken = this.dataWallet.find(x => x.code === balanceLine.code && x.issuer === balanceLine.issuer);
+      if (!dataToken) {
+        dataToken = {
+          code: balanceLine.code,
+          issuer: balanceLine.issuer,
+          'name': '',
+          'baseUrl': 'https://api.apay.io/api',
+          'icon': '',
+          'balance': balanceLine.balance,
+          'deposit': 'active',
+          'withdraw': 'active',
+          'color': '#a39ca0',
+        };
+        this.dataWallet.unshift(dataToken);
+      }
+      dataToken.balance = balanceLine.balance;
+      dataToken.trustline = true;
+      if (balanceLine.code === 'USDT') {
+        dataToken.value = parseFloat(balanceLine.balance).toFixed(2);
+        this.sumValue = +(this.sumValue + dataToken.value);
+      } else if (this.rates[balanceLine.code]) {
+        dataToken.value = +(+balanceLine.balance / this.rates[balanceLine.code]).toFixed(2);
+        this.sumValue = +(this.sumValue + dataToken.value);
+      }
+    });
+    this.percent = 100 / this.sumValue;
+    this.sumValue = Math.round(this.sumValue * 100) / 100;
+    this.drawingCharts(this.dataWallet[0].code, this.dataWallet[0].issuer, 30, 'days');
+
+    this.dataWallet.map((item) => {
+      if (item.balance && item.value) {
+        item.percent = (this.percent * item.value).toFixed(2);
+      }
+    });
+    this.doughnutChartLabels = this.dataWallet.map((item) => item.code);
+    const chartData = this.dataWallet.map((v) => v.value);
+    if (!this.datasets[0] || !isEqual(this.datasets[0].data, chartData)) {
+      this.datasets = [{
+        data: chartData,
+        backgroundColor: this.dataWallet.map((v) => v.color),
+      }];
+    }
+    this.dataSource.data = this.hideLowBalanceFlag ?
+      this.dataWallet.filter((item) => parseFloat(item.balance) > 1e-7) : this.dataWallet;
+    this.dataSource.sort = this.sort;
+  }
 }

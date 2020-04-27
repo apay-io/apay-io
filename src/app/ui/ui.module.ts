@@ -8,7 +8,7 @@ import {ConverterComponent} from './converter/converter.component';
 import {TableMobileComponent} from './table-mobile/table-mobile.component';
 import {TableComponent} from './table/table.component';
 import {MatSelectSearchModule} from './mat-select-search/mat-select-search.module';
-import {MaterialModule} from '../../../material-module';
+import {MaterialModule} from '../material-module';
 import {LoginComponent} from './login/login.component';
 import {NotificationMessageComponent} from './notification-message/notification-message.component';
 import {TextCopyDirective} from '../_directives/text-copy.directive';

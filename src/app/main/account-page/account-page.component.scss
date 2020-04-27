@@ -1,5 +1,6 @@
 @import "../../stylesheets/tools/media";
 @import "../../stylesheets/modals";
+@import "../../stylesheets/table";
 
 .content {
   background: #eeeeee;
@@ -56,7 +57,6 @@
       width: 100%;
 
       .search {
-        margin-left: 20px;
         width: 150px;
 
         ::ng-deep mat-form-field div.mat-form-field-underline {
@@ -75,6 +75,7 @@
         }
 
         mat-form-field {
+          box-shadow: none;
           font-size: 16px;
           width: 130px;
           background: #fff;
@@ -85,7 +86,7 @@
           .icon {
             position: relative;
             margin-right: -15px;
-            left: -19px;
+            left: -30px;
             top: 1px;
           }
 
@@ -95,11 +96,12 @@
         }
 
         @include mobile {
-          width: 110px;
+          width: 120px;
         }
       }
 
       .hide-low-balance {
+        padding-top: 3px;
         font-size: 14px;
       }
     }
@@ -107,14 +109,13 @@
     .table-wrapper {
       width: 100%;
 
-      .table {
+      table {
         position: relative;
-        margin-top: 15px;
         background: #fff;
         width: 100%;
         font-size: 14px;
 
-        .row {
+        tr {
           display: flex;
           width: 100%;
           height: 60px;
@@ -130,12 +131,12 @@
             cursor: default;
           }
 
-          .cell {
+          th,td {
             width: 14%;
             flex: 1 1 auto;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: left;
             border-bottom: 1px solid #dfdfdf;
             color: #979797;
 
@@ -239,6 +240,13 @@
                 }
               }
             }
+          }
+
+          td:first-child {
+            justify-content: right;
+          }
+          td:last-child {
+            justify-content: center;
           }
 
           &.active {

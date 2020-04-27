@@ -34,7 +34,7 @@
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="name">
+        <ng-container matColumnDef="code">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> NAME</th>
             <td mat-cell *matCellDef="let row">
                 <div class="name">
@@ -54,7 +54,7 @@
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="usd">
+        <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> PRICE {{this.selectedCurrency}}</th>
             <td mat-cell *matCellDef="let row"><span class="price">{{ formatAmount(row.price) }} </span></td>
         </ng-container>
@@ -64,7 +64,7 @@
             <td mat-cell *matCellDef="let row"> {{ formatAmount(row.volume, 'fixed') }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="depth">
+        <ng-container matColumnDef="depthUsd">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> LIQUIDITY DEPTH</th>
             <td mat-cell *matCellDef="let row"> {{ formatAmount(row.depthUsd, 'fixed') }}</td>
         </ng-container>

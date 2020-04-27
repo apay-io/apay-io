@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  backend: 'http://127.0.0.1:3000',
-  anchorWebsocket: 'ws://192.168.10.10:8080',
+  api: 'https://api.apay.io',
+  backend: 'https://be.apay.io',
+  anchorWebsocket: 'ws://192.168.10.10',
 };
 
 /*

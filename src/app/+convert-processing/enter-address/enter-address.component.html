@@ -12,7 +12,7 @@
     </div>
     <form (ngSubmit)="changeStep(3)">
         <div>
-            <p class="details">You can specify {{ exchange.currencyOut.code }} or Stellar address</p>
+            <p class="details">Provide your {{ exchange.currencyOut.code }}{{ exchange.currencyOut.code !== 'XLM' ? ' or Stellar' : ''}} address</p>
             <mat-form-field class="recipient-address" appearance="legacy">
                 <mat-label>Recipient address</mat-label>
                 <input #address matInput [value]="exchange.addressOut" (keyup)="onKeyUp($event)" placeholder="Enter your {{exchange.currencyOut.code}} address">

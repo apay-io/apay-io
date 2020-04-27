@@ -5,7 +5,7 @@
         </div>
         <div class="convert-processing">
             <form (ngSubmit)="changeStep(2)">
-                <app-converter [isProcessingConverter]="true" (outFlagLoader)="isLoading($event)"></app-converter>
+                <div app-converter [isProcessingConverter]="true" (outFlagLoader)="isLoading($event)"></div>
 <!--                <div class="agreement-checkbox">-->
 <!--                    <mat-checkbox formControlName="agreement" >I agree with Terms of Use, Privacy Policy and AML/KYC</mat-checkbox>-->
 <!--                </div>-->

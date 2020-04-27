@@ -2,6 +2,14 @@ import {Asset, Server, AssetType, Horizon, StrKey, TransactionBuilder, Account, 
 import {reduce, filter} from 'lodash';
 import BalanceLine = Horizon.BalanceLine;
 import {Currency} from '../../core/currency.interface';
+import {Observable, Subscription} from 'rxjs';
+
+export interface Balance {
+  code: string;
+  issuer: string;
+  balance: string;
+  asset_type: string;
+}
 
 export class StellarService {
   private server = new Server('https://horizon.stellar.org');
@@ -38,26 +46,34 @@ export class StellarService {
     }
   }
 
-  async balances(account: string) {
-    try {
-      const result = await this.server.loadAccount(account);
-      return result.balances
-        .map((item: BalanceLine) => {
-        return {
-          code: (item.asset_type === 'native' ? 'XLM' : item.asset_code),
-          issuer: (item.asset_type === 'native' ? null : item.asset_issuer),
-          balance: item.balance,
-          asset_type: item.asset_type
-        };
-      });
-    } catch (err) {
-      console.error(err);
-      return [];
-    }
+  balances(account: string): Observable<Balance[]> {
+    return new Observable((observer) => {
+      try {
+        this.server.accounts()
+          .accountId(account)
+          .stream({
+            onmessage: (result) => {
+              observer.next(result.balances
+                .map((item: BalanceLine) => {
+                  return {
+                    code: (item.asset_type === 'native' ? 'XLM' : item.asset_code),
+                    issuer: (item.asset_type === 'native' ? null : item.asset_issuer),
+                    balance: item.balance,
+                    asset_type: item.asset_type
+                  };
+                }));
+            },
+            onerror: observer.error
+          });
+      } catch (err) {
+        console.error(err);
+        return observer.next([]);
+      }
+    });
   }
 
   async hasTrustline(account: string, currency: Currency) {
-    const balances = await this.balances(account);
+    const balances = await this.balances(account).toPromise();
     return balances.find((balance) => {
       return balance.code === currency.code && balance.issuer === currency.issuer;
     });
