@@ -63,7 +63,6 @@
     background: #fff;
     border: 1px solid rgb(223, 223, 223);
     padding: 24px 16px 24px 24px;
-    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     box-shadow: rgba(0, 0, 0, 0.04) 0px 2px 4px 0px, rgba(0, 0, 0, 0.08) 0px 1px 2px 0px;
@@ -85,7 +84,6 @@
         color: rgb(59, 59, 59);
         background: none;
         font-size: 16px;
-        border-radius: 8px;
         text-align: left;
         height: 100%;
         outline: none;
@@ -96,7 +94,6 @@
         }
 
         &:focus {
-          border-radius: 8px;
           border-color: #2196F3;
         }
       }
@@ -149,7 +146,6 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      border-radius: 0;
       height: 244px;
 
       .currency-from-amount-field, .currency-to-amount-field {

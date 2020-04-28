@@ -21,8 +21,6 @@
       .head-block {
         width: 100%;
         height: 56px;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
         background: #2196F3;
         display: flex;
         box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
@@ -54,7 +52,6 @@
           flex-direction: column;
           border-right: 1px solid #eee;
           background: #fff;
-          border-radius: 8px;
           box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
           .search-currency {
@@ -172,7 +169,7 @@
           }
 
           ::-webkit-scrollbar-thumb {
-            height: 50px; background-color: #666; border-radius: 3px;
+            height: 50px; background-color: #666;
           }
 
         }
@@ -189,7 +186,6 @@
           font-size: 17px;
           color: #000;
           background: #fff;
-          border-radius: 8px;
           box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
         }
 
@@ -199,7 +195,6 @@
           min-height: 260px;
           padding: 18px;
           background: #fff;
-          border-radius: 8px;
           box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
           .title {
@@ -320,14 +315,12 @@
             margin: 0;
             width: 100%;
             min-height: 122px;
-            border-radius: 0;
             padding: 18px;
             box-shadow: none;
           }
 
           .right {
             width: 100%;
-            border-radius: 0;
             box-shadow: none;
 
             .quote {

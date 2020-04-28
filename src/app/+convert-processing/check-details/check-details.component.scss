@@ -5,7 +5,6 @@
   margin-top: 5px;
   margin-left: 2px;
   background: #fff;
-  border-radius: 8px;
   box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
   width: 710px;
   padding: 21px;
@@ -57,11 +56,9 @@
     ::ng-deep .mat-checkbox .mat-checkbox-frame {
       border-color: #efa344;
       background-color: #fff;
-      border-radius: 4px;
     }
     ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
       background-color: #efa344;
-      border-radius: 4px;
     }
 
     ::ng-deep .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {

@@ -64,8 +64,8 @@
             <div *ngIf="step === 'login-nickname-address'" class="content">
                 <div class="login-wrapper">
                     <mat-form-field class="input" appearance="legacy">
-                        <mat-label>Nickname or Address</mat-label>
-                        <input matInput #address placeholder="Nickname, federated or raw address">
+                        <mat-label>Stellar account</mat-label>
+                        <input matInput #address placeholder="Stellar address or federated account">
                     </mat-form-field>
                     <div class="error-msg" *ngIf="!isAddressValid">Invalid address</div>
                 </div>

@@ -4,13 +4,8 @@ table {
 }
 
 .mat-elevation-z8 {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
   background: #fff;
 
-  @include mobile {
-    border-radius: 0;
-  }
 }
 
 .full-width {
@@ -27,7 +22,6 @@ table {
     min-width: 60%;
     display: flex;
     align-items: center;
-    border-radius: 8px;
     font-size: 12px;
     height: 16px;
     padding: 9px 5px 15px 26px;
@@ -46,8 +40,6 @@ table {
     height: 60px;
     display: flex;
     align-items: center;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
     box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
     .mat-input-element {
@@ -195,7 +187,6 @@ table {
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
-    border-radius: 8px;
     background: rgb(255, 255, 255);
     border: 1px solid rgb(223, 223, 223);
     transition: 0.3s;
@@ -226,35 +217,6 @@ table {
       width: unset;
       height: unset;
     }
-  }
-}
-
-.favorite {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 13px;
-  width: 15px;
-  height: 15px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: 8px;
-  background: rgb(255, 255, 255);
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(223, 223, 223);
-  transition: background 150ms ease 0s, color 150ms ease 0s;
-  justify-content: center;
-
-  .icon {
-    color: rgb(245, 166, 35);
-    width: 14px;
-    height: 14px;
-  }
-
-  &:hover {
-    background: rgb(238, 238, 238);
   }
 }
 
@@ -306,7 +268,6 @@ table {
     height: 60px;
     display: flex;
     align-items: center;
-    border-radius: 0;
     box-shadow: none;
   }
 

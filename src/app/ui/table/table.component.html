@@ -1,8 +1,8 @@
 <div class="search">
-    <mat-form-field>
-        <i class="fas fa-search icon"></i>
-        <input placeholder="Search" type="text" matInput (keyup)="applyFilter($event.target.value)">
-    </mat-form-field>
+  <mat-form-field>
+    <i class="fas fa-search icon"></i>
+    <input placeholder="Search" type="text" matInput (keyup)="applyFilter($event.target.value)">
+  </mat-form-field>
 </div>
 
 
@@ -25,89 +25,80 @@
 
 <!--<table matSort (matSortChange)="sortData($event)" matSortActive="name" matSortDirection="asc" matSortDisableClear>-->
 <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort matSortActive="volume" matSortDirection="desc">
+  <table mat-table [dataSource]="dataSource" matSort matSortActive="volume" matSortDirection="desc">
 
-        <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let row">
-                <img class="icon" [ngClass]="row.code" src="{{row.icon}}" alt="">
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="icon">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <img class="icon" [ngClass]="row.code" src="{{row.icon}}" alt="">
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="code">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> NAME</th>
-            <td mat-cell *matCellDef="let row">
-                <div class="name">
-                    <div class="title">
-                        {{row.code}}
-                    </div>
-                    <div class="description">
-                        {{row.name}}
-                    </div>
-                </div>
-        </ng-container>
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> NAME</th>
+      <td mat-cell *matCellDef="let row">
+        <div class="name">
+          <div class="title">
+            {{row.code}}
+          </div>
+          <div class="description">
+            {{row.name}}
+          </div>
+        </div>
+    </ng-container>
 
-        <ng-container matColumnDef="change">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> 24H CHANGE</th>
-            <td mat-cell *matCellDef="let row"><span class="change"
-                                                     [ngClass]="row.change >= 0 ? 'positive' : 'negative'">{{row.change.toFixed(2)}}% </span>
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> PRICE {{this.selectedCurrency}}</th>
+      <td mat-cell *matCellDef="let row"><span class="price">{{ formatAmount(row.price) }}</span></td>
+    </ng-container>
 
-        <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> PRICE {{this.selectedCurrency}}</th>
-            <td mat-cell *matCellDef="let row"><span class="price">{{ formatAmount(row.price) }} </span></td>
-        </ng-container>
+    <ng-container matColumnDef="change">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 24H CHANGE</th>
+      <td mat-cell *matCellDef="let row"><span class="change"
+                                               [ngClass]="row.change >= 0 ? 'positive' : 'negative'">{{row.change.toFixed(2)}}
+        % </span>
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="volume">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> 24H VOLUME</th>
-            <td mat-cell *matCellDef="let row"> {{ formatAmount(row.volume, 'fixed') }}</td>
-        </ng-container>
+    <ng-container matColumnDef="graph">
+      <th mat-header-cell *matHeaderCellDef>7D GRAPH</th>
+      <td mat-cell *matCellDef="let row">
+        <svg id="sparkline-{{row.code}}" class="sparkline" width="100" height="30" stroke-width="1"></svg>
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="depthUsd">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ORDERBOOK DEPTH</th>
-            <td mat-cell *matCellDef="let row"> {{ formatAmount(row.depthUsd, 'fixed') }}</td>
-        </ng-container>
+    <ng-container matColumnDef="volume">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 24H VOLUME</th>
+      <td mat-cell *matCellDef="let row"> {{ formatAmount(row.volume, 'fixed') }}</td>
+    </ng-container>
 
-        <ng-container matColumnDef="graph">
-            <th mat-header-cell *matHeaderCellDef>7D GRAPH</th>
-            <td mat-cell *matCellDef="let row">
-                <svg id="sparkline-{{row.code}}" class="sparkline" width="100" height="30" stroke-width="1"></svg>
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="depthUsd">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> MARKET DEPTH</th>
+      <td mat-cell *matCellDef="let row"> {{ formatAmount(row.depthUsd, 'fixed') }}</td>
+    </ng-container>
 
-        <ng-container matColumnDef="convert">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let row">
-                <div class="buttons">
-                    <div class="button-convert" (click)="currencySelection(row, 'buy')">
-                        <div class="text">
-                            Buy
-                        </div>
-                    </div>
-                    <div class="button-convert" (click)="currencySelection(row, 'sell')">
-                        <div class="text">
-                            Sell
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="convert">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <div class="buttons">
+          <div class="button-convert" (click)="currencySelection(row, 'buy')">
+            <div class="text">
+              Buy
+            </div>
+          </div>
+          <div class="button-convert" (click)="currencySelection(row, 'sell')">
+            <div class="text">
+              Sell
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
 
-        <!--favorites col-->
-        <!--<ng-container matColumnDef="favorites">-->
-        <!--<th mat-header-cell *matHeaderCellDef></th>-->
-        <!--<td mat-cell *matCellDef="let row">-->
-        <!--<div class="favorite">-->
-        <!--<svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" data-radium="true" style="pointer-events: none; fill: currentcolor; width: 1em; height: 1em;"><path fill="#3B3B3B" d="M18.68 24c-.192 0-.38-.047-.553-.139L12 20.633l-6.126 3.228a1.203 1.203 0 0 1-1.467-.29 1.191 1.191 0 0 1-.26-.968l1.17-6.84L.36 10.921a1.186 1.186 0 0 1-.3-1.223 1.18 1.18 0 0 1 .961-.812l6.85-.998 3.062-6.223C11.135 1.255 11.544 1 12 1c.456 0 .866.255 1.068.665l3.062 6.222 6.85.998c.452.065.82.377.961.812.14.435.026.904-.301 1.223l-4.956 4.844 1.17 6.84A1.192 1.192 0 0 1 18.68 24zM12 19.506c.085 0 .17.02.246.06l6.372 3.36a.134.134 0 0 0 .17-.036.125.125 0 0 0 .027-.109l-1.217-7.113a.528.528 0 0 1 .153-.468l5.154-5.037a.13.13 0 0 0 .034-.14.13.13 0 0 0-.11-.093l-7.123-1.038a.526.526 0 0 1-.397-.29l-3.187-6.47A.128.128 0 0 0 12 2.059a.13.13 0 0 0-.121.075l-3.186 6.47a.526.526 0 0 1-.397.29L1.172 9.932a.13.13 0 0 0-.11.093.13.13 0 0 0 .035.14l5.154 5.038a.53.53 0 0 1 .153.467l-1.217 7.113a.13.13 0 0 0 .027.109.135.135 0 0 0 .17.035l6.37-3.36a.525.525 0 0 1 .247-.06z"></path></svg>-->
-        <!--</div>-->
-        <!--</td>-->
-        <!--</ng-container>-->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </table>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-        </tr>
-    </table>
-
-    <!--<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
+  <!--<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
 </div>
