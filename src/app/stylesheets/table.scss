@@ -50,9 +50,13 @@ table {
     border-top-right-radius: 8px;
     box-shadow: 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
+    .mat-input-element {
+      margin-left: -7px;
+      width: auto;
+    }
+
     .icon {
       position: relative;
-      margin-right: -15px;
       left: -20px;
       top: 0;
       width: 1ex;
@@ -173,7 +177,7 @@ table {
 }
 
 .price {
-  color: rgb(15, 89, 209);
+  color: #2196F3;
 }
 
 .buttons {
@@ -255,7 +259,7 @@ table {
 }
 
 .sparkline {
-  stroke: rgb(15, 89, 209);
+  stroke: #2196F3;
   fill: rgb(246, 249, 255);
 }
 

@@ -1,17 +1,4 @@
 <div class="content">
-    <div class="create-wallet" *ngIf="!appComponent.loginFlag">
-        <div class="title">
-            Exchange crypto
-        </div>
-        <div class="description">
-            Using Stellar Decentralized Exchange
-        </div>
-        <div class="button-create" (click)="appComponent.controlsCustomModalService.open('login')">
-            <div class="text">
-                Sign in
-            </div>
-        </div>
-    </div>
     <div app-converter class="sticky"></div>
     <div class="wrapper-content">
         <div class="container">

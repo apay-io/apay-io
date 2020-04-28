@@ -2,7 +2,7 @@
 @import "./stylesheets/tools/media.scss";
 
 .header {
-  background: rgb(15, 89, 209);
+  background: #2196F3;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -10,7 +10,7 @@
   .content {
     width: 100%;
     max-width: 1140px;
-    background: #0f59d1;
+    background: #2196F3;
 
     .menu-row {
       padding: 0 15px;
@@ -196,7 +196,7 @@
       height: 24px;
       font-size: 22px;
       margin-bottom: 4px;
-      color: rgb(15, 89, 209);
+      color: #2196F3;
       text-align: center;
 
       &.withdraw {
@@ -206,7 +206,7 @@
 
     .title-bar-footer {
       font-size: 12px;
-      color: rgb(15, 89, 209);
+      color: #2196F3;
     }
 
     &.active {

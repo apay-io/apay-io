@@ -145,7 +145,7 @@ body.modal-open {
   height: 56px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  background: rgb(15, 89, 209);
+  background: #2196F3;
   color: #fff;
 
   .back {
@@ -213,7 +213,7 @@ body.modal-open {
     font-weight: 500;
     border-radius: 8px;
     color: rgb(255, 255, 255);
-    background: rgb(15, 89, 209);
+    background: #2196F3;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
     border-style: solid;
     border-color: rgb(14, 80, 188);
@@ -278,7 +278,7 @@ body.modal-open {
         font-size: 18px;
 
         &:hover {
-          color: #0f59d1;
+          color: #2196F3;
         }
       }
     }
@@ -536,7 +536,7 @@ body.modal-open {
 
 
         &.active {
-          border: 1px solid rgb(15, 89, 209);
+          border: 1px solid #2196F3;
           background: rgb(245, 251, 255);
         }
 

@@ -106,8 +106,8 @@ export class AccountPageComponent implements OnInit {
 
   barChartColors: Color[] = [
     {
-      borderColor: '#0f59d1',
-      backgroundColor: '#0f59d11f',
+      borderColor: '#2196F3',
+      backgroundColor: '#2196F31f',
     },
   ];
 
