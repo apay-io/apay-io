@@ -15,19 +15,19 @@ export enum EExchangeActions {
 export class SetAmountIn implements Action {
   public readonly type = EExchangeActions.SetAmountIn;
 
-  constructor(public payload: string) {}
+  constructor(public payload: { amountIn: string, currencyIn?: string, currencyOut?: string }) {}
 }
 
 export class SetAmountInternal implements Action {
   public readonly type = EExchangeActions.SetAmountInternal;
 
-  constructor(public payload: { amountIn: string, amountOut: string, amountFee: string; }) {}
+  constructor(public payload: { amountIn: string, amountOut: string, amountFee: string; currencyIn: Currency, currencyOut: Currency }) {}
 }
 
 export class SetAmountOut implements Action {
   public readonly type = EExchangeActions.SetAmountOut;
 
-  constructor(public payload: string) {}
+  constructor(public payload: { amountOut: string, currencyIn?: string, currencyOut?: string }) {}
 }
 
 export class SetCurrencyIn implements Action {

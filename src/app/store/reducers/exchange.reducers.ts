@@ -12,6 +12,8 @@ export function exchangeReducers(
         amountIn: action.payload.amountIn,
         amountOut: action.payload.amountOut,
         amountFee: action.payload.amountFee,
+        currencyIn: action.payload.currencyIn,
+        currencyOut: action.payload.currencyOut,
       };
       return state;
     }

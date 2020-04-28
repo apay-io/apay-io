@@ -28,14 +28,20 @@ export class ExchangeEffects {
   calculateAmountIn$ = this.actions.pipe(
     ofType<SetAmountOut>(EExchangeActions.SetAmountOut),
     switchMap(async (action) => {
-      sessionStorage.setItem('amountOut', action.payload);
+      sessionStorage.setItem('amountOut', action.payload.amountOut);
       sessionStorage.removeItem('amountIn');
+      if (action.payload.currencyIn) {
+        localStorage.setItem('currencyIn', action.payload.currencyIn);
+      }
+      if (action.payload.currencyOut) {
+        localStorage.setItem('currencyOut', action.payload.currencyOut);
+      }
 
       try {
         return await this.stellarService.calculateSell(
           currencies.find((item) => item.code === (localStorage.getItem('currencyIn') || 'XLM')),
           currencies.find((item) => item.code === (localStorage.getItem('currencyOut') || 'BTC')),
-          action.payload,
+          action.payload.amountOut,
         );
       } catch (err) {
         return {
@@ -45,12 +51,15 @@ export class ExchangeEffects {
     }),
     switchMap((item) => {
       const amountOut = parseFloat(sessionStorage.getItem('amountOut'));
+      const currencyIn = currencies.find((currency) => currency.code === (localStorage.getItem('currencyIn') || 'XLM'));
       const currencyOut = currencies.find((currency) => currency.code === (localStorage.getItem('currencyOut') || 'BTC'));
 
       return of(new SetAmountInternal({
         amountIn: (parseFloat(item.source_amount) / this.feeMultiplier).toFixed(7),
         amountOut: sessionStorage.getItem('amountOut'),
         amountFee: (amountOut * currencyOut.withdraw.fee_percent + currencyOut.withdraw.fee_fixed).toFixed(7),
+        currencyIn,
+        currencyOut,
       }));
     })
   );
@@ -59,13 +68,19 @@ export class ExchangeEffects {
   calculateAmountOut$ = this.actions.pipe(
     ofType<SetAmountIn>(EExchangeActions.SetAmountIn),
     switchMap(async (action) => {
-      sessionStorage.setItem('amountIn', action.payload);
+      sessionStorage.setItem('amountIn', action.payload.amountIn);
       sessionStorage.removeItem('amountOut');
+      if (action.payload.currencyIn) {
+        localStorage.setItem('currencyIn', action.payload.currencyIn);
+      }
+      if (action.payload.currencyOut) {
+        localStorage.setItem('currencyOut', action.payload.currencyOut);
+      }
 
       try {
         return await this.stellarService.calculateBuy(
           currencies.find((item) => item.code === (localStorage.getItem('currencyIn') || 'XLM')),
-          (parseFloat(action.payload) * this.feeMultiplier).toFixed(7).toString(),
+          (parseFloat(action.payload.amountIn) * this.feeMultiplier).toFixed(7).toString(),
           currencies.find((item) => item.code === (localStorage.getItem('currencyOut') || 'BTC')),
         );
       } catch (err) {
@@ -75,6 +90,7 @@ export class ExchangeEffects {
       }
     }),
     switchMap((item) => {
+      const currencyIn = currencies.find((currency) => currency.code === (localStorage.getItem('currencyIn') || 'XLM'));
       const currencyOut = currencies.find((currency) => currency.code === (localStorage.getItem('currencyOut') || 'BTC'));
       const amountFee = parseFloat(item.destination_amount) * currencyOut.withdraw.fee_percent / 100 + currencyOut.withdraw.fee_fixed;
 
@@ -82,6 +98,8 @@ export class ExchangeEffects {
         amountIn: sessionStorage.getItem('amountIn'),
         amountOut: item.destination_amount,
         amountFee: amountFee.toFixed(7),
+        currencyIn,
+        currencyOut,
       }));
     })
   );

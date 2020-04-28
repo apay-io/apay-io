@@ -11,6 +11,7 @@ import {SetAmountIn, SetAmountOut, SetCurrencyIn, SetCurrencyOut} from '../../st
 import {ExchangeState} from '../../store/states/exchange.state';
 import {ControlsCustomModalService} from '../../core/controls-custom-modal.service';
 import {CurrencySelectionService} from '../../core/currency-selection.service';
+import { BigNumber } from 'bignumber.js';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -64,10 +65,10 @@ export class ConverterComponent implements OnInit, OnDestroy {
       .subscribe((exchange: ExchangeState) => {
         this.outFlagLoader.emit(false);
         if (!this.exchange && !exchange.amountOut && exchange.amountIn) {
-          this.store.dispatch(new SetAmountIn(exchange.amountIn));
+          this.store.dispatch(new SetAmountIn({ amountIn: exchange.amountIn }));
         }
         if (!this.exchange && !exchange.amountIn && exchange.amountOut) {
-          this.store.dispatch(new SetAmountOut(exchange.amountOut));
+          this.store.dispatch(new SetAmountOut({ amountOut: exchange.amountOut }));
         }
 
         this.exchange = exchange;
@@ -93,14 +94,19 @@ export class ConverterComponent implements OnInit, OnDestroy {
 
   async revertCurrency() {
     const [oldIn, oldOut] = [this.exchange.currencyIn, this.exchange.currencyOut];
-    this.store.dispatch(new SetCurrencyIn(oldOut));
-    this.store.dispatch(new SetCurrencyOut(oldIn));
     if (sessionStorage.getItem('amountIn')) {
-      this.store.dispatch(new SetAmountOut(sessionStorage.getItem('amountIn')));
+      this.store.dispatch(new SetAmountOut({
+        currencyIn: oldOut.code,
+        currencyOut: oldIn.code,
+        amountOut: sessionStorage.getItem('amountIn'),
+      }));
     } else if (sessionStorage.getItem('amountOut')) {
-      this.store.dispatch(new SetAmountIn(sessionStorage.getItem('amountOut')));
+      this.store.dispatch(new SetAmountIn({
+        currencyIn: oldOut.code,
+        currencyOut: oldIn.code,
+        amountIn: sessionStorage.getItem('amountOut'),
+      }));
     }
-    await this.recalculateAmounts(this.exchange.amountOut, this.exchange.amountIn);
   }
 
   continue() {
@@ -115,10 +121,10 @@ export class ConverterComponent implements OnInit, OnDestroy {
     this.stateButton = 'loading';
     if (event.target.value > 0) {
       if (event.target.value < this.currencyOut.withdraw.min_amount) {
-        this.notify.update('Minimum value for ' + this.currencyOut.code + ' - ' + this.currencyOut.withdraw.min_amount, 'error');
+        this.notify.update('Minimum withdrawal ' + this.currencyOut.withdraw.min_amount + ' ' + this.currencyOut.code, 'error');
         return false;
       }
-      this.store.dispatch(new SetAmountOut(event.target.value));
+      this.store.dispatch(new SetAmountOut({ amountOut: event.target.value }));
     }
   }
 
@@ -128,10 +134,10 @@ export class ConverterComponent implements OnInit, OnDestroy {
 
     if (event.target.value > 0) {
       if (event.target.value < this.currencyIn.deposit.min_amount) {
-        this.notify.update('Minimum value for ' + this.currencyIn.code + ' - ' + this.currencyIn.deposit.min_amount, 'error');
+        this.notify.update('Minimum deposit ' + this.currencyIn.deposit.min_amount + ' ' + this.currencyIn.code, 'error');
         return false;
       }
-      this.store.dispatch(new SetAmountIn(event.target.value));
+      this.store.dispatch(new SetAmountIn({ amountIn: event.target.value }));
     }
   }
 
@@ -142,7 +148,7 @@ export class ConverterComponent implements OnInit, OnDestroy {
     //   this.refreshClass = 'visible';
     // }, 1000);
     if (!amountIn || !amountOut) {
-      this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
+      // this.notify.update('Unable to find a path on the network. Please try again later or a different amount', 'error');
       this.stateButton = 'disabled';
       this.outFlagLoader.emit(false);
       return;
@@ -151,6 +157,14 @@ export class ConverterComponent implements OnInit, OnDestroy {
       this.stateButton = 'active';
       this.notify.clear();
 
+      if (new BigNumber(this.exchange.amountIn).lt(this.currencyIn.deposit.min_amount)) {
+        this.notify.update('Minimum deposit ' + this.currencyIn.deposit.min_amount + ' ' + this.currencyIn.code, 'error');
+        this.stateButton = 'disabled';
+      }
+      if (new BigNumber(this.exchange.amountOut).lt(this.currencyOut.withdraw.min_amount)) {
+        this.notify.update('Minimum withdrawal ' + this.currencyOut.withdraw.min_amount + ' ' + this.currencyOut.code, 'error');
+        this.stateButton = 'disabled';
+      }
       if (this.getInfoCurrencies) {
         const inConvertToDollars = this.getInfoCurrencies
           .find(item => item.code === this.exchange.currencyIn.code).price * parseFloat(this.exchange.amountIn);
