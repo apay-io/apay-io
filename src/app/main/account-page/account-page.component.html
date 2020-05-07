@@ -1,272 +1,280 @@
 <div class="content">
-    <div class="wrapper">
-        <div class="general-chart" *ngIf="sumValue">
-            <div class="title-wrapper">
-                <div class="title">
-                    Total Balance
-                </div>
-                <div class="description">
-                    {{this.sumValue}} USD
-                </div>
-            </div>
-            <div class="chart">
-                <canvas baseChart
-                        [options]="doughnutChartOptions"
-                        [labels]="doughnutChartLabels"
-                        [datasets]="datasets"
-                        [chartType]="'doughnut'"></canvas>
-            </div>
+  <div class="wrapper">
+    <div class="general-chart" *ngIf="sumValue">
+      <div class="title-wrapper">
+        <div class="title">
+          Total Balance
         </div>
-<!--      <div class="table-chart">-->
-<!--        <div style="width: 100%">-->
-<!--          <canvas baseChart-->
-<!--                  [options]="barChartOptions"-->
-<!--                  [colors]="barChartColors"-->
-<!--                  [data]="balanceChartData"-->
-<!--                  [labels]="balanceChartLabels"-->
-<!--                  [chartType]="ChartType">-->
-<!--          </canvas>-->
-<!--        </div>-->
-<!--      </div>-->
-      <div class="controls-table">
-        <div class="search">
-            <mat-form-field>
-                <i class="fas fa-search icon"></i>
-                <input placeholder="Search" type="text" matInput [(ngModel)]="searchValue" (ngModelChange)="search()">
-            </mat-form-field>
-            </div>
-            <div class="hide-low-balance">
-                <mat-checkbox [checked]="hideLowBalanceFlag" (change)="isHideLowBalanceCheckbox($event)">
-                    <span style="word-break: break-all;" class="">Hide low balance assets</span>
-                </mat-checkbox>
-            </div>
+        <div class="description">
+          {{this.sumValue}} USD
         </div>
-        <div class="table-wrapper">
-          <table mat-table [dataSource]="dataSource" matSort matSortActive="value" matSortDirection="desc">
-
-            <ng-container matColumnDef="icon">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let row">
-                <img class="icon" [ngClass]="row.code" src="{{row.icon}}" alt="">
-              </td>
-              <td *matFooterCellDef> </td>
-            </ng-container>
-
-            <ng-container matColumnDef="code">
-              <th mat-header-cell *matHeaderCellDef> NAME</th>
-              <td mat-cell *matCellDef="let row">
-                <div class="name">
-                  <div class="title">
-                    {{row.code}}
-                  </div>
-                  <div class="description">
-                    {{row.name}}
-                  </div>
-                </div>
-              </td>
-              <td *matFooterCellDef> </td>
-            </ng-container>
-
-            <ng-container matColumnDef="balance">
-              <th mat-header-cell *matHeaderCellDef> BALANCE</th>
-              <td mat-cell *matCellDef="let row"> {{ row.balance }}</td>
-              <td *matFooterCellDef> </td>
-            </ng-container>
-
-            <ng-container matColumnDef="percent">
-              <th mat-header-cell *matHeaderCellDef> %</th>
-              <td mat-cell *matCellDef="let row"> {{ row.percent }}</td>
-              <td *matFooterCellDef> Total: </td>
-            </ng-container>
-
-            <ng-container matColumnDef="value">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> VALUE</th>
-              <td mat-cell *matCellDef="let row"> {{ row.value | currency }}</td>
-              <td *matFooterCellDef> {{ this.sumValue | currency }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let row">
-                <div class="buttons-group">
-                  <div class="button-convert" [ngClass]="{'disabled' : !row.deposit.enabled}" (click)="openModal($event, row, 'deposit');">
-                    <div class="text">
-                      {{row.trustline ? 'Deposit': 'Accept'}}
-                    </div>
-                  </div>
-                  <div class="button-convert" [ngClass]="{'disabled' : row.balance === '0' || !row.withdraw.enabled}" (click)="openModal($event, row, 'withdraw');">
-                    <div class="text">
-                      Withdraw
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td *matFooterCellDef> </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-          </table>
+      </div>
+      <div class="chart">
+        <canvas baseChart
+                [options]="doughnutChartOptions"
+                [labels]="doughnutChartLabels"
+                [datasets]="datasets"
+                [chartType]="'doughnut'"></canvas>
+      </div>
     </div>
+    <!--      <div class="table-chart">-->
+    <!--        <div style="width: 100%">-->
+    <!--          <canvas baseChart-->
+    <!--                  [options]="barChartOptions"-->
+    <!--                  [colors]="barChartColors"-->
+    <!--                  [data]="balanceChartData"-->
+    <!--                  [labels]="balanceChartLabels"-->
+    <!--                  [chartType]="ChartType">-->
+    <!--          </canvas>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <div class="controls-table">
+      <div class="search">
+        <mat-form-field>
+          <i class="fas fa-search icon"></i>
+          <input placeholder="Search" type="text" matInput [(ngModel)]="searchValue" (ngModelChange)="search()">
+        </mat-form-field>
+      </div>
+      <div class="hide-low-balance">
+        <mat-checkbox [checked]="hideLowBalanceFlag" (change)="isHideLowBalanceCheckbox($event)">
+          <span style="word-break: break-all;" class="">Hide low balance assets</span>
+        </mat-checkbox>
+      </div>
+    </div>
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource" matSort matSortActive="value" matSortDirection="desc">
+
+        <ng-container matColumnDef="image">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <img class="icon" [ngClass]="row.code" src="{{row.image}}" alt="">
+          </td>
+          <td *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef> NAME</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="name">
+              <div class="title">
+                {{row.code}}
+              </div>
+              <div class="description">
+                {{row.name}}
+              </div>
+            </div>
+          </td>
+          <td *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="balance">
+          <th mat-header-cell *matHeaderCellDef> BALANCE</th>
+          <td mat-cell *matCellDef="let row"> {{ row.balance }}</td>
+          <td *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="percent">
+          <th mat-header-cell *matHeaderCellDef> %</th>
+          <td mat-cell *matCellDef="let row"> {{ row.percent }}</td>
+          <td *matFooterCellDef> Total:</td>
+        </ng-container>
+
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> VALUE</th>
+          <td mat-cell *matCellDef="let row"> {{ row.value | currency }}</td>
+          <td *matFooterCellDef> {{ this.sumValue | currency }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <div class="buttons-group">
+              <div class="button-convert" [ngClass]="{'disabled' : !row.deposit.enabled}"
+                   (click)="openModal($event, row, 'deposit');">
+                <div class="text">
+                  {{row.trustline ? 'Deposit' : 'Accept'}}
+                </div>
+              </div>
+              <div class="button-convert" [ngClass]="{'disabled' : row.balance === '0' || !row.withdraw.enabled}"
+                   (click)="openModal($event, row, 'withdraw');">
+                <div class="text">
+                  Withdraw
+                </div>
+              </div>
+            </div>
+          </td>
+          <td *matFooterCellDef></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+      </table>
+    </div>
+
+    <app-savings [balances]="balances" style="width: 100vw;"></app-savings>
+
+  </div>
 </div>
 
 <modal id="withdraw">
-    <div class="modal">
-        <div class="modal-body">
-            <div class="head-popup">
-                Withdraw
-                <div class="close" (click)="modalService.close('withdraw');">
-                    <i class="fas fa-times icon-close"></i>
-                </div>
+  <div class="modal">
+    <div class="modal-body">
+      <div class="head-popup">
+        Withdraw
+        <div class="close" (click)="modalService.close('withdraw');">
+          <i class="fas fa-times icon-close"></i>
+        </div>
+      </div>
+      <div class="content-popup">
+        <form [formGroup]="withdrawForm" class="operations-modal" (ngSubmit)="sendWithdrawForm()">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Recipient's {{currentToken.code}} Address" formControlName="recipient"
+                   value="">
+          </mat-form-field>
+          <div class="amount">
+            <div class="balance">
+              <div class="text">
+                Available Balance
+              </div>
+              <div class="text currency" (click)="addFullBalance(currentToken.balance)">
+                {{currentToken.balance}} {{currentToken.code}}
+              </div>
             </div>
-            <div class="content-popup">
-                <form [formGroup]="withdrawForm" class="operations-modal" (ngSubmit)="sendWithdrawForm()">
-                    <mat-form-field class="full-width">
-                        <input matInput placeholder="Recipient's {{currentToken.code}} Address" formControlName="recipient"  value="">
-                    </mat-form-field>
-                    <div class="amount">
-                        <div class="balance">
-                            <div class="text">
-                                Available Balance
-                            </div>
-                            <div class="text currency" (click)="addFullBalance(currentToken.balance)">
-                                {{currentToken.balance}} {{currentToken.code}}
-                            </div>
-                        </div>
-                        <div class="min">
-                            Minimum Withdrawal: {{this.currentToken.withdraw.min_amount}} {{currentToken.code}}
-                        </div>
-                        <mat-form-field class="full-width">
-                            <input matInput placeholder="Amount" maxlength="18" formControlName="amount" autocomplete="off" value="">
-                        </mat-form-field>
-                        <div *ngIf="_amount.invalid && (_amount.touched || _amount.dirty)">
+            <div class="min">
+              Minimum Withdrawal: {{this.currentToken.withdraw.min_amount}} {{currentToken.code}}
+            </div>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Amount" maxlength="18" formControlName="amount" autocomplete="off" value="">
+            </mat-form-field>
+            <div *ngIf="_amount.invalid && (_amount.touched || _amount.dirty)">
                             <span class="error" *ngIf="_amount.errors?.required">
                                 Field cannot be empty
                             </span>
-                            <span class="error" *ngIf="_amount.errors?.min && !_amount.errors?.pattern">
+              <span class="error" *ngIf="_amount.errors?.min && !_amount.errors?.pattern">
                                 Value must be greater {{_amount.errors?.min.min}}
                             </span>
-                            <span class="error" *ngIf="_amount.errors?.max && !_amount.errors?.pattern">
+              <span class="error" *ngIf="_amount.errors?.max && !_amount.errors?.pattern">
                                 Value must not exceed {{_amount.errors?.max.max}}
                             </span>
-                            <span class="error" *ngIf="_amount.errors?.pattern">
+              <span class="error" *ngIf="_amount.errors?.pattern">
                                 Value error
                             </span>
-                        </div>
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                          Transaction Fee:
-                        </div>
-                        <div class="text">
-                            {{_amount.value * currentToken.withdraw.fee_percent + currentToken.withdraw.fee_fixed}} {{currentToken.code}}
-                        </div>
-                    </div>
-                    <div class="info">
-                        <div class="title">
-                            You will get:
-                        </div>
-                        <div class="text">
-                            {{ _amount.value * ( 1 - currentToken.withdraw.fee_percent) - currentToken.withdraw.fee_fixed }} {{currentToken.code}}
-                        </div>
-                    </div>
-                    <button
-                            [disabled]="!withdrawForm.valid"
-                            mat-raised-button
-                            [ngClass]="{'load': isLoading}"
-                            class="button-next">
-                        <div *ngIf="isLoading" class=" icon spinner small"></div>
-                        <span>{{buttonText}}</span>
-                    </button>
-                </form>
             </div>
+          </div>
+          <div class="info">
+            <div class="title">
+              Transaction Fee:
+            </div>
+            <div class="text">
+              {{_amount.value * currentToken.withdraw.fee_percent + currentToken.withdraw.fee_fixed | number:'1.0-7'}} {{currentToken.code}}
+            </div>
+          </div>
+          <div class="info">
+            <div class="title">
+              You will get:
+            </div>
+            <div class="text">
+              {{ _amount.value * (1 - currentToken.withdraw.fee_percent) - currentToken.withdraw.fee_fixed | number:'1.0-7' }} {{currentToken.code}}
+            </div>
+          </div>
+          <button
+            [disabled]="!withdrawForm.valid"
+            mat-raised-button
+            [ngClass]="{'load': isLoading}"
+            class="button-next">
+            <div *ngIf="isLoading" class=" icon spinner small"></div>
+            <span>{{buttonText}}</span>
+          </button>
+        </form>
+      </div>
 
-        </div>
     </div>
-    <div class="modal-background"></div>
+  </div>
+  <div class="modal-background"></div>
 </modal>
 
 <modal id="deposit">
-    <div class="modal">
-        <div class="modal-body">
-            <div class="head-popup">
-                Deposit
-                <div class="close" (click)="modalService.close('deposit');">
-                    <i class="fas fa-times icon-close"></i>
-                </div>
+  <div class="modal">
+    <div class="modal-body">
+      <div class="head-popup">
+        Deposit
+        <div class="close" (click)="modalService.close('deposit');">
+          <i class="fas fa-times icon-close"></i>
+        </div>
+      </div>
+      <div class="content-popup">
+        <div class="operations-modal">
+          <div class="info deposit">
+            <div class="title">
+              Send only {{currentToken.code}} to this deposit address.
             </div>
-            <div class="content-popup">
-                <div class="operations-modal">
-                    <div class="info deposit">
-                        <div class="title">
-                            Send only {{currentToken.code}} to this deposit address.
-                        </div>
-                        <div class="text">
-                            Sending coin or token other than {{currentToken.code}} to this address may result in the loss of your deposit.
-                        </div>
-                    </div>
-                    <div class="address-wrapper">
-                        <div class="info">
-                            <div class="title">
-                                {{currentToken.code}} Address
-                            </div>
-                            <div class="address" [ngClass]="{'load': !address}">
-                                {{address}}
-                                <span [text-copy]="address">
+            <div class="text">
+              Sending coin or token other than {{currentToken.code}} to this address may result in the loss of your
+              deposit.
+            </div>
+          </div>
+          <div class="address-wrapper">
+            <div class="info">
+              <div class="title">
+                {{currentToken.code}} Address
+              </div>
+              <div class="address" [ngClass]="{'load': !address}">
+                {{address}}
+                <span [text-copy]="address">
                                     <i class="far fa-clone icon copy"></i>
                                 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <app-crypto-qr [code]="currentToken.code" [address]="address"></app-crypto-qr>
-                </div>
+              </div>
             </div>
+          </div>
+          <app-crypto-qr [code]="currentToken.code" [address]="address"></app-crypto-qr>
         </div>
+      </div>
     </div>
-    <div class="modal-background"></div>
+  </div>
+  <div class="modal-background"></div>
 </modal>
 
 <modal id="prepare-transaction">
-    <div class="modal">
-        <div class="modal-body">
-            <div class="head-popup">
-                Prepare transaction
-                <div class="close" (click)="modalService.close('prepare-transaction');">
-                    <i class="fas fa-times icon-close"></i>
-                </div>
+  <div class="modal">
+    <div class="modal-body">
+      <div class="head-popup">
+        Prepare transaction
+        <div class="close" (click)="modalService.close('prepare-transaction');">
+          <i class="fas fa-times icon-close"></i>
+        </div>
+      </div>
+      <div class="content-popup">
+        <div class="operations-modal">
+          <div class="info deposit">
+            <!--<div class="title">-->
+            <!--Prepare transaction-->
+            <!--</div>-->
+            <div class="text">
+              {{ description }}
             </div>
-            <div class="content-popup">
-                <div class="operations-modal">
-                    <div class="info deposit">
-                        <!--<div class="title">-->
-                        <!--Prepare transaction-->
-                        <!--</div>-->
-                        <div class="text">
-                            {{ description }}
-                        </div>
-                    </div>
-                    <div class="address-wrapper">
-                        <div class="info">
-                            <div class="title">
-                                Transaction id
-                            </div>
-                            <div class="address tx" [ngClass]="{'load': !xdr}">
-                                <span class="tx-id">{{xdr}}</span>
-                                <span [text-copy]="xdr">
+          </div>
+          <div class="address-wrapper">
+            <div class="info">
+              <div class="title">
+                Transaction id
+              </div>
+              <div class="address tx" [ngClass]="{'load': !xdr}">
+                <span class="tx-id">{{xdr}}</span>
+                <span [text-copy]="xdr">
                                     <i class="far fa-clone icon copy" aria-hidden="true"></i>
                                 </span>
-                            </div>
-                        </div>
-                    </div>
-                    <a target="_blank" [href]="'http://cosmic.link/?network=public&xdr=' + xdr"
-                       class="button-next external-link">
-                        <span>Sign</span>
-                        <i class="fas fa-external-link-alt external-icon"></i>
-                    </a>
-                </div>
+              </div>
             </div>
+          </div>
+          <a target="_blank" [href]="'http://cosmic.link/?xdr=' + xdr + '&network=public'"
+             class="button-next external-link">
+            <span>Sign</span>
+            <i class="fas fa-external-link-alt external-icon"></i>
+          </a>
         </div>
+      </div>
     </div>
-    <div class="modal-background"></div>
+  </div>
+  <div class="modal-background"></div>
 </modal>

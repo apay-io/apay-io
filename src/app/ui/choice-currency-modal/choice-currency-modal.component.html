@@ -17,7 +17,7 @@
                 <div class="currency-wrapper">
                     <div class="currency-list">
                         <div class="currency-item" *ngFor="let item of arraySearchValue" (click)="selectCurrency(item, currencyInfoSave.type);controlsCustomModalService.close('choiceCurrency')" [ngClass]="{'active': currencyInfoSave.code == item.code}" >
-                            <img class="icon" [ngClass]="item.code" [src]="item.icon" alt="">
+                            <img class="icon" [ngClass]="item.code" [src]="item.image" alt="">
                             <div class="title-currency">
                                 {{item.code}}
                             </div>

@@ -2,11 +2,11 @@ export const currencies = [
   // {
   //   'code': 'XDR',
   //   'name': 'Pays XDR',
-  //   'icon': '/assets/img/xdr-coin.svg',
+  //   image: '/assets/img/xdr-coin.svg',
   //   'convert': '1',
   //   'favorites': '2',
   //   'issuer': 'GAWJSEVB6H4RIZX6FJJORJAXFLQDMFTKUAOU5UGFNWLPCYQ6A2O6PAYS',
-  //   'baseUrl': 'https://api.apay.io/api',
+  //   transferServer: 'https://api.apay.io/api',
   //   'balance': '0',
   //   'percent': '-',
   //   'value': 0,
@@ -20,11 +20,11 @@ export const currencies = [
   {
     'code': 'XLM',
     'name': 'Lumen',
-    'icon': '/assets/img/XLM.png',
+    image: '/assets/img/XLM.png',
     'issuer': null,
     'convert': '1',
     'favorites': '2',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     'balance': '0',
     'percent': '-',
     'value': 0,
@@ -50,11 +50,11 @@ export const currencies = [
   {
     'code': 'BTC',
     'name': 'Bitcoin',
-    'icon': '/assets/img/btc.svg',
+    image: '/assets/img/btc.svg',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GAUTUYY2THLF7SGITDFMXJVYH3LHDSMGEAKSBU267M2K7A3W543CKUEF',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     'color': '#f89f37',
     stellarNative: false,
     'trustline': false,
@@ -76,12 +76,12 @@ export const currencies = [
   {
     code: 'USDT',
     name: 'Tether USD',
-    'icon': '/assets/img/usdt.svg',
+    image: '/assets/img/usdt.svg',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GCQTGZQQ5G4PTM2GL7CDIFKUBIPEC52BROAQIAPW53XBRJVN6ZJVTG6V',
     'minDeposit': '0.5',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     deposit: {
       enabled: true,
       fee_fixed: 0.0,
@@ -103,11 +103,11 @@ export const currencies = [
   {
     'code': 'ETH',
     'name': 'Ethereum',
-    'icon': '/assets/img/eth.png',
+    image: '/assets/img/eth.png',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     deposit: {
       enabled: true,
       fee_fixed: 0.0,
@@ -129,11 +129,11 @@ export const currencies = [
   {
     'code': 'LTC',
     'name': 'Litecoin',
-    'icon': '/assets/img/ltc.png',
+    image: '/assets/img/ltc.png',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     deposit: {
       enabled: true,
       fee_fixed: 0.0,
@@ -155,11 +155,11 @@ export const currencies = [
   {
     'code': 'BAT',
     'name': 'Basic Attention Token',
-    'icon': '/assets/img/bat.svg',
+    image: '/assets/img/bat.svg',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     deposit: {
       enabled: true,
       fee_fixed: 0.0,
@@ -181,11 +181,11 @@ export const currencies = [
   {
     'code': 'KIN',
     'name': 'Kin',
-    'icon': '/assets/img/kin.svg',
+    image: '/assets/img/kin.svg',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     deposit: {
       enabled: true,
       fee_fixed: 0.0,
@@ -207,11 +207,11 @@ export const currencies = [
   {
     'code': 'LINK',
     'name': 'ChainLink',
-    'icon': '/assets/img/link.svg',
+    image: '/assets/img/link.svg',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     deposit: {
       enabled: true,
       fee_fixed: 0.0,
@@ -233,11 +233,11 @@ export const currencies = [
   {
     'code': 'OMG',
     'name': 'OmiseGo',
-    'icon': '/assets/img/omg.svg',
+    image: '/assets/img/omg.svg',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     deposit: {
       enabled: true,
       fee_fixed: 0.0,
@@ -259,11 +259,11 @@ export const currencies = [
   {
     'code': 'REP',
     'name': 'Augur',
-    'icon': '/assets/img/rep.png',
+    image: '/assets/img/rep.png',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     deposit: {
       enabled: true,
       fee_fixed: 0.0,
@@ -285,11 +285,11 @@ export const currencies = [
   {
     'code': 'ZRX',
     'name': '0xProject',
-    'icon': '/assets/img/zrx.svg',
+    image: '/assets/img/zrx.svg',
     'convert': '1',
     'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
-    'baseUrl': 'https://api.apay.io/api',
+    transferServer: 'https://api.apay.io/api',
     deposit: {
       enabled: true,
       fee_fixed: 0.0,

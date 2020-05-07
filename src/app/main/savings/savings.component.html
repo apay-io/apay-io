@@ -1,0 +1,226 @@
+<div class="markets">
+  <h2>Support Stellar Decentralized Exchange</h2>
+  <p>Put your funds to work by making markets on DEX. <a target="_blank" href="medium.org">Learn more</a>.<br/> Active
+    market maker bots are listed below</p>
+  <mat-card class="alert" *ngFor="let market of incomingOps">
+    <mat-card-title>Action required</mat-card-title>
+    <mat-card-content>
+      There are incoming transactions, that haven't been applied yet
+      <ul>
+        <li *ngFor="let op of market.ops">
+          {{ op.amount }} {{ op.asset_code }}
+        </li>
+      </ul>
+    </mat-card-content>
+    <mat-card-actions [align]="'end'">
+      <label style="margin-right: 20px;">
+        <input type="checkbox" [checked]="termsAccepted" (change)="termsAccepted = !termsAccepted" style="margin-right: 5px;">
+        I accept terms and conditions
+      </label>
+      <button class="mat-flat-button mat-primary" [disabled]="!termsAccepted" (click)="apply(market)">Apply</button>
+<!--      <button class="mat-stroked-button mat-button-base" (click)="refund(market)">Refund</button>-->
+    </mat-card-actions>
+  </mat-card>
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort matSortActive="percent" matSortDirection="desc">
+
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <img class="icon" [ngClass]="row.code" src="{{row.image}}" alt="">
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> NAME</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="name">
+            <div class="title">
+              {{row.code}}
+            </div>
+            <div class="description">
+              {{row.name}}
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef> BALANCE</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="name">
+            <div class="title">
+              {{ getBalance(row.code) }}
+            </div>
+            <div class="description" *ngIf="getBalance(row.code)">
+              APAY{{ row.code }}
+            </div>
+          </div></td>
+      </ng-container>
+
+      <ng-container matColumnDef="percent">
+        <th mat-header-cell *matHeaderCellDef>ROI in USD</th>
+        <td mat-cell *matCellDef="let row">
+          <span class="change" [ngClass]="{ positive: row.percent > 0, negative: row.percent < 0 }">
+            {{ row.percent | number:'1.0-2' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> VALUE</th>
+        <td mat-cell *matCellDef="let row"> {{ row.value | currency:'USD' }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <div class="buttons-group">
+            <div class="button-convert" [ngClass]="{'disabled' : !row.deposit.enabled}"
+                 (click)="addFunds(row.code)">
+              <div class="text">
+                {{hasTrustline(row.code) ? 'Add funds' : 'Participate'}}
+              </div>
+            </div>
+            <div class="button-convert" [ngClass]="{'disabled' : !hasTrustline(row.code) || getBalance(row.code) === '0'}"
+                 (click)="redeem(row.code)">
+              <div class="text">
+                Redeem
+              </div>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</div>
+
+<modal id="contribute">
+  <div class="modal" *ngIf="code && mmTotal">
+    <div class="modal-body">
+      <div class="head-popup">
+        Contribute funds
+        <div class="close" (click)="closeContributeModal()">
+          <i class="fas fa-times icon-close"></i>
+        </div>
+      </div>
+      <div class="content-popup">
+        <div class="operations-modal">
+          <div class="info">
+            <div class="title">
+              Market maker for {{ code }} / USDT
+            </div>
+            <div class="text">
+              <div class="column">
+                Balances:<br/>
+                <span class="currency">{{ mmTotal.asset }} {{ code }}</span><br/>
+                <span class="currency">{{ mmTotal.base }} USDT</span><br/>
+              </div>
+              <div class="column">
+                Rate:<br/>
+                <span class="currency">{{ mmTotal.rate }} {{code}} / USDT</span><br/><br/>
+              </div>
+
+            </div>
+
+            <div class="box">
+              <div class="balance">
+                <div class="text">
+                  max
+                </div>
+                <div class="text currency" (click)="updateAssetAmount(this.assetBalance.balance)">
+                  {{this.assetBalance.balance}} {{code}}
+                </div>
+              </div>
+              <mat-form-field class="full-width" [ngClass]="{ 'mat-form-field-invalid': assetAmountControl.invalid }">
+                <input matInput placeholder="Amount of {{code}}" [formControl]="assetAmountControl" (keyup)="updateAssetAmount($event.target.value)"
+                       maxlength="18" autocomplete="off">
+              </mat-form-field>
+              <div *ngIf="assetAmountControl.invalid">
+                <span class="error" *ngIf="assetAmountControl.errors?.max && !assetAmountControl.errors?.pattern">
+                    Value must not exceed available balance
+                </span>
+                <span class="error" *ngIf="assetAmountControl.errors?.pattern">
+                    Value error
+                </span>
+              </div>
+            </div>
+
+            <div class="box">
+              <div class="balance">
+                <div class="text">
+                  max
+                </div>
+                <div class="text currency" (click)="updateBaseAmount(this.baseBalance.balance)">
+                  {{this.baseBalance.balance}} USDT
+                </div>
+              </div>
+              <mat-form-field class="full-width" [ngClass]="{ 'mat-form-field-invalid': baseAmountControl.invalid }">
+                <input matInput placeholder="Amount of USDT" [formControl]="baseAmountControl" (keyup)="updateBaseAmount($event.target.value)"
+                       maxlength="18" autocomplete="off">
+              </mat-form-field>
+              <div *ngIf="baseAmountControl.invalid">
+                <span class="error" *ngIf="baseAmountControl.errors?.max && !baseAmountControl.errors?.pattern">
+                    Value must not exceed available balance
+                </span>
+                <span class="error" *ngIf="baseAmountControl.errors?.pattern">
+                    Value error
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="address-wrapper" *ngIf="false">
+            <div class="address">
+              Add trustline for asset APAY{{code}} by <span [text-copy]="mmTotal.market.manager" class="tx-id">{{mmTotal.market.manager}}</span>
+            </div>
+            You need to send equal USDT value of both assets to
+            <div class="info">
+              <div class="title-details">
+                To address
+              </div>
+              <div class="address tx">
+                <span [text-copy]="mmTotal.market.manager" class="tx-id">{{mmTotal.market.manager}}</span>
+                <span [text-copy]="mmTotal.market.manager">
+                    <i class="far fa-clone icon copy" aria-hidden="true"></i>
+                </span>
+              </div>
+            </div>
+            <div class="info">
+              <div class="title-details">
+                Memo ID
+              </div>
+              <div class="address tx">
+                <span [text-copy]="memoId" class="tx-id">{{memoId}}</span>
+                <span [text-copy]="memoId">
+                    <i class="far fa-clone icon copy" aria-hidden="true"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="address-wrapper">
+            <div class="info">
+              {{ description }}
+              <div class="address tx" *ngIf="xdr">
+                <span [text-copy]="xdr" class="tx-id">{{xdr}}</span>
+                <span [text-copy]="xdr">
+                                    <i class="far fa-clone icon copy" aria-hidden="true"></i>
+                                </span>
+              </div>
+            </div>
+          </div>
+          <a target="_blank" [href]="'https://cosmic.link/?xdr=' + xdr + '&network=public'"
+             [ngClass]="{'disabled': !xdr || baseAmountControl.invalid || assetAmountControl.invalid }"
+             class="button-next external-link">
+            <span>Sign</span>
+            <i class="fas fa-external-link-alt external-icon"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-background"></div>
+</modal>
+

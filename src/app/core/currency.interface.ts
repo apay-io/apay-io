@@ -2,7 +2,7 @@ export interface Currency {
   code: string;
   name: string;
   issuer?: string;
-  icon: string;
+  image: string;
   deposit: {
     enabled: boolean,
     fee_fixed: number,

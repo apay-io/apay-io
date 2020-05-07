@@ -29,7 +29,7 @@
                         <div *ngIf="arraySearchValue.length">
                             <div class="token" *ngFor="let item of arraySearchValue" [ngClass]="{'active': selectedToken && selectedToken.code === item.code}" (click)="selectToken(item)">
                                 <div class="wrapper-icon">
-                                    <img class="icon" [src]="item.icon" [ngClass]="item.code" alt="">
+                                    <img class="icon" [src]="item.image" [ngClass]="item.code" alt="">
                                 </div>
                                 <div class="name">
                                     {{item.name}}
@@ -201,7 +201,7 @@
               </div>
             </div>
           </div>
-          <a target="_blank" [href]="'http://cosmic.link/?network=public&xdr=' + xdr"
+          <a target="_blank" [href]="'http://cosmic.link/?xdr=' + xdr + '&network=public'"
              class="button-next external-link" style="width: auto;">
             <span>Sign</span>
             <i class="fas fa-external-link-alt external-icon"></i>

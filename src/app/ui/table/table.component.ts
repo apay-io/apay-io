@@ -23,7 +23,7 @@ export interface UserData {
 })
 
 export class TableComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['icon', 'code', 'price', 'change', 'graph', 'volume', 'depthUsd', 'convert'];
+  displayedColumns: string[] = ['image', 'code', 'price', 'change', 'graph', 'volume', 'depthUsd', 'convert'];
   dataSource: MatTableDataSource<UserData>;
 
   @Input()

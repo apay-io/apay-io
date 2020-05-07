@@ -12,7 +12,8 @@ import {Currency} from '../../core/currency.interface';
 import {environment} from '../../../environments/environment';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
-import {isEqual} from 'lodash';
+import {isEqual, pick, map, find, findIndex} from 'lodash';
+import {markets} from '../../../assets/markets';
 
 export interface Data {
   date: string;
@@ -21,7 +22,7 @@ export interface Data {
 
 interface Token extends Currency {
   balance: string;
-  baseUrl: string;
+  transferServer: string;
   trustline: boolean;
 }
 
@@ -32,9 +33,9 @@ interface Token extends Currency {
 })
 
 export class AccountPageComponent implements OnInit {
-  dataWallet= JSON.parse(JSON.stringify(currencies));
+  dataWallet = JSON.parse(JSON.stringify(currencies));
   dataSource = new MatTableDataSource(this.dataWallet);
-  displayedColumns = ['icon', 'code', 'balance', 'percent', 'value', 'actions'];
+  displayedColumns = ['image', 'code', 'balance', 'percent', 'value', 'actions'];
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   rates = {};
   isLoading = false;
@@ -49,7 +50,7 @@ export class AccountPageComponent implements OnInit {
   currentToken: Token = {
     code: '',
     name: '',
-    icon: '',
+    image: '',
     balance: '',
     deposit: {
       enabled: true,
@@ -66,7 +67,7 @@ export class AccountPageComponent implements OnInit {
       fee: ''
     },
     stellarNative: false,
-    baseUrl: '',
+    transferServer: '',
     trustline: false
   };
   public doughnutChartLabels = [];
@@ -85,7 +86,8 @@ export class AccountPageComponent implements OnInit {
   withdrawForm: FormGroup;
   regexpAmount = /^[0-9]*[.,]?[0-9]+$/;
   public description: string;
-  private balances: Balance[];
+  public balances: Balance[];
+  meta = JSON.parse(sessionStorage.getItem('assets-meta') || '{}');
 
   constructor(private readonly http: HttpClient,
               public readonly appComponent: AppComponent,
@@ -179,7 +181,25 @@ export class AccountPageComponent implements OnInit {
         if (this.account) {
           this.stellarService.balances(this.account)
             .subscribe((balances) => {
-              this.balances = balances;
+              this.balances = balances.map(v => {
+                return {
+                  ...v,
+                  ...this.meta[`${v.asset_code}:${v.asset_issuer}`],
+                };
+              });
+              const missingMeta = this.balances.filter((balance) => {
+                return balance.asset_type !== 'native' && !balance.image && !balance.asset_code.startsWith('APAY');
+              });
+              if (missingMeta.length > 0) {
+                this.http.post('https://stellar-asset-meta.apay.workers.dev',
+                  missingMeta.map(balance => pick(balance, ['asset_code', 'asset_issuer']))
+                ).toPromise()
+                  .then((meta) => {
+                  this.meta = meta;
+                  sessionStorage.setItem('assets-meta', JSON.stringify(meta));
+                  this.refreshTable();
+                });
+              }
               this.refreshTable();
             });
         }
@@ -277,7 +297,7 @@ export class AccountPageComponent implements OnInit {
         this.address = this.account;
         return false;
       }
-      this.getToken(item.code, item.baseUrl);
+      this.getToken(item.code, item.transferServer);
     }
     if (modalName === 'withdraw') {
       this.modalService.open(modalName);
@@ -338,46 +358,52 @@ export class AccountPageComponent implements OnInit {
   private refreshTable() {
     this.sumValue = 0;
     this.balances.map(balanceLine => {
-      let dataToken = this.dataWallet.find(x => x.code === balanceLine.code && x.issuer === balanceLine.issuer);
+      if (find(markets, { unit: balanceLine.asset_code, manager: balanceLine.asset_issuer })) {
+        return;
+      }
+      let index = findIndex(this.dataWallet, { code: balanceLine.asset_code, issuer: balanceLine.asset_issuer });
+      let dataToken = this.dataWallet[index];
       if (!dataToken) {
         dataToken = {
-          code: balanceLine.code,
-          issuer: balanceLine.issuer,
-          'name': '',
-          'baseUrl': 'https://api.apay.io/api',
-          'icon': '',
+          code: balanceLine.asset_code,
+          issuer: balanceLine.asset_issuer,
+          name: balanceLine.name || '',
+          transferServer: balanceLine.transferServer,
+          image: balanceLine.image,
           'balance': balanceLine.balance,
-          'deposit': 'active',
-          'withdraw': 'active',
-          'color': '#a39ca0',
+          'deposit': !balanceLine.status || balanceLine.status === 'live' ? 'active' : 'inactive',
+          'withdraw': !balanceLine.status || balanceLine.status === 'live' ? 'active' : 'inactive',
         };
-        this.dataWallet.unshift(dataToken);
+        index = this.dataWallet.length;
       }
       dataToken.balance = balanceLine.balance;
       dataToken.trustline = true;
-      if (balanceLine.code === 'USDT') {
-        dataToken.value = parseFloat(balanceLine.balance).toFixed(2);
+      if (balanceLine.asset_code === 'USDT') {
+        dataToken.value = parseFloat(balanceLine.balance);
         this.sumValue = +(this.sumValue + dataToken.value);
-      } else if (this.rates[balanceLine.code]) {
-        dataToken.value = +(+balanceLine.balance / this.rates[balanceLine.code]).toFixed(2);
+      } else if (this.rates[balanceLine.asset_code]) {
+        dataToken.value = +(+balanceLine.balance / this.rates[balanceLine.asset_code]);
         this.sumValue = +(this.sumValue + dataToken.value);
       }
+      this.dataWallet[index] = {
+        ...dataToken,
+        ...this.meta[`${dataToken.code}:${dataToken.issuer}`],
+      };
     });
     this.percent = 100 / this.sumValue;
     this.sumValue = Math.round(this.sumValue * 100) / 100;
-    this.drawingCharts(this.dataWallet[0].code, this.dataWallet[0].issuer, 30, 'days');
 
     this.dataWallet.map((item) => {
       if (item.balance && item.value) {
         item.percent = (this.percent * item.value).toFixed(2);
       }
     });
-    this.doughnutChartLabels = this.dataWallet.map((item) => item.code);
-    const chartData = this.dataWallet.map((v) => v.value);
+    this.doughnutChartLabels = map(this.dataWallet, 'code');
+    const chartData = map(this.dataWallet, 'value');
     if (!this.datasets[0] || !isEqual(this.datasets[0].data, chartData)) {
       this.datasets = [{
         data: chartData,
-        backgroundColor: this.dataWallet.map((v) => v.color),
+        backgroundColor: map(this.dataWallet, 'color'),
       }];
     }
     this.dataSource.data = this.hideLowBalanceFlag ?

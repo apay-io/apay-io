@@ -25,6 +25,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {ExchangeEffects} from './store/effects/exchange.effects';
 import {SocketService} from './services/socket/socket';
 import {QrCodeModule} from 'ng-qrcode';
+import {SavingsComponent} from './main/savings/savings.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import {QrCodeModule} from 'ng-qrcode';
     ConvertPageComponent,
     DepositPageComponent,
     WithdrawPageComponent,
-    AccountPageComponent
+    AccountPageComponent,
+    SavingsComponent
   ],
   bootstrap: [AppComponent],
   providers: [ModalService, StellarService, SocketService]

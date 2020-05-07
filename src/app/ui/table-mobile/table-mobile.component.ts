@@ -22,7 +22,7 @@ export interface UserData {
 })
 
 export class TableMobileComponent implements OnInit {
-    displayedColumns: string[] = ['icon', 'name', 'change', 'usd'];
+    displayedColumns: string[] = ['image', 'name', 'change', 'usd'];
     dataSource: MatTableDataSource<UserData>;
     @Input() currencyTableInfo: object;
     @Input() getInfoCurrencies;

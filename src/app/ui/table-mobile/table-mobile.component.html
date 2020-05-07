@@ -8,10 +8,10 @@
     <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="icon">
+            <ng-container matColumnDef="image">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let row">
-                    <img class="icon" [ngClass]="row.code" src="{{row.icon}}" alt="">
+                    <img class="icon" [ngClass]="row.code" src="{{row.image}}" alt="">
                 </td>
             </ng-container>
 
