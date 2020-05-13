@@ -40,11 +40,12 @@ export class AppComponent implements OnInit{
     this.publicKeyPart = this.publicKey.substring(0,4) + '...' + this.publicKey.substring(this.publicKey.length - 4,this.publicKey.length);
   }
 
-  logout() {
+  async logout() {
     this.loginFlag = false;
     localStorage.setItem('account', '');
     this.publicKey = '';
-    this.router.navigate(['/']);
+    await this.router.navigate(['/']);
+    window.location.href = '/';
   }
 
   routeAccount() {

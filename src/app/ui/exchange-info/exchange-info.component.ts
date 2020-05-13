@@ -133,7 +133,7 @@ export class ExchangeInfoComponent implements OnInit, OnDestroy {
   getAddress() {
     this.loading = true;
     this.errorMessage = '';
-    this.http.get(`${environment.api}/api/deposit?account=` + this.stellarAddress +
+    this.http.get(`${environment.api}/deposit?account=` + this.stellarAddress +
       `&asset_code=` + this.selectedToken.code +
       (this.selectedMemoType !== 'none' ? `&memo_type=` + this.selectedMemoType + `&memo=` + this.memoValue : '')).subscribe(
       async (res) => {

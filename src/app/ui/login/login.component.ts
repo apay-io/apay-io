@@ -92,24 +92,19 @@ export class LoginComponent implements OnInit {
   async login(account) {
     this.loading = true;
     clearTimeout(this.ledgerReconnect);
-    let accountId;
-    if (!this.stellarService.validateAddress(account) && account.indexOf('*') > -1) {
-      try {
-        const fed = await this.stellarService.resolveFederatedAddress(account);
-        accountId = fed.account_id;
-      } catch (err) {
-        this.isAddressValid = false;
-        this.loading = false;
-        return;
-      }
+    try {
+      const { accountId } = await this.stellarService.resolveFederatedAddress(account);
+      this.isAddressValid = true;
+      localStorage.setItem('account', accountId);
+      this.outFlagLogin.emit(true);
+      this.controlsCustomModalService.close('login');
+      this.clear();
+      await this.router.navigate(['/account']);
+      this.loading = false;
+    } catch (err) {
+      this.isAddressValid = false;
+      this.loading = false;
     }
-    this.isAddressValid = true;
-    localStorage.setItem('account', accountId || account);
-    this.outFlagLogin.emit(true);
-    this.controlsCustomModalService.close('login');
-    this.clear();
-    await this.router.navigate(['/account']);
-    this.loading = false;
   }
 
   closeModal() {

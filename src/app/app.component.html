@@ -9,7 +9,7 @@
                 <div class="beta">Beta</div>
             </div>
             <div class="tabs-menu">
-                <div class="tab" [ngClass]="{'active': router.url === '/convert'}" routerLink="/convert">
+                <div class="tab" [ngClass]="{'active': router.url === '/'}" routerLink="/">
                     <div class="text">
                         Convert
                     </div>
@@ -58,7 +58,7 @@
 <router-outlet></router-outlet>
 
 <div class="footer">
-    <div class="tab-footer" [ngClass]="{'active': router.url === '/convert'}" routerLink="/convert">
+    <div class="tab-footer" [ngClass]="{'active': router.url === '/'}" routerLink="/">
         <i class="fas fa-exchange-alt icon-footer"></i>
         <div class="title-bar-footer">
             Convert

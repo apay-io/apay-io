@@ -37,6 +37,7 @@
 
   .table-wrapper {
     margin-top: 20px;
+    overflow: auto;
 
     table {
       position: relative;
@@ -430,6 +431,8 @@
 }
 
 .button-next {
+  inline-size: auto;
+
   &.disabled {
     cursor: default;
     background: #e8e8e8;

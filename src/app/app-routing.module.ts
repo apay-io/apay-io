@@ -9,12 +9,8 @@ import {AccountPageComponent} from './main/account-page/account-page.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'convert',
-    pathMatch: 'full'
-  },
-  {
-    path: 'convert',
-    component: ConvertPageComponent
+    component: ConvertPageComponent,
+    pathMatch: 'full',
   },
   {
     path: 'deposit',
@@ -32,6 +28,11 @@ const routes: Routes = [
   {
     path: 'account',
     component: AccountPageComponent
+  },
+  {
+    path: 'static',
+    loadChildren: () => import('./+static/static.module')
+      .then(m => m.StaticModule)
   },
 ];
 

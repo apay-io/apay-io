@@ -6,6 +6,7 @@ import {ExchangeState} from '../../store/states/exchange.state';
 import {SetAddressOut, SetExchangeStep} from '../../store/actions/exchange.actions';
 import {StellarService} from '../../services/stellar/stellar.service';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-enter-address',
@@ -54,29 +55,47 @@ export class EnterAddressComponent implements OnInit {
   async validateAddress(address: string, update = false) {
     this.loading = true;
     this.errorMessage = '';
-    // todo: validate stellar federated addresses
-    const validStellarAddress = this.stellar.validateAddress(address);
-    if (!this.exchange.currencyOut.stellarNative) {
-      const hasTrustline = validStellarAddress ? await this.stellar.hasTrustline(address, this.exchange.currencyOut) : false;
-      if (validStellarAddress && !hasTrustline) {
-        this.isAddressValid = false;
-        this.errorMessage = `You need to add trustline for ${this.exchange.currencyOut.code} first`;
+    try {
+      const { accountId } = await this.stellar.resolveFederatedAddress(address);
+
+      if (this.exchange.currencyOut.code !== 'XLM') {
+        const hasTrustline = await this.stellar.hasTrustline(accountId, this.exchange.currencyOut);
+        if (!hasTrustline) {
+          this.isAddressValid = false;
+          this.errorMessage = `You need to add trustline for ${this.exchange.currencyOut.code} first`;
+        } else {
+          this.isAddressValid = true;
+          if (update) {
+            this.store.dispatch(new SetAddressOut(address));
+          }
+        }
+
+        this.loading = false;
         return;
+      } else {
+        this.isAddressValid = !!accountId;
       }
-      this.isAddressValid = validStellarAddress && hasTrustline ||
-        (await this.http.post('https://test.apay.io/validateAddress', {
-          asset_code: this.exchange.currencyOut.code,
-          dest: address,
+
+    } catch (err) {
+      try {
+        const { account_id } = (await this.http.get(`${environment.api}/transactions/withdraw/non-interactive`, {
+          params: {
+            type: 'crypto',
+            asset_code: this.exchange.currencyOut.code,
+            dest: address,
+          }
         }).toPromise()) as any;
-    } else {
-      this.isAddressValid = validStellarAddress;
+        this.isAddressValid = !!account_id;
+      } catch (err) {
+        this.isAddressValid = false;
+      }
     }
 
     if (this.isAddressValid) {
       if (update) {
         this.store.dispatch(new SetAddressOut(address));
       }
-    } else {
+    } else if (!this.errorMessage) {
       this.errorMessage = 'Invalid address';
     }
     this.loading = false;

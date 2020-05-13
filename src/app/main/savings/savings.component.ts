@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AppComponent} from '../../app.component';
 import {ModalService} from '../../services/modal/modal.service';
@@ -9,11 +9,13 @@ import {currencies} from '../../../assets/currencies-list';
 import {markets} from 'src/assets/markets';
 import {environment} from '../../../environments/environment';
 import {MatTableDataSource} from '@angular/material/table';
-import { find, findIndex } from 'lodash';
-import {Subscription} from 'rxjs';
-import {ServerApi} from 'stellar-sdk';
-import OperationRecord = ServerApi.OperationRecord;
+import { find, findIndex, mapValues, map } from 'lodash';
+import {Observable, Subscription} from 'rxjs';
+import {Horizon, ServerApi} from 'stellar-sdk';
 import PaymentOperationRecord = ServerApi.PaymentOperationRecord;
+import { BigNumber } from 'bignumber.js';
+import AccountRecord = ServerApi.AccountRecord;
+import BalanceLineAsset = Horizon.BalanceLineAsset;
 
 @Component({
   selector: 'app-savings',
@@ -21,35 +23,25 @@ import PaymentOperationRecord = ServerApi.PaymentOperationRecord;
   styleUrls: ['./savings.component.scss']
 })
 
-export class SavingsComponent implements OnInit {
+export class SavingsComponent implements OnInit, OnDestroy {
   displayedColumns = ['image', 'code', 'balance', 'percent', 'value', 'actions'];
-  markets = markets.map((market) => {
-    return {
-      ...market,
-      ...currencies.find((item) => item.code === market.asset.asset_code
-        || item.code === 'XLM' && market.asset.asset_type === 'native'),
-      percent: null,
-      value: null,
-      baseValue: null,
-    };
-  });
+  markets = markets;
+
   dataSource;
 
-  @Input()
-  balances;
+  account$: Observable<AccountRecord>;
 
   description = 'Add required trustline and send funds';
   code: string;
   xdr: string;
   rate: string;
-  mmTotal: { rate: string; asset: string; base: string, market: any };
   isLoading = false;
   private assetBalance: any;
   private baseBalance: any;
   assetAmountControl = new FormControl(
     '', [
       (control) => {
-        return this.assetBalance && parseFloat(control.value) > parseFloat(this.assetBalance.balance) ?
+        return this.assetBalance && parseFloat(control.value) > parseFloat(this.getAvailableBalance(this.code)) ?
           { max: 'Specified amount exceeds available balance' } : null;
       }
     ]
@@ -67,22 +59,37 @@ export class SavingsComponent implements OnInit {
   memoId = this.account ? localStorage.getItem(`mmbot:${this.account}`) : null;
   incomingOps = [];
   termsAccepted = false;
+  private balances: Horizon.BalanceLine[];
 
   constructor(private readonly http: HttpClient,
               private readonly stellarService: StellarService,
               public modalService: ModalService,
               private notify: NotifyService) {
+    this.account$ = this.stellarService.account(this.account);
+    for (const currencyMeta of currencies) {
+      if (this.markets[currencyMeta.code]) {
+        this.markets[currencyMeta.code] = {
+          ...this.markets[currencyMeta.code],
+          ...currencyMeta,
+        };
+      }
+    }
   }
 
   ngOnInit() {
-    // this.http.get(`${environment.botApi}/`).toPromise()
-    //   .then((result) => {
-    //     this.dataSource = [];
-    //   });
+    this.account$.subscribe((account: AccountRecord) => {
+      this.balances = account.balances;
+      for (const balance of account.balances) {
+        const asset = (balance as BalanceLineAsset).asset_code;
+        if (asset && asset.indexOf('APAY') === 0) {
+          this.markets[asset.substr(4)].balance = balance.balance;
+        }
+      }
+    });
     this.fetchMMStats();
     this.stellarService.cursor(this.account)
       .then((cursor) => {
-        this.stellarService.payments(this.account, this.markets, cursor)
+        this.stellarService.payments(this.account, cursor)
           .subscribe((payment: PaymentOperationRecord) => {
             const market = find(this.markets, { manager: payment.from });
             let index = findIndex(this.incomingOps, { to: payment.from });
@@ -114,55 +121,51 @@ export class SavingsComponent implements OnInit {
     // });
   }
 
+  ngOnDestroy() {
+    console.log('destroy');
+  }
+
   private fetchMMStats() {
     if (this.memoId) {
       this.http.get(`${environment.botApi}/stats?account=${this.memoId}`).toPromise()
         .then((result: any) => {
           for (const item of result) {
-            const index = findIndex(this.markets, { unit: `APAY${item.asset}` });
-            this.markets[index].baseValue = parseFloat(item.baseTotal) * 2;
-            this.markets[index].value = parseFloat(item.tokensTotal) * parseFloat(item.unitPriceBase) * 2;
-            this.markets[index].percent = (this.markets[index].value / this.markets[index].baseValue - 1) * 100;
-            this.dataSource = new MatTableDataSource(this.markets);
+            this.markets[item.asset].baseValue = parseFloat(item.accountBase) * 2;
+            if (this.markets[item.asset].baseValue) {
+              this.markets[item.asset].value = parseFloat(item.accountTokens) * parseFloat(item.unitPriceBase) * 2;
+              this.markets[item.asset].percent = (this.markets[item.asset].value / this.markets[item.asset].baseValue - 1) * 100;
+            }
+            this.markets[item.asset].baseBalance = parseFloat(new BigNumber(item.issued).mul(item.unitPriceBase).toPrecision(4))
+              .toLocaleString();
+            this.markets[item.asset].assetBalance = parseFloat(new BigNumber(item.issued).mul(item.unitPriceAsset).toPrecision(4))
+              .toLocaleString();
+            this.markets[item.asset].rate = parseFloat(new BigNumber(item.unitPriceBase).dividedBy(item.unitPriceAsset).toPrecision(4));
           }
+          this.dataSource = new MatTableDataSource(Object.values(this.markets));
         });
     } else {
-      this.dataSource = new MatTableDataSource(this.markets);
+      this.dataSource = new MatTableDataSource(Object.values(this.markets));
     }
   }
 
   getBalance(code: string) {
-    const trustline = this.hasTrustline(code);
-    return trustline && trustline.balance;
-  }
-
-  getChange(code: string) {
-    return '';
-  }
-
-  getValue(code: string) {
-    return '';
+    return this.markets[code].balance;
   }
 
   hasTrustline(code: string) {
-    return this.balances && find(this.balances, { asset_code: `APAY${code}` });
+    return this.markets[code].balance;
   }
 
   async addFunds(code: string) {
     this.code = code;
+    this.assetBalance = find(this.balances,
+      code === 'XLM' ? { asset_type: 'native'} : {asset_code: code, asset_issuer: this.markets[code].asset.asset_issuer
+    });
+    this.baseBalance = find(this.balances, {asset_code: 'USDT', asset_issuer: this.markets[code].base.asset_issuer});
     this.baseAmountControl.setValue('');
     this.assetAmountControl.setValue('');
     this.modalService.open('contribute');
     this.registerAccount();
-    this.mmSub = this.stellarService.calculateMMRate(code)
-      .subscribe(mmTotal => {
-        if (!this.mmTotal || this.mmTotal.base !== mmTotal.base) {
-          this.mmTotal = mmTotal;
-          this.assetBalance = find(this.balances, {asset_code: code, asset_issuer: mmTotal.market.asset.asset_issuer});
-          this.baseBalance = find(this.balances, {asset_code: 'USDT', asset_issuer: mmTotal.market.base.asset_issuer});
-          this.updateXdr();
-        }
-      });
   }
 
   private registerAccount() {
@@ -185,7 +188,7 @@ export class SavingsComponent implements OnInit {
   updateBaseAmount(baseAmount) {
     if (baseAmount) {
       this.baseAmountControl.setValue(baseAmount);
-      this.assetAmountControl.setValue((this.baseAmountControl.value / parseFloat(this.mmTotal.rate)).toFixed(7));
+      this.assetAmountControl.setValue((this.baseAmountControl.value / parseFloat(this.markets[this.code].rate)).toFixed(7));
     } else {
       this.baseAmountControl.setValue('');
       this.assetAmountControl.setValue('');
@@ -196,7 +199,7 @@ export class SavingsComponent implements OnInit {
   updateAssetAmount(assetAmount) {
     if (assetAmount) {
       this.assetAmountControl.setValue(assetAmount);
-      this.baseAmountControl.setValue((this.assetAmountControl.value * parseFloat(this.mmTotal.rate)).toFixed(7));
+      this.baseAmountControl.setValue((this.assetAmountControl.value * parseFloat(this.markets[this.code].rate)).toFixed(7));
     } else {
       this.baseAmountControl.setValue('');
       this.assetAmountControl.setValue('');
@@ -207,7 +210,7 @@ export class SavingsComponent implements OnInit {
   async updateXdr() {
     const account = localStorage.getItem('account');
     if (this.baseAmountControl.value && !this.baseAmountControl.invalid
-      && this.assetAmountControl.value && !this.assetAmountControl.invalid && this.mmTotal
+      && this.assetAmountControl.value && !this.assetAmountControl.invalid && this.markets[this.code]
       && account && localStorage.getItem(`mmbot:${account}`)) {
       this.xdr = await this.stellarService.buildContributionTx(
         localStorage.getItem(`mmbot:${account}`),
@@ -221,7 +224,7 @@ export class SavingsComponent implements OnInit {
   }
 
   closeContributeModal() {
-    this.mmSub.unsubscribe();
+    this.xdr = null;
     this.modalService.close('contribute');
   }
 
@@ -231,10 +234,18 @@ export class SavingsComponent implements OnInit {
       txs: market.ops.map((op) => op.id),
     }).toPromise()
       .then((result) => {
+        this.fetchMMStats();
       });
   }
 
   refund(market: any) {
 
+  }
+
+  getAvailableBalance(code: string) {
+    if (code === 'XLM') {
+      return new BigNumber(this.assetBalance.balance).minus(10).toFixed(7);
+    }
+    return this.assetBalance.balance;
   }
 }

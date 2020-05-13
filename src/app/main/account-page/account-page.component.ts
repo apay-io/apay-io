@@ -14,6 +14,10 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {isEqual, pick, map, find, findIndex} from 'lodash';
 import {markets} from '../../../assets/markets';
+import {Horizon, ServerApi} from 'stellar-sdk';
+import AccountRecord = ServerApi.AccountRecord;
+import BalanceLineAsset = Horizon.BalanceLineAsset;
+import { of } from 'rxjs';
 
 export interface Data {
   date: string;
@@ -77,7 +81,6 @@ export class AccountPageComponent implements OnInit {
   public ChartData = [];
   public debounceFlag = false;
   public ChartType = 'line';
-  private account: string;
 
   public balanceDebounceFlag = false;
   public balanceChartLabels = [];
@@ -86,6 +89,8 @@ export class AccountPageComponent implements OnInit {
   withdrawForm: FormGroup;
   regexpAmount = /^[0-9]*[.,]?[0-9]+$/;
   public description: string;
+  public account = localStorage.getItem('account');
+  public account$ = this.account ? this.stellarService.account(this.account) : of(null);
   public balances: Balance[];
   meta = JSON.parse(sessionStorage.getItem('assets-meta') || '{}');
 
@@ -179,12 +184,12 @@ export class AccountPageComponent implements OnInit {
         this.rates = rates;
         this.account = localStorage.getItem('account');
         if (this.account) {
-          this.stellarService.balances(this.account)
-            .subscribe((balances) => {
-              this.balances = balances.map(v => {
+          this.account$
+            .subscribe((account: AccountRecord) => {
+              this.balances = account.balances.map(v => {
                 return {
                   ...v,
-                  ...this.meta[`${v.asset_code}:${v.asset_issuer}`],
+                  ...this.meta[`${(v as BalanceLineAsset).asset_code || 'XLM'}:${(v as BalanceLineAsset).asset_issuer}`],
                 };
               });
               const missingMeta = this.balances.filter((balance) => {
@@ -361,7 +366,7 @@ export class AccountPageComponent implements OnInit {
       if (find(markets, { unit: balanceLine.asset_code, manager: balanceLine.asset_issuer })) {
         return;
       }
-      let index = findIndex(this.dataWallet, { code: balanceLine.asset_code, issuer: balanceLine.asset_issuer });
+      let index = findIndex(this.dataWallet, { code: balanceLine.asset_code || 'XLM', issuer: balanceLine.asset_issuer || null });
       let dataToken = this.dataWallet[index];
       if (!dataToken) {
         dataToken = {
@@ -381,8 +386,8 @@ export class AccountPageComponent implements OnInit {
       if (balanceLine.asset_code === 'USDT') {
         dataToken.value = parseFloat(balanceLine.balance);
         this.sumValue = +(this.sumValue + dataToken.value);
-      } else if (this.rates[balanceLine.asset_code]) {
-        dataToken.value = +(+balanceLine.balance / this.rates[balanceLine.asset_code]);
+      } else if (this.rates[balanceLine.asset_code || 'XLM']) {
+        dataToken.value = +(+balanceLine.balance / this.rates[balanceLine.asset_code || 'XLM']);
         this.sumValue = +(this.sumValue + dataToken.value);
       }
       this.dataWallet[index] = {

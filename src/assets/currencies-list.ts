@@ -4,7 +4,6 @@ export const currencies = [
   //   'name': 'Pays XDR',
   //   image: '/assets/img/xdr-coin.svg',
   //   'convert': '1',
-  //   'favorites': '2',
   //   'issuer': 'GAWJSEVB6H4RIZX6FJJORJAXFLQDMFTKUAOU5UGFNWLPCYQ6A2O6PAYS',
   //   transferServer: 'https://api.apay.io/api',
   //   'balance': '0',
@@ -23,12 +22,7 @@ export const currencies = [
     image: '/assets/img/XLM.png',
     'issuer': null,
     'convert': '1',
-    'favorites': '2',
     transferServer: 'https://api.apay.io/api',
-    'balance': '0',
-    'percent': '-',
-    'value': 0,
-    'chart': [0, 1, 2, 1, 0, 4, 7, 3, 1, 2, 1, 0, 4, 7, 3],
     'color': '#000000',
     stellarNative: true,
     'trustline': false,
@@ -52,7 +46,6 @@ export const currencies = [
     'name': 'Bitcoin',
     image: '/assets/img/btc.svg',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GAUTUYY2THLF7SGITDFMXJVYH3LHDSMGEAKSBU267M2K7A3W543CKUEF',
     transferServer: 'https://api.apay.io/api',
     'color': '#f89f37',
@@ -78,7 +71,6 @@ export const currencies = [
     name: 'Tether USD',
     image: '/assets/img/usdt.svg',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GCQTGZQQ5G4PTM2GL7CDIFKUBIPEC52BROAQIAPW53XBRJVN6ZJVTG6V',
     'minDeposit': '0.5',
     transferServer: 'https://api.apay.io/api',
@@ -105,7 +97,6 @@ export const currencies = [
     'name': 'Ethereum',
     image: '/assets/img/eth.png',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     transferServer: 'https://api.apay.io/api',
     deposit: {
@@ -131,7 +122,6 @@ export const currencies = [
     'name': 'Litecoin',
     image: '/assets/img/ltc.png',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP',
     transferServer: 'https://api.apay.io/api',
     deposit: {
@@ -157,7 +147,6 @@ export const currencies = [
     'name': 'Basic Attention Token',
     image: '/assets/img/bat.svg',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     transferServer: 'https://api.apay.io/api',
     deposit: {
@@ -183,7 +172,6 @@ export const currencies = [
     'name': 'Kin',
     image: '/assets/img/kin.svg',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     transferServer: 'https://api.apay.io/api',
     deposit: {
@@ -209,7 +197,6 @@ export const currencies = [
     'name': 'ChainLink',
     image: '/assets/img/link.svg',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     transferServer: 'https://api.apay.io/api',
     deposit: {
@@ -235,7 +222,6 @@ export const currencies = [
     'name': 'OmiseGo',
     image: '/assets/img/omg.svg',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     transferServer: 'https://api.apay.io/api',
     deposit: {
@@ -261,7 +247,6 @@ export const currencies = [
     'name': 'Augur',
     image: '/assets/img/rep.png',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     transferServer: 'https://api.apay.io/api',
     deposit: {
@@ -287,7 +272,6 @@ export const currencies = [
     'name': '0xProject',
     image: '/assets/img/zrx.svg',
     'convert': '1',
-    'favorites': '2',
     'issuer': 'GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR',
     transferServer: 'https://api.apay.io/api',
     deposit: {

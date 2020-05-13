@@ -13,7 +13,7 @@ export class GetCurrenciesServices {
   }
 
   currenciesList;
-  data = this.http.get(`${environment.api}/api/stats`);
+  data = this.http.get(`${environment.api}/stats`);
 
   public state$ = new Subject<object>();
 

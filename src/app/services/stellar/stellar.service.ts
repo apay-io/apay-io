@@ -1,14 +1,11 @@
 import {Asset, FederationServer, Horizon, Networks, Operation, Server, StrKey, TransactionBuilder, Memo, ServerApi} from 'stellar-sdk';
-import {filter, isMatch, reduce, find} from 'lodash';
+import {filter, isMatch, reduce, find } from 'lodash';
 import {Currency} from '../../core/currency.interface';
 import {Observable} from 'rxjs';
 import {markets} from '../../../assets/markets';
 import {environment} from '../../../environments/environment';
-import {BigNumber} from 'bignumber.js';
+import AccountRecord = ServerApi.AccountRecord;
 import BalanceLine = Horizon.BalanceLine;
-import BalanceLineAsset = Horizon.BalanceLineAsset;
-import { map } from 'rxjs/operators';
-import PaymentOperationRecord = ServerApi.PaymentOperationRecord;
 
 export interface Balance {
   asset_code: string;
@@ -57,33 +54,32 @@ export class StellarService {
     }
   }
 
-  balances(account: string): Observable<Balance[]> {
+  account(account: string): Observable<AccountRecord> {
     return new Observable((observer) => {
       try {
         this.server.accounts()
           .accountId(account)
           .stream({
-            onmessage: (result) => {
-              observer.next(result.balances.map(balance => {
-                return {
-                  ...balance,
-                  asset_code: balance.asset_type === 'native' ? 'XLM' : balance.asset_code,
-                  asset_issuer: balance.asset_type === 'native' ? null : balance.asset_issuer,
-                };
-              }) as Balance[]);
+            onmessage: (result: AccountRecord) => {
+              observer.next(result);
             },
             onerror: observer.error
           });
       } catch (err) {
         console.error(err);
-        return observer.next([]);
+        return observer.next(null);
       }
     });
   }
 
+  balances(account: string): Promise<BalanceLine[]> {
+    return this.server.loadAccount(account)
+      .then((accountRecord) => accountRecord.balances);
+  }
+
   async hasTrustline(account: string, currency: Currency) {
-    const balances = await this.balances(account).toPromise();
-    return find(balances, { asset_code: currency.code, asset_issuer: currency.issuer });
+    const accountRecord = await this.server.loadAccount(account);
+    return find(accountRecord.balances, { asset_code: currency.code, asset_issuer: currency.issuer });
   }
 
   validateAddress(address: string) {
@@ -128,12 +124,28 @@ export class StellarService {
     return tx.toEnvelope().toXDR('base64').toString();
   }
 
-  async resolveFederatedAddress(account: string) {
-    return FederationServer.resolve(account);
+  async resolveFederatedAddress(account: string): Promise<{ accountId: string, memo?: string, memoType?: string }> {
+    if (StrKey.isValidEd25519PublicKey(account)) {
+      return {
+        accountId: account,
+      };
+    }
+    try {
+      if (account.indexOf('*') > -1) {
+        const fed = await FederationServer.resolve(account);
+        return {
+          accountId: fed.account_id,
+        };
+      } else {
+        throw new Error('invalid federated address');
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   async buildContributionTx(memo: string, code: string, baseAmount: string, assetAmount: string) {
-    const market = markets.find((item) => item.asset.asset_code === code || code === 'XLM' && item.asset.asset_type === 'native');
+    const market = markets[code];
     const user = await this.server.loadAccount(localStorage.getItem('account'));
     const hasTrustline = find(user.balances, { asset_code: `APAY${code}`, asset_issuer: market.manager });
 
@@ -177,26 +189,11 @@ export class StellarService {
     }
   }
 
-  calculateMMRate(code: string): Observable<{ market: any, asset: string, base: string, rate: string }> {
-    const market = find(markets, (item) => item.asset.asset_code === code || code === 'XLM' && item.asset.asset_type === 'native');
-    return this.balances(market.account)
-      .pipe(map((balances) => {
-        const assetBalance = find(balances, market.asset);
-        const baseBalance = find(balances, market.base);
-        return {
-          market,
-          asset: assetBalance.balance,
-          base: baseBalance.balance,
-          rate: new BigNumber(baseBalance.balance).dividedBy(assetBalance.balance).toPrecision(4),
-        };
-      }));
-  }
-
   cursor(account: string): Promise<string> {
     return this.server.payments()
       .forAccount(account)
       .order('desc')
-      .limit(20)
+      .limit(15)
       .call()
       .then((result) => {
         if (result.records.length > 0) {
@@ -211,13 +208,14 @@ export class StellarService {
       });
   }
 
-  payments(account: string, markets, cursor = null) {
+  payments(account: string, cursor = null) {
     return new Observable((observer) => {
       try {
         this.server.payments()
           .forAccount(account)
           .cursor(cursor || 'now')
           .join('transactions')
+          .limit(50)
           .stream({
             onmessage: async (result: any) => {
               const tx = await result.transaction();

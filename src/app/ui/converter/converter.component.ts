@@ -171,8 +171,9 @@ export class ConverterComponent implements OnInit, OnDestroy {
         const outConvertToDollars = this.getInfoCurrencies
           .find(item => item.code === this.exchange.currencyOut.code).price * parseFloat(this.exchange.amountOut);
 
-        if (Math.abs(inConvertToDollars / outConvertToDollars) >= 1.05) {
-          this.notify.update('Current exchange rate is not favourable due to the low liquidity on the DEX. Try again later or smaller amount', 'error');
+        if (Math.abs(inConvertToDollars / outConvertToDollars) >= 1.08) {
+          console.log(inConvertToDollars, outConvertToDollars);
+          this.notify.update('Current exchange rate is not favourable due to the low liquidity on the DEX. Try again later or different amount', 'error');
           this.stateButton = 'disabled';
         }
       } else {

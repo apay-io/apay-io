@@ -19,7 +19,6 @@ import {QrCodeModule} from 'ng-qrcode';
 import {CryptoQrComponent} from './crypto-qr/crypto-qr.component';
 import {ChoiceCurrencyModalComponent} from './choice-currency-modal/choice-currency-modal.component';
 import {ChoiceCurrencyComponent} from './choice-currency/choice-currency.component';
-import {SignTxComponent} from './sign-tx/sign-tx.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -45,7 +44,6 @@ import {SignTxComponent} from './sign-tx/sign-tx.component';
     TextCopyDirective,
     ChoiceCurrencyModalComponent,
     ChoiceCurrencyComponent,
-    SignTxComponent
   ],
   exports: [
     CryptoQrComponent,
@@ -59,7 +57,6 @@ import {SignTxComponent} from './sign-tx/sign-tx.component';
     TextCopyDirective,
     ChoiceCurrencyModalComponent,
     ChoiceCurrencyComponent,
-    SignTxComponent
   ]
 })
 export class UiModule {}

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import {ConvertProcessingIndexComponent} from './convert-processing-index/convert-processing-index.component';
+import {BotTermsComponent} from './bot-terms/bot-terms.component';
 
 const routes: Routes = [
-  { path: '',
-    component: ConvertProcessingIndexComponent
+  {
+    path: 'bot-terms',
+    component: BotTermsComponent
   },
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   exports: [ RouterModule ]
 })
 
-export class ConvertProcessingRoutingModule {}
+export class StaticRoutingModule {}

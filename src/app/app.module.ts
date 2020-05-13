@@ -26,6 +26,7 @@ import {ExchangeEffects} from './store/effects/exchange.effects';
 import {SocketService} from './services/socket/socket';
 import {QrCodeModule} from 'ng-qrcode';
 import {SavingsComponent} from './main/savings/savings.component';
+import {StaticModule} from './+static/static.module';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import {SavingsComponent} from './main/savings/savings.component';
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([ExchangeEffects]),
     QrCodeModule,
+    StaticModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   entryComponents: [AppComponent],

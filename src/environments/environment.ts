@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  api: 'https://api.apay.io',
+  api: 'https://api.apay.io/api',
   backend: 'https://be.apay.io',
   anchorWebsocket: 'ws://192.168.10.10',
   horizonUrl: 'https://horizon.stellar.org',
-  botApi: 'http://64.225.95.27',
+  botApi: 'https://bot.apay.io',
 };
 
 /*

@@ -93,7 +93,11 @@ export class TableComponent implements OnInit, OnDestroy {
   formatAmount(amount: number, type = 'precision') {
     const symbol = this.selectedCurrency === 'USD' ? '$' : (this.selectedCurrency === 'EUR' ? '€' : '');
     if (type === 'precision') {
-      return symbol + (amount * this.selectedCurrencyRate).toPrecision(4).replace(/\.0+$/, '');
+      return symbol + parseFloat((amount * this.selectedCurrencyRate).toPrecision(4))
+        .toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 7
+        }).replace(/\.0+$/, '');
     } else {
       return symbol + (Math.round(amount * this.selectedCurrencyRate)).toLocaleString();
     }

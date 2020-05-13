@@ -15,7 +15,7 @@
     <mat-card-actions [align]="'end'">
       <label style="margin-right: 20px;">
         <input type="checkbox" [checked]="termsAccepted" (change)="termsAccepted = !termsAccepted" style="margin-right: 5px;">
-        I accept terms and conditions
+        I accept <a routerLink="/static/bot-terms" target="_blank">terms and conditions</a>
       </label>
       <button class="mat-flat-button mat-primary" [disabled]="!termsAccepted" (click)="apply(market)">Apply</button>
 <!--      <button class="mat-stroked-button mat-button-base" (click)="refund(market)">Refund</button>-->
@@ -82,7 +82,7 @@
                 {{hasTrustline(row.code) ? 'Add funds' : 'Participate'}}
               </div>
             </div>
-            <div class="button-convert" [ngClass]="{'disabled' : !hasTrustline(row.code) || getBalance(row.code) === '0'}"
+            <div class="button-convert" [ngClass]="{'disabled' : !getBalance(row.code) || getBalance(row.code) === '0'}"
                  (click)="redeem(row.code)">
               <div class="text">
                 Redeem
@@ -99,7 +99,7 @@
 </div>
 
 <modal id="contribute">
-  <div class="modal" *ngIf="code && mmTotal">
+  <div class="modal" *ngIf="code">
     <div class="modal-body">
       <div class="head-popup">
         Contribute funds
@@ -116,12 +116,12 @@
             <div class="text">
               <div class="column">
                 Balances:<br/>
-                <span class="currency">{{ mmTotal.asset }} {{ code }}</span><br/>
-                <span class="currency">{{ mmTotal.base }} USDT</span><br/>
+                <span class="currency">{{ this.markets[code].assetBalance }} {{ code }}</span><br/>
+                <span class="currency">{{ this.markets[code].baseBalance }} USDT</span><br/>
               </div>
               <div class="column">
                 Rate:<br/>
-                <span class="currency">{{ mmTotal.rate }} {{code}} / USDT</span><br/><br/>
+                <span class="currency">{{ this.markets[code].rate.toLocaleString() }} USDT / {{code}}</span><br/><br/>
               </div>
 
             </div>
@@ -131,8 +131,8 @@
                 <div class="text">
                   max
                 </div>
-                <div class="text currency" (click)="updateAssetAmount(this.assetBalance.balance)">
-                  {{this.assetBalance.balance}} {{code}}
+                <div class="text currency" (click)="updateAssetAmount(getAvailableBalance(code))">
+                  {{getAvailableBalance(code)}} {{code}}
                 </div>
               </div>
               <mat-form-field class="full-width" [ngClass]="{ 'mat-form-field-invalid': assetAmountControl.invalid }">
@@ -174,7 +174,7 @@
           </div>
           <div class="address-wrapper" *ngIf="false">
             <div class="address">
-              Add trustline for asset APAY{{code}} by <span [text-copy]="mmTotal.market.manager" class="tx-id">{{mmTotal.market.manager}}</span>
+              Add trustline for asset APAY{{code}} by <span [text-copy]="markets[code].manager" class="tx-id">{{markets[code].manager}}</span>
             </div>
             You need to send equal USDT value of both assets to
             <div class="info">
@@ -182,8 +182,8 @@
                 To address
               </div>
               <div class="address tx">
-                <span [text-copy]="mmTotal.market.manager" class="tx-id">{{mmTotal.market.manager}}</span>
-                <span [text-copy]="mmTotal.market.manager">
+                <span [text-copy]="markets[code].manager" class="tx-id">{{markets[code].manager}}</span>
+                <span [text-copy]="markets[code].manager">
                     <i class="far fa-clone icon copy" aria-hidden="true"></i>
                 </span>
               </div>
