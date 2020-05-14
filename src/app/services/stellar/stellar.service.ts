@@ -1,4 +1,17 @@
-import {Asset, FederationServer, Horizon, Networks, Operation, Server, StrKey, TransactionBuilder, Memo, ServerApi} from 'stellar-sdk';
+import {
+  Asset,
+  FederationServer,
+  Horizon,
+  Networks,
+  Operation,
+  Server,
+  StrKey,
+  TransactionBuilder,
+  Memo,
+  ServerApi,
+  Account,
+  AccountResponse
+} from 'stellar-sdk';
 import {filter, isMatch, reduce, find } from 'lodash';
 import {Currency} from '../../core/currency.interface';
 import {Observable} from 'rxjs';
@@ -21,6 +34,7 @@ export interface Balance {
 
 export class StellarService {
   private server = new Server(environment.horizonUrl);
+  private accounts = {};
 
   async calculateSell(currencyIn, currencyOut, amountOut) {
     const result = await this.server.strictReceivePaths(
@@ -61,6 +75,7 @@ export class StellarService {
           .accountId(account)
           .stream({
             onmessage: (result: AccountRecord) => {
+              this.accounts[account] = new AccountResponse(result);
               observer.next(result);
             },
             onerror: observer.error
@@ -77,8 +92,12 @@ export class StellarService {
       .then((accountRecord) => accountRecord.balances);
   }
 
+  async getAccountRecord(account: string) {
+    return this.accounts[account] || await this.server.loadAccount(account);
+  }
+
   async hasTrustline(account: string, currency: Currency) {
-    const accountRecord = await this.server.loadAccount(account);
+    const accountRecord = await this.getAccountRecord(account);
     return find(accountRecord.balances, { asset_code: currency.code, asset_issuer: currency.issuer });
   }
 
@@ -87,7 +106,7 @@ export class StellarService {
   }
 
   async buildTrustlineTx(account: string, code: string, issuer: string) {
-    const sourceAccount = await this.server.loadAccount(account);
+    const sourceAccount = await this.getAccountRecord(account);
     const builder = new TransactionBuilder(
       sourceAccount,
       {
@@ -105,7 +124,7 @@ export class StellarService {
   }
 
   async buildWithdrawalTx(account: string, destination: string, amount: string, code: string, issuer: string) {
-    const sourceAccount = await this.server.loadAccount(account);
+    const sourceAccount = await this.getAccountRecord(account);
     const builder = new TransactionBuilder(
       sourceAccount,
       {
@@ -146,7 +165,7 @@ export class StellarService {
 
   async buildContributionTx(memo: string, code: string, baseAmount: string, assetAmount: string) {
     const market = markets[code];
-    const user = await this.server.loadAccount(localStorage.getItem('account'));
+    const user = await this.getAccountRecord(localStorage.getItem('account'));
     const hasTrustline = find(user.balances, { asset_code: `APAY${code}`, asset_issuer: market.manager });
 
     const txBuilder = new TransactionBuilder(user, {
@@ -176,11 +195,43 @@ export class StellarService {
     return tx.toEnvelope().toXDR('base64').toString();
   }
 
+  async buildRedemptionTx(memo: string, code: string, tokensAmount: string) {
+    const market = markets[code];
+    const user = await this.getAccountRecord(localStorage.getItem('account'));
+
+    const txBuilder = new TransactionBuilder(user, {
+      fee: await this.getModerateFee(),
+      networkPassphrase: Networks.PUBLIC,
+      memo: Memo.id(memo)
+    });
+    if (!find(user.balances, market.base)) {
+      txBuilder.addOperation(Operation.changeTrust({
+        asset: new Asset(market.base.asset_code, market.base.asset_issuer),
+      }));
+    }
+    if (!find(user.balances, market.asset)) {
+      txBuilder.addOperation(Operation.changeTrust({
+        asset: new Asset(market.asset.asset_code, market.asset.asset_issuer),
+      }));
+    }
+    txBuilder
+      .addOperation(Operation.payment({
+        destination: market.manager,
+        asset: new Asset(`APAY${code}`, market.manager),
+        amount: tokensAmount
+      }))
+      .setTimeout(1800);
+    const tx = txBuilder.build();
+
+    return tx.toEnvelope().toXDR('base64').toString();
+  }
+
   assetFromObject(assetObj): Asset {
     return assetObj.asset_type === 'native' ? Asset.native() : new Asset(assetObj.asset_code, assetObj.asset_issuer);
   }
 
   async getModerateFee() {
+    return '100'; // takes too long
     try {
       const feeStats = await this.server.feeStats();
       return Math.min(parseInt(feeStats.fee_charged.mode, 10), 10000).toString(); // moderate fee, 10000 max

@@ -1,7 +1,8 @@
 <div class="markets">
   <h2>Support Stellar Decentralized Exchange</h2>
-  <p>Put your funds to work by making markets on DEX. <a target="_blank" href="medium.org">Learn more</a>.<br/> Active
-    market maker bots are listed below</p>
+  <p>Put your funds to work by making markets on DEX.
+    <a target="_blank" href="https://medium.com/apay-io/apay-mm-bot-for-stellar-dex-is-ready-65b6d6a38d13">
+      Learn more</a>.<br/> Active market maker bots are listed below</p>
   <mat-card class="alert" *ngFor="let market of incomingOps">
     <mat-card-title>Action required</mat-card-title>
     <mat-card-content>
@@ -99,7 +100,7 @@
 </div>
 
 <modal id="contribute">
-  <div class="modal" *ngIf="code">
+  <div class="modal" *ngIf="code && assetBalance">
     <div class="modal-body">
       <div class="head-popup">
         Contribute funds
@@ -213,6 +214,82 @@
           </div>
           <a target="_blank" [href]="'https://cosmic.link/?xdr=' + xdr + '&network=public'"
              [ngClass]="{'disabled': !xdr || baseAmountControl.invalid || assetAmountControl.invalid }"
+             class="button-next external-link">
+            <span>Sign</span>
+            <i class="fas fa-external-link-alt external-icon"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-background"></div>
+</modal>
+
+<modal id="redeem">
+  <div class="modal" *ngIf="code && tokensBalance">
+    <div class="modal-body">
+      <div class="head-popup">
+        Redeem funds
+        <div class="close" (click)="closeRedeemModal()">
+          <i class="fas fa-times icon-close"></i>
+        </div>
+      </div>
+      <div class="content-popup">
+        <div class="operations-modal">
+          <div class="info">
+            <div class="title">
+              Market maker for {{ code }} / USDT
+            </div>
+            <div class="text">
+              <div class="column">
+                Balances:<br/>
+                <span class="currency">{{ this.markets[code].assetBalance }} {{ code }}</span><br/>
+                <span class="currency">{{ this.markets[code].baseBalance }} USDT</span><br/>
+              </div>
+              <div class="column">
+                Rate:<br/>
+                <span class="currency">{{ this.markets[code].rate.toLocaleString() }} USDT / {{code}}</span><br/><br/>
+              </div>
+
+            </div>
+
+            <div class="box">
+              <div class="balance">
+                <div class="text">
+                  max
+                </div>
+                <div class="text currency" (click)="updateTokensAmount(this.tokensBalance.balance)">
+                  {{this.tokensBalance.balance}} APAY{{code}}
+                </div>
+              </div>
+              <mat-form-field class="full-width" [ngClass]="{ 'mat-form-field-invalid': tokensAmountControl.invalid }">
+                <input matInput placeholder="Amount of APAY{{code}}" [formControl]="tokensAmountControl" (keyup)="updateTokensAmount($event.target.value)"
+                       maxlength="18" autocomplete="off">
+              </mat-form-field>
+              <div *ngIf="tokensAmountControl.invalid">
+                <span class="error" *ngIf="tokensAmountControl.errors?.max && !tokensAmountControl.errors?.pattern">
+                    Value must not exceed available balance
+                </span>
+                <span class="error" *ngIf="tokensAmountControl.errors?.pattern">
+                    Value error
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="address-wrapper">
+            <div class="info">
+              {{ description }}
+              <div class="address tx" *ngIf="xdr">
+                <span [text-copy]="xdr" class="tx-id">{{xdr}}</span>
+                <span [text-copy]="xdr">
+                                    <i class="far fa-clone icon copy" aria-hidden="true"></i>
+                                </span>
+              </div>
+            </div>
+          </div>
+          <a target="_blank" [href]="'https://cosmic.link/?xdr=' + xdr + '&network=public'"
+             [ngClass]="{'disabled': !xdr || tokensAmountControl.invalid }"
              class="button-next external-link">
             <span>Sign</span>
             <i class="fas fa-external-link-alt external-icon"></i>

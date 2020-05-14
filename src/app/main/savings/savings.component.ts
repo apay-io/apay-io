@@ -38,6 +38,8 @@ export class SavingsComponent implements OnInit, OnDestroy {
   isLoading = false;
   private assetBalance: any;
   private baseBalance: any;
+  private tokensBalance: any;
+
   assetAmountControl = new FormControl(
     '', [
       (control) => {
@@ -50,6 +52,14 @@ export class SavingsComponent implements OnInit, OnDestroy {
     '', [
       (control) => {
         return this.baseBalance && parseFloat(control.value) > parseFloat(this.baseBalance.balance) ?
+          { max: 'Specified amount exceeds available balance' } : null;
+      }
+    ]
+  );
+  tokensAmountControl = new FormControl(
+    '', [
+      (control) => {
+        return this.tokensBalance && parseFloat(control.value) > parseFloat(this.tokensBalance.balance) ?
           { max: 'Specified amount exceeds available balance' } : null;
       }
     ]
@@ -182,7 +192,11 @@ export class SavingsComponent implements OnInit, OnDestroy {
   }
 
   redeem(code: string) {
-    console.log(code);
+    this.code = code;
+    this.tokensBalance = find(this.balances, { asset_code: `APAY${code}`});
+    this.tokensAmountControl.setValue('');
+    this.modalService.open('redeem');
+    this.registerAccount();
   }
 
   updateBaseAmount(baseAmount) {
@@ -207,6 +221,11 @@ export class SavingsComponent implements OnInit, OnDestroy {
     this.updateXdr();
   }
 
+  updateTokensAmount(tokensAmount) {
+    this.tokensAmountControl.setValue(tokensAmount);
+    this.updateRedeemXdr();
+  }
+
   async updateXdr() {
     const account = localStorage.getItem('account');
     if (this.baseAmountControl.value && !this.baseAmountControl.invalid
@@ -223,8 +242,23 @@ export class SavingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  async updateRedeemXdr() {
+    const account = localStorage.getItem('account');
+    if (this.tokensAmountControl.value && !this.tokensAmountControl.invalid && this.markets[this.code]
+      && account && this.memoId) {
+      this.xdr = await this.stellarService.buildRedemptionTx(
+        this.memoId,
+        this.code,
+        this.tokensAmountControl.value,
+      );
+    } else {
+      this.xdr = null;
+    }
+  }
+
   closeContributeModal() {
     this.xdr = null;
+    this.assetBalance = null;
     this.modalService.close('contribute');
   }
 
@@ -247,5 +281,11 @@ export class SavingsComponent implements OnInit, OnDestroy {
       return new BigNumber(this.assetBalance.balance).minus(10).toFixed(7);
     }
     return this.assetBalance.balance;
+  }
+
+  closeRedeemModal() {
+    this.xdr = null;
+    this.tokensBalance = null;
+    this.modalService.close('redeem');
   }
 }
