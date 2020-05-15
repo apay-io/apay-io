@@ -14,11 +14,14 @@
       </ul>
     </mat-card-content>
     <mat-card-actions [align]="'end'">
-      <label style="margin-right: 20px;">
+      <label style="margin-right: 20px;" *ngIf="market.type === 'deposit'">
         <input type="checkbox" [checked]="termsAccepted" (change)="termsAccepted = !termsAccepted" style="margin-right: 5px;">
         I accept <a routerLink="/static/bot-terms" target="_blank">terms and conditions</a>
       </label>
-      <button class="mat-flat-button mat-primary" [disabled]="!termsAccepted" (click)="apply(market)">Apply</button>
+      <button class="mat-flat-button mat-primary"
+              [disabled]="(market.type === 'deposit' && !termsAccepted) || isLoading" (click)="apply(market)">
+        <div *ngIf="isLoading"  class="spinner processing"></div> Apply
+      </button>
 <!--      <button class="mat-stroked-button mat-button-base" (click)="refund(market)">Refund</button>-->
     </mat-card-actions>
   </mat-card>

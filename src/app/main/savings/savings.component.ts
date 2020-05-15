@@ -36,9 +36,9 @@ export class SavingsComponent implements OnInit, OnDestroy {
   xdr: string;
   rate: string;
   isLoading = false;
-  private assetBalance: any;
+  public assetBalance: any;
   private baseBalance: any;
-  private tokensBalance: any;
+  public tokensBalance: any;
 
   assetAmountControl = new FormControl(
     '', [
@@ -101,8 +101,8 @@ export class SavingsComponent implements OnInit, OnDestroy {
       .then((cursor) => {
         this.stellarService.payments(this.account, cursor)
           .subscribe((payment: PaymentOperationRecord) => {
-            const market = find(this.markets, { manager: payment.from });
-            let index = findIndex(this.incomingOps, { to: payment.from });
+            const market = find(this.markets, { manager: payment.from }) || find(this.markets, { account: payment.from });
+            let index = findIndex(this.incomingOps, { to: market.manager });
             if (index !== -1) {
               // removing processed txns
               this.incomingOps.splice(index, 1);
@@ -115,6 +115,7 @@ export class SavingsComponent implements OnInit, OnDestroy {
               index = this.incomingOps.length;
               this.incomingOps[index] = {
                 to: payment.to,
+                type: payment.asset_code && payment.asset_code.startsWith('APAY') ? 'withdraw' : 'deposit',
                 ops: []
               };
             }
@@ -141,9 +142,12 @@ export class SavingsComponent implements OnInit, OnDestroy {
         .then((result: any) => {
           for (const item of result) {
             this.markets[item.asset].baseValue = parseFloat(item.accountBase) * 2;
-            if (this.markets[item.asset].baseValue) {
+            if (this.markets[item.asset].baseValue && parseFloat(item.accountTokens) > 0) {
               this.markets[item.asset].value = parseFloat(item.accountTokens) * parseFloat(item.unitPriceBase) * 2;
               this.markets[item.asset].percent = (this.markets[item.asset].value / this.markets[item.asset].baseValue - 1) * 100;
+            } else {
+              this.markets[item.asset].value = null;
+              this.markets[item.asset].percent = null;
             }
             this.markets[item.asset].baseBalance = parseFloat(new BigNumber(item.issued).mul(item.unitPriceBase).toPrecision(4))
               .toLocaleString();
@@ -263,12 +267,19 @@ export class SavingsComponent implements OnInit, OnDestroy {
   }
 
   apply(market: any) {
-    this.http.post(`${environment.botApi}/deposit`, {
+    this.isLoading = true;
+    this.http.post(`${environment.botApi}/${market.type}`, {
       memo: this.memoId,
       txs: market.ops.map((op) => op.id),
+      txId: market.ops.shift().id,
     }).toPromise()
       .then((result) => {
+        this.isLoading = false;
         this.fetchMMStats();
+      })
+      .catch((err) => {
+        console.log(err);
+        this.isLoading = false;
       });
   }
 

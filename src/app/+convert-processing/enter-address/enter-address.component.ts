@@ -78,7 +78,7 @@ export class EnterAddressComponent implements OnInit {
 
     } catch (err) {
       try {
-        const { account_id } = (await this.http.get(`${environment.api}/transactions/withdraw/non-interactive`, {
+        const { account_id } = (await this.http.get(`${environment.api}/withdraw`, {
           params: {
             type: 'crypto',
             asset_code: this.exchange.currencyOut.code,
