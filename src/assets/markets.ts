@@ -145,4 +145,19 @@ export const markets = {
     },
     unit: 'APAYZRX'
   },
+  TERN: {
+    'account': 'GD2FALFJHYYE5PDYLXNUWE3SRDLK373QI3Y5GV6GSZ6TRJUTVGYPTERN',
+    'manager': 'GBRYBTQJAOJ7KPR26IOKTPB423SYMAS5O3RP234VRQ4CFDIUKDRFVYUU',
+    'base': {
+      'asset_type': 'credit_alphanum4',
+      'asset_code': 'USDT',
+      'asset_issuer': 'GCQTGZQQ5G4PTM2GL7CDIFKUBIPEC52BROAQIAPW53XBRJVN6ZJVTG6V'
+    },
+    'asset': {
+      'asset_type': 'credit_alphanum4',
+      'asset_code': 'TERN',
+      'asset_issuer': 'GDGQDVO6XPFSY4NMX75A7AOVYCF5JYGW2SHCJJNWCQWIDGOZB53DGP6C'
+    },
+    unit: 'APAYTERN'
+  },
 };

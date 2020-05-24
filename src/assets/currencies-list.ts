@@ -291,6 +291,30 @@ export const currencies = [
       min_amount: 2,
       fee: '0.1% + 1 ZRX'
     },
-  }
+  },
+  {
+    'code': 'TERN',
+    'name': 'Ternio',
+    image: '/assets/img/tern.png',
+    'convert': '1',
+    'issuer': 'GDGQDVO6XPFSY4NMX75A7AOVYCF5JYGW2SHCJJNWCQWIDGOZB53DGP6C',
+    deposit: {
+      enabled: false,
+      fee_fixed: 0.0,
+      fee_percent: 0,
+      min_amount: 10,
+      fee: ''
+    },
+    'color': '#1d344e',
+    stellarNative: true,
+    'trustline': false,
+    withdraw: {
+      enabled: false,
+      fee_fixed: 0,
+      fee_percent: 0.0,
+      min_amount: 10,
+      fee: 'free'
+    },
+  },
 ];
 
