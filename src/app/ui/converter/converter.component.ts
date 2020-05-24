@@ -166,12 +166,14 @@ export class ConverterComponent implements OnInit, OnDestroy {
         this.stateButton = 'disabled';
       }
       if (this.getInfoCurrencies) {
-        const inConvertToDollars = this.getInfoCurrencies
-          .find(item => item.code === this.exchange.currencyIn.code).price * parseFloat(this.exchange.amountIn);
-        const outConvertToDollars = this.getInfoCurrencies
-          .find(item => item.code === this.exchange.currencyOut.code).price * parseFloat(this.exchange.amountOut);
+        const inConvertToDollars = (this.getInfoCurrencies
+          .find(item => item.code === this.exchange.currencyIn.code) || {})
+          .price * parseFloat(this.exchange.amountIn);
+        const outConvertToDollars = (this.getInfoCurrencies
+          .find(item => item.code === this.exchange.currencyOut.code) || {})
+          .price * parseFloat(this.exchange.amountOut);
 
-        if (Math.abs(inConvertToDollars / outConvertToDollars) >= 1.08) {
+        if (inConvertToDollars && outConvertToDollars && Math.abs(inConvertToDollars / outConvertToDollars) >= 1.08) {
           console.log(inConvertToDollars, outConvertToDollars);
           this.notify.update('Current exchange rate is not favourable due to the low liquidity on the DEX. Try again later or different amount', 'error');
           this.stateButton = 'disabled';

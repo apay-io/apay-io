@@ -43,7 +43,8 @@ export class SavingsComponent implements OnInit, OnDestroy {
   assetAmountControl = new FormControl(
     '', [
       (control) => {
-        return this.assetBalance && parseFloat(control.value) > parseFloat(this.getAvailableBalance(this.code)) ?
+        return !this.assetBalance && parseFloat(control.value) > 0
+        || this.assetBalance && parseFloat(control.value) > parseFloat(this.getAvailableBalance(this.code)) ?
           { max: 'Specified amount exceeds available balance' } : null;
       }
     ]
@@ -51,7 +52,8 @@ export class SavingsComponent implements OnInit, OnDestroy {
   baseAmountControl = new FormControl(
     '', [
       (control) => {
-        return this.baseBalance && parseFloat(control.value) > parseFloat(this.baseBalance.balance) ?
+        return !this.baseBalance && parseFloat(control.value) > 0
+          || this.baseBalance && parseFloat(control.value) > parseFloat(this.baseBalance.balance) ?
           { max: 'Specified amount exceeds available balance' } : null;
       }
     ]
@@ -70,6 +72,7 @@ export class SavingsComponent implements OnInit, OnDestroy {
   incomingOps = [];
   termsAccepted = false;
   private balances: Horizon.BalanceLine[];
+  private processedOperations = JSON.parse(localStorage.getItem(`mmbot:${this.account}:txs`) || '[]');
 
   constructor(private readonly http: HttpClient,
               private readonly stellarService: StellarService,
@@ -96,18 +99,27 @@ export class SavingsComponent implements OnInit, OnDestroy {
         }
       }
     });
+    if (!this.memoId) {
+      this.registerAccount();
+    }
     this.fetchMMStats();
     this.stellarService.cursor(this.account)
       .then((cursor) => {
         this.stellarService.payments(this.account, cursor)
           .subscribe((payment: PaymentOperationRecord) => {
-            const market = find(this.markets, { manager: payment.from }) || find(this.markets, { account: payment.from });
-            let index = findIndex(this.incomingOps, { to: market.manager });
-            if (index !== -1) {
-              // removing processed txns
-              this.incomingOps.splice(index, 1);
+            if (this.processedOperations.indexOf(payment.id) > -1) {
+              return;
             }
+            const market = find(this.markets, { manager: payment.from }) || find(this.markets, { account: payment.from });
+            let index;
             if (market) {
+              index = findIndex(this.incomingOps, { to: market.manager });
+              if (index !== -1) {
+                // removing processed txns
+                this.incomingOps[index].ops.forEach((op) => this.processedOperations.push(op.id));
+                this.incomingOps.splice(index, 1);
+                localStorage.setItem(`mmbot:${this.account}:txs`, JSON.stringify(this.processedOperations));
+              }
               return;
             }
             index = findIndex(this.incomingOps, { to: payment.to });
@@ -179,7 +191,6 @@ export class SavingsComponent implements OnInit, OnDestroy {
     this.baseAmountControl.setValue('');
     this.assetAmountControl.setValue('');
     this.modalService.open('contribute');
-    this.registerAccount();
   }
 
   private registerAccount() {
@@ -232,8 +243,10 @@ export class SavingsComponent implements OnInit, OnDestroy {
 
   async updateXdr() {
     const account = localStorage.getItem('account');
-    if (this.baseAmountControl.value && !this.baseAmountControl.invalid
-      && this.assetAmountControl.value && !this.assetAmountControl.invalid && this.markets[this.code]
+    const baseAmount = new BigNumber(this.baseAmountControl.value);
+    const assetAmount = new BigNumber(this.assetAmountControl.value);
+    if (baseAmount.gt(0) && !this.baseAmountControl.invalid
+      && assetAmount.gt(0) && !this.assetAmountControl.invalid && this.markets[this.code]
       && account && localStorage.getItem(`mmbot:${account}`)) {
       this.xdr = await this.stellarService.buildContributionTx(
         localStorage.getItem(`mmbot:${account}`),
@@ -291,7 +304,7 @@ export class SavingsComponent implements OnInit, OnDestroy {
     if (code === 'XLM') {
       return new BigNumber(this.assetBalance.balance).minus(10).toFixed(7);
     }
-    return this.assetBalance.balance;
+    return this.assetBalance && this.assetBalance.balance || '0.0000000';
   }
 
   closeRedeemModal() {

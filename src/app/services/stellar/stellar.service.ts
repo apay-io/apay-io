@@ -19,6 +19,7 @@ import {markets} from '../../../assets/markets';
 import {environment} from '../../../environments/environment';
 import AccountRecord = ServerApi.AccountRecord;
 import BalanceLine = Horizon.BalanceLine;
+import axios from 'axios';
 
 export interface Balance {
   asset_code: string;
@@ -123,19 +124,28 @@ export class StellarService {
     return tx.toEnvelope().toXDR('base64').toString();
   }
 
-  async buildWithdrawalTx(account: string, destination: string, amount: string, code: string, issuer: string) {
+  async buildWithdrawalTx(account: string, recipient: string, amount: string, currency: Currency) {
+    const { account_id, memo } = currency.stellarNative
+      ? { account_id: recipient, memo: null }
+      : await axios.post(`${environment.api}/withdraw`, {
+        type: 'crypto',
+        asset_code: currency.code,
+        dest: recipient,
+      }).then((response) => response.data);
+
     const sourceAccount = await this.getAccountRecord(account);
     const builder = new TransactionBuilder(
       sourceAccount,
       {
         fee: await this.getModerateFee(),
         networkPassphrase: Networks.PUBLIC,
+        memo: memo ? Memo.text(memo) : null,
       })
       .setTimeout(600) // 10 min
       .addOperation(Operation.payment({
         amount: amount,
-        asset: new Asset(code, issuer),
-        destination,
+        asset: new Asset(currency.code, currency.issuer),
+        destination: account_id,
       }));
 
     const tx = builder.build();
@@ -272,7 +282,7 @@ export class StellarService {
               const tx = await result.transaction();
               const memo = localStorage.getItem(`mmbot:${account}`);
               if (memo && tx.memo === memo && find(markets, { manager: result.to })
-                || find(markets, { manager: result.from })) {
+                || find(markets, { manager: result.from }) || find(markets, { account: result.from })) {
                 observer.next(result);
               }
             },

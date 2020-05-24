@@ -80,7 +80,7 @@
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
           <div class="buttons-group">
-            <div class="button-convert" [ngClass]="{'disabled' : !row.deposit.enabled}"
+            <div class="button-convert"
                  (click)="addFunds(row.code)">
               <div class="text">
                 {{hasTrustline(row.code) ? 'Add funds' : 'Participate'}}
@@ -103,7 +103,7 @@
 </div>
 
 <modal id="contribute">
-  <div class="modal" *ngIf="code && assetBalance">
+  <div class="modal" *ngIf="code">
     <div class="modal-body">
       <div class="head-popup">
         Contribute funds
@@ -158,8 +158,8 @@
                 <div class="text">
                   max
                 </div>
-                <div class="text currency" (click)="updateBaseAmount(this.baseBalance.balance)">
-                  {{this.baseBalance.balance}} USDT
+                <div class="text currency" (click)="updateBaseAmount(baseBalance && baseBalance.balance || '0.0000000')">
+                  {{baseBalance && baseBalance.balance || '0.0000000'}} USDT
                 </div>
               </div>
               <mat-form-field class="full-width" [ngClass]="{ 'mat-form-field-invalid': baseAmountControl.invalid }">

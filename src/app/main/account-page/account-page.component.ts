@@ -327,8 +327,7 @@ export class AccountPageComponent implements OnInit {
       this.account,
       this.withdrawForm.controls.recipient.value,
       this.withdrawForm.controls.amount.value,
-      this.currentToken.code,
-      this.currentToken.issuer,
+      this.currentToken,
     );
     this.modalService.close('withdraw');
     this.description = `You are going to send ${this.withdrawForm.controls.amount.value} ${this.currentToken.code}`;
