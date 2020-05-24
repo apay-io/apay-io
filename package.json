@@ -26,7 +26,7 @@
     "moment": "^2.24.0",
     "ng-qrcode": "latest",
     "ng2-charts": "^2.3.0",
-    "rxjs": "^6.5.4",
+    "rxjs": "^6.5.5",
     "stellar-sdk": "5.0.2",
     "trezor-connect": "^8.1.1",
     "web-animations-js": "2.3.2",
