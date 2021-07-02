@@ -27,7 +27,7 @@
     "ng-qrcode": "latest",
     "ng2-charts": "^2.3.0",
     "rxjs": "^6.5.4",
-    "stellar-sdk": "5.0.2",
+    "stellar-sdk": "8.2.3",
     "trezor-connect": "^8.1.1",
     "web-animations-js": "2.3.2",
     "zone.js": "^0.10.3"
