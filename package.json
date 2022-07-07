@@ -23,7 +23,7 @@
     "core-js": "^3.6.4",
     "hammerjs": "2.0.8",
     "lodash": "latest",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ng-qrcode": "latest",
     "ng2-charts": "^2.3.0",
     "rxjs": "^6.5.4",
